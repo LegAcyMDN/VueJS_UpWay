@@ -2,12 +2,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import { useUserStore } from './stores/user.js'
+import Entete from './components/Entete.vue'
 
 const userStore = useUserStore()
 </script>
 
 <template>
   <header>
+    <Entete></Entete>
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 

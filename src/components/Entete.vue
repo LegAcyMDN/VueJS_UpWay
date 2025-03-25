@@ -1,19 +1,15 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-})
 </script>
 
 <template>
-  <div class="greetings">
-    <h1 class="purpel">{{ msg }}</h1>
-    <h3>
-      UpWay
-    </h3>
-  </div>
+    <nav>
+        <div>
+          <li><router-link to="/"> Accueil</router-link></li>
+          <li><router-link to="/about"> Informations à propos de nous</router-link></li>
+          <li><router-link to="/velos"> Vélos</router-link></li>
+          <li><router-link to="/accessoires"> Nos Accessoires</router-link></li>
+        </div>
+    </nav>
 </template>
 
 <style scoped>
