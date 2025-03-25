@@ -8,9 +8,9 @@
 }
 
 a,
-.green {
+.purpel {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: rgb(71, 51, 255);
   transition: 0.4s;
   padding: 3px;
 }
