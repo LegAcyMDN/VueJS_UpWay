@@ -16,6 +16,7 @@ const credentials = ref({
 })
 
 const msg = ref('')
+const newUser = ref(false)
 
 function login() {
   userStore
@@ -54,7 +55,13 @@ function register() {
   <div class="container">
     <p>{{ msg }}</p>
     <div class="login">
-      <p>
+      <input type="radio" :value="false" id="not_new" v-model="newUser" checked />
+      <label for="not_new">I already have an account</label>
+
+      <input type="radio" :value="true" id="new" v-model="newUser" />
+      <label for="new">I'm new</label>
+
+      <p v-if="newUser">
         <label>Username</label>
         <input type="text" name="username" v-model="credentials.username" />
       </p>
@@ -64,29 +71,31 @@ function register() {
         <input type="password" name="password" v-model="credentials.password" />
       </p>
 
-      <p>
+      <p v-if="!newUser">
         <label>Email</label>
         <input type="email" name="email" v-model="credentials.email" />
       </p>
 
-      <p>
+      <p v-if="newUser">
         <label>First Name</label>
         <input type="text" name="first_name" v-model="credentials.first_name" />
       </p>
 
-      <p>
+      <p v-if="newUser">
         <label>Last Name</label>
         <input type="text" name="last_name" v-model="credentials.last_name" />
       </p>
 
       <p>
         <button
+          v-if="!newUser"
           @click="login()"
           :disabled="credentials.username == '' || credentials.password == ''"
         >
           Login
         </button>
         <button
+          v-if="newUser"
           @click="register()"
           :disabled="
             credentials.username == '' ||
