@@ -1,12 +1,12 @@
 <script setup>
-//import HelloWorld from '../components/HelloWorld.vue'
+import Accessoires from '../components/Accessoires.vue'
 </script>
 
 <template>
   <main>
     <p>En construction</p>
     <div>
-
+      <Accessoires/>
     </div>
   </main>
 </template>
