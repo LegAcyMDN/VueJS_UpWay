@@ -13,14 +13,22 @@ const credentials = ref({
   email: '',
   first_name: '',
   last_name: '',
+  code: undefined,
 })
 
 const msg = ref('')
 const newUser = ref(false)
+const requireOtp = ref(false)
 
 function login() {
-  userStore
-    .login(credentials.value.username, credentials.value.password)
+  ;(credentials.code == undefined
+    ? userStore.login(credentials.value.email, credentials.value.password)
+    : userStore.loginOtp(
+        credentials.value.username,
+        credentials.value.password,
+        credentials.value.code,
+      )
+  )
     .then((res) => {
       router.push({ name: 'home' })
     })
@@ -71,7 +79,7 @@ function register() {
         <input type="password" name="password" v-model="credentials.password" />
       </p>
 
-      <p v-if="!newUser">
+      <p>
         <label>Email</label>
         <input type="email" name="email" v-model="credentials.email" />
       </p>
@@ -90,7 +98,7 @@ function register() {
         <button
           v-if="!newUser"
           @click="login()"
-          :disabled="credentials.username == '' || credentials.password == ''"
+          :disabled="credentials.email == '' || credentials.password == ''"
         >
           Login
         </button>
@@ -108,6 +116,11 @@ function register() {
           Register
         </button>
       </p>
+    </div>
+
+    <div v-if="requireOtp">
+      <input type="text" id="otpcode" v-model="newUser.code" />
+      <label for="otpcode">Code OTP</label>
     </div>
   </div>
 </template>

@@ -23,8 +23,20 @@ export const useUserStore = defineStore('user', () => {
     await refreshUser()
   }
 
+  async function loginOtp(username, password, code) {
+    token.value = (
+      await axios.post(import.meta.env.VITE_BACKEND_URL + '/Auth/login-otp', {
+        login: username,
+        password,
+        code,
+      })
+    ).data.token
+    $cookies.set('jwt_token', token.value)
+    await refreshUser()
+  }
+
   async function register(username, password, email, first_name, last_name) {
-    current.value = (
+    token.value = (
       await axios.post(import.meta.env.VITE_BACKEND_URL + '/Auth/register', {
         login: username,
         password,
@@ -33,6 +45,7 @@ export const useUserStore = defineStore('user', () => {
         lastName: last_name,
       })
     ).data.token
+    $cookies.set('jwt_token', token.value)
     await refreshUser()
   }
 
@@ -58,5 +71,5 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  return { current, token, connected, login, register, logout }
+  return { current, token, connected, login, loginOtp, register, logout }
 })
