@@ -1,11 +1,4 @@
 <script setup>
-/*defineProps({
-  data: {
-    required: true,
-  },
-})*/
-
-
 import { ref } from 'vue';
 import { toRefs } from '@vue/reactivity'
 import axios from 'axios';
@@ -22,7 +15,7 @@ const categorie = ref({});
 
 // Récupération des données de l' API
 
-console.log(accessoire.value);
+// console.log(accessoire.value);
 
 axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.value.marqueId).then(res => {
   marque.value = res.data
