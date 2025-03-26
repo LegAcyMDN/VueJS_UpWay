@@ -2,6 +2,7 @@
 </script>
 
 <template>
+  <img src="https://cdn.shopify.com/s/files/1/0591/7769/7445/files/Upway_Logo_RGB_Dark_Blue-cropped.png?v=1737388577&width=900" alt="UPWAY">
     <nav>
         <div>
           <li><router-link to="/"> Accueil</router-link></li>
@@ -10,6 +11,7 @@
           <li><router-link to="/accessoires"> Nos Accessoires</router-link></li>
           <li><router-link to="/articles"> Actualités</router-link></li>
           <li><router-link to="/marques"> Marques</router-link></li>
+          <li><router-link to="/magasins"> Magasins</router-link></li>
         </div>
     </nav>
 </template>
