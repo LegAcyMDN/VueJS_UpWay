@@ -1,5 +1,5 @@
 <script setup>
-import Accessoire from '../components/Accessoire.vue'
+import Accessoires from '../components/Accessoires.vue'
 import { useAccessoiresStore } from '@/stores/accessoires';
 
 const accessoires = useAccessoiresStore()
@@ -8,7 +8,7 @@ const accessoires = useAccessoiresStore()
 <template>
   <main>
     <div>
-      <Accessoire v-for="accessoire in accessoires.list" :accessoire="accessoire"/>
+      <Accessoires v-for="accessoire in accessoires.list" :accessoire="accessoire"/>
     </div>
   </main>
 </template>
