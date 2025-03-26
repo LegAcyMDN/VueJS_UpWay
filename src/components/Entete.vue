@@ -8,6 +8,7 @@
           <li><router-link to="/about"> Informations à propos de nous</router-link></li>
           <li><router-link to="/velos"> Vélos</router-link></li>
           <li><router-link to="/accessoires"> Nos Accessoires</router-link></li>
+          <li><router-link to="/articles"> Actualités</router-link></li>
         </div>
     </nav>
 </template>
