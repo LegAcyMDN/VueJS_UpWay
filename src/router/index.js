@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AuthView from '../views/AuthView.vue'
 import VeloView from '../views/VeloView.vue'
+import AccessoiresView from '../views/AccessoiresView.vue'
 import AccessoireView from '../views/AccessoireView.vue'
 import ArticleView from '../views/ArticleView.vue'
 
@@ -34,6 +35,11 @@ const router = createRouter({
     {
       path: '/accessoires',
       name: 'accessoires',
+      component: AccessoiresView,
+    },
+    {
+      path: '/accessoire',
+      name: 'accessoire',
       component: AccessoireView,
     },
     {
