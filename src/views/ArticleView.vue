@@ -8,7 +8,7 @@ const articles = useArticleStore()
 
 <template>
   <main>
-    <p>Article</p>
+    <p>Articles</p>
     <ArticleComponent v-for="article in articles.listarticle":article="article"/>
   </main>
 </template>
