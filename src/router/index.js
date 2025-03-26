@@ -5,6 +5,8 @@ import VeloView from '../views/VeloView.vue'
 import AccessoiresView from '../views/AccessoiresView.vue'
 import AccessoireView from '../views/AccessoireView.vue'
 import ArticleView from '../views/ArticleView.vue'
+import MarqueView from '@/views/MarqueView.vue'
+import MagasinView from '@/views/MagasinView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +48,16 @@ const router = createRouter({
       path: '/articles',
       name: 'articles',
       component: ArticleView,
+    },
+    {
+      path: '/marques',
+      name: 'marques',
+      component: MarqueView,
+    },
+    {
+      path: '/magasins',
+      name: 'magasins',
+      component: MagasinView,
     },
   ],
 })
