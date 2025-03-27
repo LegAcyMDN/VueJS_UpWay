@@ -9,9 +9,9 @@ defineProps({
 <template>
     <article>
     <div>
-      <h2>{{article.caa_titre}}</h2>
-      <p>{{article.caa_contenue}}</p>
-      <img :src="article.caa_image">
+      <h2>{{article.titreCategorieArticle}}</h2>
+      <p>{{article.contenuCategorieArticle}}</p>
+      <img :src="article.imageCategorie">
     </div>
     </article>
 </template>
