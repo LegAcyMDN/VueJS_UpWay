@@ -1,10 +1,15 @@
 <script setup>
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 </script>
 
 <template>
     <div id="top-barre">
       <div id="img-logo">
-        <img src="https://cdn.shopify.com/s/files/1/0591/7769/7445/files/Upway_Logo_RGB_Dark_Blue-cropped.png?v=1737388577&width=900" alt="UPWAY">
+        <router-link to="/">
+          <img src="https://cdn.shopify.com/s/files/1/0591/7769/7445/files/Upway_Logo_RGB_Dark_Blue-cropped.png?v=1737388577&width=900" alt="UPWAY">
+        </router-link>
       </div>
 
       <div id="input-search">
@@ -55,14 +60,20 @@
 
     <div id="navigation">
       <nav>
-        <div>
-          <li><router-link to="/"> Accueil</router-link></li>
-          <li><router-link to="/about"> Informations à propos de nous</router-link></li>
-          <li><router-link to="/velos"> Vélos</router-link></li>
-          <li><router-link to="/accessoires"> Nos Accessoires</router-link></li>
-          <li><router-link to="/articles"> Actualités</router-link></li>
-          <li><router-link to="/marques"> Marques</router-link></li>
-          <li><router-link to="/magasins"> Magasins</router-link></li>
+        <div id="nav-container">
+          <router-link to="/" id="nav-acc"> Accueil</router-link>
+          <router-link to="/about" id="nav-inf"> Informations à propos de nous</router-link>
+          <router-link to="/velos" id="nav-vel"> Vélos</router-link>
+          <router-link to="/accessoires" id="nav-acs"> Nos Accessoires</router-link>
+          <router-link to="/articles" id="nav-act"> Actualités</router-link>
+          <router-link to="/marques" id="nav-mar"> Marques</router-link>
+          <router-link to="/magasins" id="nav-mag"> Magasins</router-link>
+        </div>
+        
+        <div id="nav-connection">
+          <p v-if="userStore.connected">currently logged as: {{ userStore.current.loginClient }}</p>
+          <router-link to="/auth" v-if="!userStore.connected">Login / Register</router-link>
+          <button @click="userStore.logout()" v-else>Logout</button>
         </div>
       </nav>
     </div>
@@ -74,11 +85,40 @@
   padding: 0;
 }
 
+#navigation {
+  width: 40%;
+}
+
+#nav-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#nav-acc {
+  margin-left: 25px;
+}
+
+#nav-acc, #nav-inf, #nav-vel, #nav-acs, #nav-act, #nav-mar, #nav-mag {
+  color: inherit;
+  text-decoration: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid transparent;
+  transition: border-bottom-color 0.3s ease-in-out;
+}
+
+#nav-acc:hover, #nav-inf:hover, #nav-vel:hover, #nav-acs:hover, #nav-act:hover, #nav-mar:hover, #nav-mag:hover {
+  border-bottom-color: black;
+}
+
 #top-barre {
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 #img-logo {
