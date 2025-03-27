@@ -3,14 +3,7 @@ import { ref } from 'vue';
 import { toRefs } from '@vue/reactivity'
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-/*
-const props = defineProps({
-  id: {
-    required: true,
-  },
-})
-*/
-//const { id } = toRefs(props);
+
 const route = useRoute();
 const id = route.params.id;
 const accessoire = ref({});
@@ -32,7 +25,6 @@ axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires/GetById/" + id).then(re
 
 <template> 
   <div class="accessoire">
-    <!-- Vérification si port 5173 si probléme cors -->
     <div>
       <img :src="accessoire.image" alt="Image de l'accessoire" />
       <div>
