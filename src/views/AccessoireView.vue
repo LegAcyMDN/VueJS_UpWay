@@ -8,7 +8,7 @@ const accessoires = useAccessoiresStore()
 <template>
   <main>
     <div>
-      <Accessoire v-for="accessoire in accessoires.list" :accessoire="accessoire"/>
+      <Accessoire/><!-- v-for="accessoire in accessoires.list" :accessoire="accessoire" -->
     </div>
   </main>
 </template>

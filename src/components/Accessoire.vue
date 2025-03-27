@@ -1,29 +1,33 @@
 <script setup>
 import { ref } from 'vue';
 import { toRefs } from '@vue/reactivity'
+import { useRoute } from 'vue-router';
 import axios from 'axios';
-
+/*
 const props = defineProps({
-  accessoire: {
+  id: {
     required: true,
   },
 })
- 
-const { accessoire } = toRefs(props);
+*/
+//const { id } = toRefs(props);
+const route = useRoute();
+const id = route.params.id;
+const accessoire = ref({});
 const marque = ref({});
 const categorie = ref({});
 
-// Récupération des données de l' API
-
-// console.log(accessoire.value);
-
-axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.value.marqueId).then(res => {
-  marque.value = res.data
-})
-
-axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
-  categorie.value = res.data
-})
+// Récupération de l'accessoire par ID
+axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires/GetById/" + id).then(res => {
+  accessoire.value = res.data;
+  // Récupération données supplémentaires (marque et catégorie)
+  axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques/GetById/" + accessoire.value.marqueId).then(res => {
+    marque.value = res.data;
+  })
+  axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.value.categorieId).then(res => {
+    categorie.value = res.data;
+  })
+});
 </script>
 
 <template> 
