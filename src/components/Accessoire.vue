@@ -1,15 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { toRefs } from '@vue/reactivity'
+import { useRoute } from 'vue-router';
 import axios from 'axios';
 
-const props = defineProps({
-  accessoire: {
-    required: true,
-  },
-})
- 
-const { accessoire } = toRefs(props);
+const route = useRoute();
+const id = route.params.id;
+const accessoire = ref({});
 const marque = ref({});
 const categorie = ref({});
 var photos = ref({});
@@ -24,10 +21,11 @@ axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.val
 
 axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
   categorie.value = res.data
-});
+})
+</script>
+
 <template> 
   <div class="accessoire">
-    <!-- Vérification si port 5173 si probléme cors -->
     <div>
       <div>
         <h3>{{ accessoire.nomAccessoire }}</h3>

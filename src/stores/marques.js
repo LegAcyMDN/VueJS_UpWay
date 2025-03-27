@@ -6,7 +6,7 @@ export const useMarquesStore = defineStore('marques', () => {
     const list = ref([])
     const connected = ref(false)
 
-    axios.get(import.meta.env.VITE_BACKEND_URL+"Marques")
+    axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques")
         .then(response => {
             list.value = response.data
         })

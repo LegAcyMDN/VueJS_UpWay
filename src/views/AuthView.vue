@@ -64,10 +64,10 @@ function register() {
     <p>{{ msg }}</p>
     <div class="login">
       <input type="radio" :value="false" id="not_new" v-model="newUser" checked />
-      <label for="not_new">I already have an account</label>
+      <label for="not_new">Connexion</label>
 
       <input type="radio" :value="true" id="new" v-model="newUser" />
-      <label for="new">I'm new</label>
+      <label for="new">S'inscrire</label>
 
       <p v-if="newUser">
         <label>Username</label>

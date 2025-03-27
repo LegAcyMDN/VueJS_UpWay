@@ -9,15 +9,13 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
     const connected = ref(false)
 
-    const urlBase = "https://s401-dev.redboxing.moe/api/"
-
-    axios.get(urlBase+"Accessoires")
+    axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires")
         .then(response => {
             list.value = response.data
         })
     
     function add(accessoire) {
-        return axios.post(urlBase+"add", accessoire.value)
+        return axios.post(import.meta.env.VITE_BACKEND_URL+"/add", accessoire.value)
     }
 
     return { list, cart, add, connected }

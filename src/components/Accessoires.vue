@@ -14,21 +14,17 @@ const marque = ref({});
 const categorie = ref({});
 
 // Récupération des données de l' API
-
-// console.log(accessoire.value);
-
-axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.value.marqueId).then(res => {
+axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques/GetById/" + accessoire.value.marqueId).then(res => {
   marque.value = res.data
 })
-
-axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
+axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.value.categorieId).then(res => {
   categorie.value = res.data
 })
 </script>
 
 <template> 
   <div>
-    <router-link to="/accessoire">
+    <router-link :to="{ path: '/accessoire/'+ accessoire.accessoireId, params: { id: accessoire.accessoireId } }">
       <button class="accessoire">
         <!-- Vérification si port 5173 si probléme cors -->
         <img :src="accessoire.image" alt="Image de l'accessoire" />
