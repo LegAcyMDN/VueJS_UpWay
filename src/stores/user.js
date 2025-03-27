@@ -6,7 +6,7 @@ export const useUserStore = defineStore('user', () => {
   const $cookies = inject('$cookies')
   const current = ref(null)
   const token = ref($cookies.get('jwt_token'))
-  const connected = computed(() => token.value != null)
+  const connected = computed(() => token.value != null && current.value != null)
 
   if (token.value != undefined && token.value != '') {
     refreshUser()
