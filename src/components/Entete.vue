@@ -32,7 +32,7 @@ const userStore = useUserStore()
       </div>
       
       <div id="aide">
-        <a href="">aide au choix
+        <a href="">Aide au choix
           <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#1C1535" class="absolute top-0 right-0">
             <path d="M15.8669 7.84722L9.35554 6.87122C9.24215 6.85151 9.14847 6.76279 9.13372 6.6494L8.15772 0.133087C8.14296 0.0443623 8.07394 0 8.00002 0C7.92605 0 7.85707 0.0443623 7.84227 0.133087L6.86632 6.6445C6.84656 6.75783 6.75783 6.85151 6.6445 6.86632L0.133087 7.84722C-0.0443623 7.87183 -0.0443623 8.13311 0.133087 8.15772L6.6445 9.13372C6.75783 9.15342 6.85151 9.24215 6.86632 9.35554L7.84227 15.8669C7.85707 15.9556 7.92605 16 8.00002 16C8.07394 16 8.14296 15.9556 8.15772 15.8669L9.13372 9.35554C9.15342 9.24215 9.24215 9.14847 9.35554 9.13372L15.8669 8.15772C16.0443 8.13311 16.0443 7.87183 15.8669 7.84722Z"/>
           </svg>
@@ -71,19 +71,15 @@ const userStore = useUserStore()
         </div>
         
         <div id="nav-connection">
-          <p v-if="userStore.connected">currently logged as: {{ userStore.current.loginClient }}</p>
+          <p v-if="userStore.connected" id="user-name">currently logged as: {{ userStore.current.loginClient }}</p>
           <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Login / Register</router-link>
-          <button @click="userStore.logout()" v-else>Logout</button>
+          <button id="but-logout" @click="userStore.logout()" v-else>Logout</button>
         </div>
       </nav>
     </div>
 </template>
 
 <style scoped>
-*{
-  margin: 0;
-  padding: 0;
-}
 
 #navigation {
   width: 100%;
@@ -97,7 +93,7 @@ const userStore = useUserStore()
 #nav-container {
   display: flex;
   justify-content: space-between;
-  width: calc(100% - 60%);
+  width: calc(100% - 40%);
 }
 
 #nav-acc {
@@ -120,7 +116,6 @@ const userStore = useUserStore()
 #nav-connection {
   display: flex;
   margin-left: auto;
-  
 }
 
 #nav-auth {
@@ -129,6 +124,19 @@ const userStore = useUserStore()
   padding-top: 20px;
   padding-bottom: 20px;
   margin-right: 25px;
+}
+
+#but-logout {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 20px 0;
+  margin-right: 25px;
+}
+
+#user-name {
+  padding: 20px 0;
+  margin-right: 20px;
 }
 
 #top-barre {
@@ -162,6 +170,10 @@ const userStore = useUserStore()
   border-radius: 5px;
 }
 
+#input-search:focus-within {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 #input-container {
   display: flex;
   align-items: center;
@@ -175,6 +187,10 @@ const userStore = useUserStore()
   width: 95%;
   background-color: transparent;
   border: none;
+}
+
+#search:focus {
+  outline: none;
 }
 
 #cancel-search, #enter-search {
