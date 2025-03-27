@@ -72,7 +72,7 @@ const userStore = useUserStore()
         
         <div id="nav-connection">
           <p v-if="userStore.connected">currently logged as: {{ userStore.current.loginClient }}</p>
-          <router-link to="/auth" v-if="!userStore.connected">Login / Register</router-link>
+          <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Login / Register</router-link>
           <button @click="userStore.logout()" v-else>Logout</button>
         </div>
       </nav>
@@ -86,12 +86,18 @@ const userStore = useUserStore()
 }
 
 #navigation {
-  width: 40%;
+  width: 100%;
+}
+
+#navigation nav {
+  display: flex;
+  width: 100%;
 }
 
 #nav-container {
   display: flex;
   justify-content: space-between;
+  width: calc(100% - 60%);
 }
 
 #nav-acc {
@@ -109,6 +115,20 @@ const userStore = useUserStore()
 
 #nav-acc:hover, #nav-inf:hover, #nav-vel:hover, #nav-acs:hover, #nav-act:hover, #nav-mar:hover, #nav-mag:hover {
   border-bottom-color: black;
+}
+
+#nav-connection {
+  display: flex;
+  margin-left: auto;
+  
+}
+
+#nav-auth {
+  color: inherit;
+  text-decoration: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 25px;
 }
 
 #top-barre {
