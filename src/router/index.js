@@ -40,9 +40,10 @@ const router = createRouter({
       component: AccessoiresView,
     },
     {
-      path: '/accessoire',
+      path: '/accessoire/:id',  // :id est un paramètre dynamique
       name: 'accessoire',
       component: AccessoireView,
+      props: true  // Permet de passer l'ID à la props du composant,
     },
     {
       path: '/articles',
