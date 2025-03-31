@@ -6,6 +6,8 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
   const cart = ref([])
 
+  const connected = ref(false)
+
   axios.get(`${window.VITE_BACKEND_URL}/Accessoires`).then((response) => {
     list.value = response.data
   })
