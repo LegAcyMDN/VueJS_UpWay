@@ -1,6 +1,5 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
-
 const userStore = useUserStore()
 </script>
 
@@ -88,10 +87,8 @@ const userStore = useUserStore()
 </template>
 
 <style scoped>
-
 #navigation {
   width: 100%;
-  margin-bottom: 25px;
 }
 
 #navigation nav {
