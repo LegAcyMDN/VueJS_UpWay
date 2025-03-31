@@ -1,30 +1,41 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { toRefs } from '@vue/reactivity'
-import axios from 'axios';
+import { useMarquesStore } from '../stores/marques.js'
+import { useCategoriesStore } from '../stores/category.js'
+import axios from 'axios'
 
 const props = defineProps({
   accessoire: {
     required: true,
   },
 })
- 
-const { accessoire } = toRefs(props);
-const marque = ref({});
-const categorie = ref({});
+
+const { accessoire } = toRefs(props)
+const brandStore = useMarquesStore()
+const categoriesStore = useCategoriesStore()
+
+const marque = ref({})
+const categorie = ref({})
 
 // Récupération des données de l' API
-axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques/GetById/" + accessoire.value.marqueId).then(res => {
-  marque.value = res.data
+brandStore.getById(accessoire.value.marqueId).then((brand) => {
+  marque.value = brand
 })
-axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.value.categorieId).then(res => {
-  categorie.value = res.data
+
+categoriesStore.getById(accessoire.value.categorieId).then((category) => {
+  categorie.value = category
 })
 </script>
 
-<template> 
+<template>
   <div>
-    <router-link :to="{ path: '/accessoire/'+ accessoire.accessoireId, params: { id: accessoire.accessoireId } }">
+    <router-link
+      :to="{
+        path: '/accessoire/' + accessoire.accessoireId,
+        params: { id: accessoire.accessoireId },
+      }"
+    >
       <button class="accessoire">
         <!-- Vérification si port 5173 si probléme cors -->
         <img :src="accessoire.image" alt="Image de l'accessoire" />
@@ -37,14 +48,14 @@ axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.v
 </template>
 
 <style scoped>
-img{
+img {
   width: 500px;
   background-color: lightgrey;
 }
-div{
+div {
   margin: 50px;
 }
-.accessoire{
+.accessoire {
   background-color: white;
   border-color: white;
   border: 0px;

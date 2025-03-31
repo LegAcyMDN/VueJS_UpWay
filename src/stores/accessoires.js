@@ -3,20 +3,20 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useAccessoiresStore = defineStore('accesoires', () => {
+  const list = ref([])
+  const cart = ref([])
 
-    const list = ref([])
-    const cart = ref([])
+  axios.get(`${window.VITE_BACKEND_URL}/Accessoires`).then((response) => {
+    list.value = response.data
+  })
 
-    const connected = ref(false)
+  async function add(accessoire) {
+    return (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)).data
+  }
 
-    axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires")
-        .then(response => {
-            list.value = response.data
-        })
-    
-    function add(accessoire) {
-        return axios.post(import.meta.env.VITE_BACKEND_URL+"/add", accessoire.value)
-    }
+  async function getById(id) {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetById/${id}`)).data
+  }
 
-    return { list, cart, add, connected }
+  return { list, cart, add, getById }
 })

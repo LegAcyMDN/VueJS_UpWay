@@ -2,15 +2,16 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+export const useArticleStore = defineStore('articles', () => {
+  const list = ref([])
 
-export const useArticleStore = defineStore('article',() =>{
-  const listarticle =ref([])
-  const connected = ref(false)
+  axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles`).then((response) => {
+    list.value = response.data
+  })
 
-  axios.get(import.meta.env.VITE_BACKEND_URL+"/CategorieArticles").then (
-    response => {
-      listarticle.value = response.data
-    }
-  )
-return {listarticle, connected}
+  async function getById(id) {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles/GetByID/${id}`)).data
+  }
+
+  return { listarticle, getById }
 })
