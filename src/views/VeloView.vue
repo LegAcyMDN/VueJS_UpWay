@@ -12,6 +12,7 @@ const velos = useVelosStore()
     <div class="velos_container">
       <Velo v-for="velo in velos.list" :velo="velo"/>
     </div>
+
   </main>
 </template>
 

@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { toRefs } from '@vue/reactivity'
-import axios from 'axios';
+import { useVelosStore } from '@/stores/velos';
 
+const velos = useVelosStore()
 
 const props = defineProps({
   velo: {
@@ -15,7 +16,7 @@ var photos = ref({});
 // Récupération des données de l' API
 
 
-axios.get("https://s401-dev.redboxing.moe/api/Velos/GetPhotosById/" + velo.value.veloId).then(res => {
+velos.getPhotoById(velo.value.veloId).then(res => {
    photos.value = res.data
 })
 
@@ -23,14 +24,13 @@ axios.get("https://s401-dev.redboxing.moe/api/Velos/GetPhotosById/" + velo.value
 
 <template>
     <!-- <img :src="{{ photos[0].urlPhotoVelo }}"/> -->
-    <RouterLink to="/">
     <div>
-      <img v-if="photos.length > 0" :src="photos[0].urlPhotoVelo" alt="Photo du vélo"/>     
+      <p>{{photos.value}}</p>
+      <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo"/>     
       <h3 class="titre_velo">{{ velo.nomVelo}}</h3>
       <p>{{ velo.anneeVelo }}  {{ velo.tailleMin  }}- {{  velo.tailleMax }}</p>
       <p class="prixvelo">{{ velo.prixRemise }}€</p>
     </div>
-  </RouterLink>
     <!-- <button @click="accessoires.cart.push(data)"> Ajouter au panier</button> -->
 </template>
 

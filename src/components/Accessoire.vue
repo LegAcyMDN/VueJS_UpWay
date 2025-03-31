@@ -11,6 +11,19 @@ const marque = ref({});
 const categorie = ref({});
 var photos = ref({});
 
+// Récupération de l'accessoire par ID
+axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires/GetById/" + id).then(res => {
+  accessoire.value = res.data;
+  // Récupération données supplémentaires (marque et catégorie)
+  axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques/GetById/" + accessoire.value.marqueId).then(res => {
+    marque.value = res.data;
+  })
+  axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.value.categorieId).then(res => {
+    categorie.value = res.data;
+  })
+});
+</script>
+
 // Récupération des données de l' API
 
 // console.log(accessoire.value);
@@ -21,9 +34,7 @@ axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.val
 
 axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
   categorie.value = res.data
-})
-</script>
-
+});
 <template> 
   <div class="accessoire">
     <div>

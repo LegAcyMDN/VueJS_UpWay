@@ -9,16 +9,18 @@ export const useVelosStore = defineStore('velos', () => {
 
     const connected = ref(false)
 
-    const urlBase = "https://s401-dev.redboxing.moe/api/"
-
-    axios.get(urlBase+"Velos")
+    axios.get(`${window.VITE_BACKEND_URL}/Velos?page=0`)
         .then(response => {
             list.value = response.data
         })
     
     function add(velo) {
-        return axios.post(urlBase+"add", velo.value)
+        return axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo.value)
     }
 
-    return { list, cart, add, connected }
+    async function getPhotoById(id) {
+        return (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetPhotosById/${id}`));
+    }
+
+    return { list, cart, add, getPhotoById, connected }
 })
