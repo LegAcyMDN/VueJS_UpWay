@@ -53,7 +53,6 @@ accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
         <p>{{ accessoire.prixAccessoire }}€</p>
       </button>
     </router-link>
-    <button @click="accessoires.cart.push(accessoire)">Ajouter au panier</button>
   </div>
 </template>
 
