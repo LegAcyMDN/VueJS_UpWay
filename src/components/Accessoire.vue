@@ -5,38 +5,47 @@ import { useRoute } from 'vue-router'
 import { useMarquesStore } from '../stores/marques.js'
 import { useCategoriesStore } from '../stores/category.js'
 import axios from 'axios'
+import { useAccessoiresStore } from '@/stores/accessoires.js'
 
-const route = useRoute();
-const id = route.params.id;
-const accessoire = ref({});
-const marque = ref({});
-const categorie = ref({});
-var photos = ref({});
+const route = useRoute()
+const brandStore = useMarquesStore()
+const categoriesStore = useCategoriesStore()
+const accessoiresStore = useAccessoiresStore()
+
+const id = route.params.id
+const accessoire = ref({})
+const marque = ref({})
+const categorie = ref({})
+const photos = ref({})
 
 // Récupération de l'accessoire par ID
-axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires/GetById/" + id).then(res => {
-  accessoire.value = res.data;
+/*
+brandStore.getById(id).then((brand) => {
+  accessoire.value = brand
+  })*/
+axios.get(import.meta.env.VITE_BACKEND_URL + '/Accessoires/GetById/' + id).then((res) => {
+  accessoire.value = res.data
   // Récupération données supplémentaires (marque et catégorie)
-  axios.get(import.meta.env.VITE_BACKEND_URL+"/Marques/GetById/" + accessoire.value.marqueId).then(res => {
-    marque.value = res.data;
+  brandStore.getById(accessoire.value.marqueId).then((brand) => {
+    marque.value = brand
   })
-  axios.get(import.meta.env.VITE_BACKEND_URL+"/Categories/GetById/" + accessoire.value.categorieId).then(res => {
-    categorie.value = res.data;
+  brandStore.getById(accessoire.value.categorieId).then((brand) => {
+    categorie.value = brand
   })
-});
+  accessoiresStore.getPhotoById(accessoire.value.accessoireId).then((brand) => {
+    photos.value = brand
+  })
+})
 </script>
 
-// Récupération des données de l' API
-brandStore.getById(accessoire.value.marqueId).then((brand) => {
-  marque.value = brand
-})
-
-axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
-  categorie.value = res.data
-});
-<template> 
+<template>
   <div class="accessoire">
     <div>
+      <img
+        v-if="photos[0]?.urlPhotoAccessoire"
+        :src="photos[0].urlPhotoAccessoire"
+        alt="Image de l'accessoire"
+      />
       <div>
         <h3>{{ accessoire.nomAccessoire }}</h3>
         <p>{{ accessoire.prixAccessoire }}€</p>

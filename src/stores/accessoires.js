@@ -6,8 +6,6 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
   const cart = ref([])
 
-  const connected = ref(false)
-
   axios.get(`${window.VITE_BACKEND_URL}/Accessoires`).then((response) => {
     list.value = response.data
   })
@@ -21,8 +19,8 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   }
 
   async function getPhotoById(id) {
-    return (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetPhotosById/${id}`));
+    return (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetPhotosById/${id}`)).data
   }
 
-  return { list, cart, add, getPhotoById, connected }
+  return { list, cart, add, getPhotoById, getById }
 })
