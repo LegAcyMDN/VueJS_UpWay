@@ -8,11 +8,18 @@ export const useVelosStore = defineStore('velos', () => {
 
     const connected = ref(false)
 
-    axios.get(`${window.VITE_BACKEND_URL}/Velos?page=0`)
+    axios.get(`${window.VITE_BACKEND_URL}/Velos`)
         .then(response => {
             list.value = response.data
         })
-    
+    async function fetchBikes(page) {
+        this.currentPage = page;
+        response = await axios.get(
+          `${window.VITE_BACKEND_URL}/Velos?=${page}`
+        );
+        list.value = response.data;
+        
+    }
     function add(velo) {
         return axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo.value)
     }
@@ -21,5 +28,5 @@ export const useVelosStore = defineStore('velos', () => {
         return (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetPhotosById/${id}`));
     }
 
-    return { list, cart, add, getPhotoById, connected }
+    return { list, cart, add, getPhotoById, connected, fetchBikes }
 })
