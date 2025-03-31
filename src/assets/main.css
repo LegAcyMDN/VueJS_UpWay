@@ -11,11 +11,11 @@ h1, h2, h3, h4 {
     font-family: 'Exo 2';
 }
 
-h1 { font-size: 30px; }
+h1 { font-size: 64px; }
 h2 { font-size: 20px; }
 h3, h4 { font-size: 16px; }
 
-p, span, a, input {
+p, span, a, input, option {
     font-family: 'Maison Neue';
     font-size: medium;
 }

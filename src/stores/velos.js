@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -14,5 +14,7 @@ export const useVelosStore = defineStore('velos', () => {
     return (await axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo)).data
   }
 
-  return { list, cart, add }
+  const countVelos = computed(() => list.value.length)
+
+  return { list, cart, add, countVelos }
 })
