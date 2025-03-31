@@ -1,11 +1,10 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useVelosStore = defineStore('velos', () => {
-
-    const list = ref([])
-    const cart = ref([])
+  const list = ref([])
+  const cart = ref([])
 
     const connected = ref(false)
 

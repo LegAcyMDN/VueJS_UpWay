@@ -1,6 +1,6 @@
 <script setup>
 import Accessoire from '../components/Accessoire.vue'
-import { useAccessoiresStore } from '@/stores/accessoires';
+import { useAccessoiresStore } from '@/stores/accessoires'
 
 const accessoires = useAccessoiresStore()
 </script>
@@ -8,10 +8,9 @@ const accessoires = useAccessoiresStore()
 <template>
   <main>
     <div>
-      <Accessoire/>
+      <Accessoire />
     </div>
   </main>
 </template>
 
-<style>
-</style>
+<style></style>

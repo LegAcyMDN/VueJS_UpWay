@@ -4,11 +4,14 @@ import axios from 'axios'
 
 export const useMarquesStore = defineStore('marques', () => {
   const list = ref([])
-  const connected = ref(false)
 
   axios.get(`${window.VITE_BACKEND_URL}/Marques`).then((response) => {
     list.value = response.data
   })
 
-  return { list, connected }
+  async function getById(id) {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/Marques/GetById/${id}`)).data
+  }
+
+  return { list, getById }
 })

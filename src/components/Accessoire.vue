@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { toRefs } from '@vue/reactivity'
-import { useRoute } from 'vue-router';
-import axios from 'axios';
+import { useRoute } from 'vue-router'
+import { useMarquesStore } from '../stores/marques.js'
+import { useCategoriesStore } from '../stores/category.js'
+import axios from 'axios'
 
 const route = useRoute();
 const id = route.params.id;
@@ -25,11 +27,8 @@ axios.get(import.meta.env.VITE_BACKEND_URL+"/Accessoires/GetById/" + id).then(re
 </script>
 
 // Récupération des données de l' API
-
-// console.log(accessoire.value);
-
-axios.get("https://s401-dev.redboxing.moe/api/Marques/GetById/" + accessoire.value.marqueId).then(res => {
-  marque.value = res.data
+brandStore.getById(accessoire.value.marqueId).then((brand) => {
+  marque.value = brand
 })
 
 axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.value.categorieId).then(res => {
@@ -53,11 +52,11 @@ axios.get("https://s401-dev.redboxing.moe/api/Categories/GetById/" + accessoire.
 </template>
 
 <style scoped>
-img{
+img {
   width: 500px;
   background-color: lightgrey;
 }
-.accessoire{
+.accessoire {
   background-color: white;
   border-color: white;
   border: 0px;

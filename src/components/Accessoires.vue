@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { toRefs } from '@vue/reactivity'
 import axios from 'axios';
 import { useAccessoiresStore } from '@/stores/accessoires';
@@ -30,9 +30,14 @@ accessoires.getPhotoById(accessoire.value.accessoireId).then(res => {
 })
 </script>
 
-<template> 
+<template>
   <div>
-    <router-link :to="{ path: '/accessoire/'+ accessoire.accessoireId, params: { id: accessoire.accessoireId } }">
+    <router-link
+      :to="{
+        path: '/accessoire/' + accessoire.accessoireId,
+        params: { id: accessoire.accessoireId },
+      }"
+    >
       <button class="accessoire">
         <!-- Vérification si port 5173 si probléme cors -->
         <img v-if="photos[0]?.urlPhotoAccessoire" :src="photos[0].urlPhotoAccessoire" alt="Image de l'accessoire"/>
@@ -45,14 +50,14 @@ accessoires.getPhotoById(accessoire.value.accessoireId).then(res => {
 </template>
 
 <style scoped>
-img{
+img {
   width: 500px;
   background-color: lightgrey;
 }
-div{
+div {
   margin: 50px;
 }
-.accessoire{
+.accessoire {
   background-color: white;
   border-color: white;
   border: 0px;
