@@ -62,6 +62,7 @@ export const useUserStore = defineStore('user', () => {
           headers: {
             Authorization: `Bearer ${token.value}`,
           },
+          withCredentials: true
         })
       ).data
     } catch (err) {
