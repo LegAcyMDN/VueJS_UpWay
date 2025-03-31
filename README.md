@@ -27,3 +27,10 @@ npm run dev
 ```sh
 npm run build
 ```
+
+## Docker Setup
+
+```sh
+docker buildx build -t <image tag> .
+docker run -p 8080:8080 -e VITE_BACKEND_URL=<backend url> <image tag>
+```
