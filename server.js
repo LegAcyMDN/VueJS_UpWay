@@ -22,4 +22,11 @@ app.get('*', (req, res) => {
   res.sendFile(indexFile)
 })
 
-app.listen(8080)
+app.listen(8080, (err) => {
+  if (err) {
+    console.log('Server setup failed: ' + err)
+    return
+  }
+
+  console.log('Server listening on port 8080')
+})

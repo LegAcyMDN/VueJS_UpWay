@@ -91,6 +91,7 @@ const userStore = useUserStore()
 
 #navigation {
   width: 100%;
+  margin-bottom: 25px;
 }
 
 #navigation nav {

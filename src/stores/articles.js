@@ -25,7 +25,13 @@ export const useArticleStore = defineStore('article', () => {
       })
   }
   axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles`).then((response) => {
-    listarticle.value = response.data
+    list.value = response.data
   })
   return { listarticle, connected, nouvelart, ajouter}
+
+  async function getById(id) {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles/GetByID/${id}`)).data
+  }
+
+  return { listarticle, getById }
 })
