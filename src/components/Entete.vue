@@ -32,7 +32,7 @@ const userStore = useUserStore()
       </div>
       
       <div id="aide">
-        <a href="">aide au choix
+        <a href="">Aide au choix
           <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#1C1535" class="absolute top-0 right-0">
             <path d="M15.8669 7.84722L9.35554 6.87122C9.24215 6.85151 9.14847 6.76279 9.13372 6.6494L8.15772 0.133087C8.14296 0.0443623 8.07394 0 8.00002 0C7.92605 0 7.85707 0.0443623 7.84227 0.133087L6.86632 6.6445C6.84656 6.75783 6.75783 6.85151 6.6445 6.86632L0.133087 7.84722C-0.0443623 7.87183 -0.0443623 8.13311 0.133087 8.15772L6.6445 9.13372C6.75783 9.15342 6.85151 9.24215 6.86632 9.35554L7.84227 15.8669C7.85707 15.9556 7.92605 16 8.00002 16C8.07394 16 8.14296 15.9556 8.15772 15.8669L9.13372 9.35554C9.15342 9.24215 9.24215 9.14847 9.35554 9.13372L15.8669 8.15772C16.0443 8.13311 16.0443 7.87183 15.8669 7.84722Z"/>
           </svg>
@@ -40,9 +40,9 @@ const userStore = useUserStore()
       </div>
   
       <div id="svg-info">
-        <button id="but-info">
+        <a>
           <img src="data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M11.125%2014.875C11.125%2015.0975%2011.059%2015.315%2010.9354%2015.5C10.8118%2015.685%2010.6361%2015.8292%2010.4305%2015.9144C10.225%2015.9995%209.99876%2016.0218%209.78053%2015.9784C9.5623%2015.935%209.36184%2015.8278%209.20451%2015.6705C9.04718%2015.5132%208.94003%2015.3127%208.89662%2015.0945C8.85321%2014.8762%208.87549%2014.65%208.96064%2014.4445C9.04579%2014.2389%209.18998%2014.0632%209.37499%2013.9396C9.55999%2013.816%209.7775%2013.75%2010%2013.75C10.2984%2013.75%2010.5845%2013.8685%2010.7955%2014.0795C11.0065%2014.2905%2011.125%2014.5766%2011.125%2014.875ZM10%204.75C7.93188%204.75%206.25%206.26406%206.25%208.125V8.5C6.25%208.69891%206.32902%208.88968%206.46967%209.03033C6.61033%209.17098%206.80109%209.25%207%209.25C7.19892%209.25%207.38968%209.17098%207.53033%209.03033C7.67099%208.88968%207.75%208.69891%207.75%208.5V8.125C7.75%207.09375%208.75969%206.25%2010%206.25C11.2403%206.25%2012.25%207.09375%2012.25%208.125C12.25%209.15625%2011.2403%2010%2010%2010C9.80109%2010%209.61033%2010.079%209.46967%2010.2197C9.32902%2010.3603%209.25%2010.5511%209.25%2010.75V11.5C9.25%2011.6989%209.32902%2011.8897%209.46967%2012.0303C9.61033%2012.171%209.80109%2012.25%2010%2012.25C10.1989%2012.25%2010.3897%2012.171%2010.5303%2012.0303C10.671%2011.8897%2010.75%2011.6989%2010.75%2011.5V11.4325C12.46%2011.1184%2013.75%209.75437%2013.75%208.125C13.75%206.26406%2012.0681%204.75%2010%204.75ZM19.75%2010C19.75%2011.9284%2019.1782%2013.8134%2018.1068%2015.4168C17.0355%2017.0202%2015.5127%2018.2699%2013.7312%2019.0078C11.9496%2019.7458%209.98919%2019.9389%208.09787%2019.5627C6.20656%2019.1865%204.46928%2018.2579%203.10571%2016.8943C1.74215%2015.5307%200.813554%2013.7934%200.437348%2011.9021C0.061142%2010.0108%200.254225%208.05042%200.992179%206.26884C1.73013%204.48726%202.97982%202.96451%204.58319%201.89317C6.18657%200.821828%208.07164%200.25%2010%200.25C12.585%200.25273%2015.0634%201.28084%2016.8913%203.10872C18.7192%204.93661%2019.7473%207.41498%2019.75%2010ZM18.25%2010C18.25%208.3683%2017.7661%206.77325%2016.8596%205.41655C15.9531%204.05984%2014.6646%203.00242%2013.1571%202.37799C11.6497%201.75357%209.99085%201.59019%208.39051%201.90852C6.79017%202.22685%205.32016%203.01259%204.16637%204.16637C3.01259%205.32015%202.22685%206.79016%201.90853%208.3905C1.5902%209.99085%201.75358%2011.6496%202.378%2013.1571C3.00242%2014.6646%204.05984%2015.9531%205.41655%2016.8596C6.77326%2017.7661%208.36831%2018.25%2010%2018.25C12.1873%2018.2475%2014.2843%2017.3775%2015.8309%2015.8309C17.3775%2014.2843%2018.2475%2012.1873%2018.25%2010Z'%20fill='black'%20/%3e%3c/svg%3e">
-        </button>
+        </a>
       </div>
 
       <div id="favoris-svg">
@@ -71,19 +71,23 @@ const userStore = useUserStore()
         </div>
         
         <div id="nav-connection">
-          <p v-if="userStore.connected">currently logged as: {{ userStore.current.loginClient }}</p>
+          <div id="login-user" v-if="userStore.connected">
+            <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.096"></g>
+              <g id="SVGRepo_iconCarrier"><path d="M6.00001 21V15.3426C6.00001 15.1158 5.96145 14.8908 5.88599 14.6769L3.35382 7.50248C3.15169 6.92978 3.40765 6.29618 3.95086 6.02457C4.5347 5.73265 5.24482 5.95902 5.552 6.53498L9.00001 13M18 21V15.3426C18 15.1158 18.0386 14.8908 18.114 14.6769L20.6462 7.50248C20.8483 6.92978 20.5924 6.29618 20.0491 6.02457C19.4653 5.73265 18.7552 5.95902 18.448 6.53498L15 13M16 6.5C16 8.70914 14.2091 10.5 12 10.5C9.79087 10.5 8.00001 8.70914 8.00001 6.5C8.00001 4.29086 9.79087 2.5 12 2.5C14.2091 2.5 16 4.29086 16 6.5Z" stroke="#000000" stroke-linecap="round" stroke-width="1.4"></path>
+              </g>
+            </svg>
+            <p v-if="userStore.connected" id="user-name">{{ userStore.current.loginClient }}</p>
+          </div>
           <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Login / Register</router-link>
-          <button @click="userStore.logout()" v-else>Logout</button>
+          <button id="but-logout" @click="userStore.logout()" v-else>Logout</button>
         </div>
       </nav>
     </div>
 </template>
 
 <style scoped>
-*{
-  margin: 0;
-  padding: 0;
-}
 
 #navigation {
   width: 100%;
@@ -97,7 +101,7 @@ const userStore = useUserStore()
 #nav-container {
   display: flex;
   justify-content: space-between;
-  width: calc(100% - 60%);
+  width: calc(100% - 40%);
 }
 
 #nav-acc {
@@ -120,7 +124,6 @@ const userStore = useUserStore()
 #nav-connection {
   display: flex;
   margin-left: auto;
-  
 }
 
 #nav-auth {
@@ -129,6 +132,27 @@ const userStore = useUserStore()
   padding-top: 20px;
   padding-bottom: 20px;
   margin-right: 25px;
+}
+
+#but-logout {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 20px 0;
+  margin-right: 25px;
+}
+
+#login-user {
+  display: flex;
+}
+
+#user-name {
+  padding: 20px 0;
+  margin-right: 25px;
+}
+
+#login-user svg{
+  width: 40px;
 }
 
 #top-barre {
@@ -162,6 +186,10 @@ const userStore = useUserStore()
   border-radius: 5px;
 }
 
+#input-search:focus-within {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
 #input-container {
   display: flex;
   align-items: center;
@@ -175,6 +203,10 @@ const userStore = useUserStore()
   width: 95%;
   background-color: transparent;
   border: none;
+}
+
+#search:focus {
+  outline: none;
 }
 
 #cancel-search, #enter-search {
@@ -202,16 +234,19 @@ const userStore = useUserStore()
   padding-right: 15px;
 }
 
-#but-info {
+#svg-info {
+  cursor: pointer;
   background-color: transparent;
   border: none;
 }
 
-#favoris-svg {
+#favoris-svg {  
+  cursor: pointer;
   padding-right: 15px;
 }
 
-#panier-svg {
+#panier-svg {  
+  cursor: pointer;
   padding-right: 25px;
 }
 </style>
