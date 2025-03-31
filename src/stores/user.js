@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function login(username, password) {
     token.value = (
-      await axios.post(import.meta.env.VITE_BACKEND_URL + '/Auth/login', {
+      await axios.post(`${window.VITE_BACKEND_URL}/Auth/login`, {
         login: username,
         password,
       })
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function loginOtp(username, password, code) {
     token.value = (
-      await axios.post(import.meta.env.VITE_BACKEND_URL + '/Auth/login-otp', {
+      await axios.post(`${window.VITE_BACKEND_URL}/Auth/login-otp`, {
         login: username,
         password,
         code,
@@ -37,7 +37,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function register(username, password, email, first_name, last_name) {
     token.value = (
-      await axios.post(import.meta.env.VITE_BACKEND_URL + '/Auth/register', {
+      await axios.post(`${window.VITE_BACKEND_URL}/Auth/register`, {
         login: username,
         password,
         email,
@@ -58,7 +58,7 @@ export const useUserStore = defineStore('user', () => {
   async function refreshUser() {
     try {
       current.value = (
-        await axios.get(import.meta.env.VITE_BACKEND_URL + '/User/me', {
+        await axios.get(`${window.VITE_BACKEND_URL}/User/me`, {
           headers: {
             Authorization: `Bearer ${token.value}`,
           },
