@@ -10,14 +10,6 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     list.value = response.data
   })
 
-  async function fetchAccessoires(page) {
-    this.currentPage = page;
-    response = await axios.get(
-      `${window.VITE_BACKEND_URL}/Accessoires?=${page}`
-    );
-    list.value = response.data; 
-  }
-
   async function add(accessoire) {
     return (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)).data
   }
@@ -32,10 +24,10 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   function fetchAccessories(page) {
     axios.get(`${window.VITE_BACKEND_URL}/Accessoires?page=${page}`)
-        .then(response => {
-            list.value = response.data
-        })
-}
+      .then(response => {
+          list.value = response.data
+      })
+  }
 
   return { list, cart, add, getPhotoById, getById, fetchAccessories }
 })

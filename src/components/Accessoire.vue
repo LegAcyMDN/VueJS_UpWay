@@ -19,10 +19,6 @@ const categorie = ref({})
 const photos = ref({})
 
 // Récupération de l'accessoire par ID
-/*
-brandStore.getById(id).then((brand) => {
-  accessoire.value = brand
-  })*/
 axios.get(import.meta.env.VITE_BACKEND_URL + '/Accessoires/GetById/' + id).then((res) => {
   accessoire.value = res.data
   // Récupération données supplémentaires (marque et catégorie)

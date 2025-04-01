@@ -1,7 +1,6 @@
 <script setup>
 import { ref,watch } from 'vue'
 import { toRefs } from '@vue/reactivity'
-import axios from 'axios'
 import { useAccessoiresStore } from '@/stores/accessoires'
 
 const accessoires = useAccessoiresStore()
@@ -13,22 +12,9 @@ const props = defineProps({
 })
 
 const { accessoire } = toRefs(props)
-const marque = ref({})
-const categorie = ref({})
 const photos = ref({})
 
 // Récupération des données de l' API
-axios
-  .get(import.meta.env.VITE_BACKEND_URL + '/Marques/GetById/' + accessoire.value.marqueId)
-  .then((res) => {
-    marque.value = res.data
-  })
-axios
-  .get(import.meta.env.VITE_BACKEND_URL + '/Categories/GetById/' + accessoire.value.categorieId)
-  .then((res) => {
-    categorie.value = res.data
-  })
-
 accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
   photos.value = photo
 })

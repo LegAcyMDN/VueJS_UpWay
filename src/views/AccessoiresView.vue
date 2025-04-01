@@ -3,9 +3,6 @@ import Accessoires from '../components/Accessoires.vue'
 import { useAccessoiresStore } from '@/stores/accessoires';
 
 const accessoires = useAccessoiresStore()
-
-const currentPage = accessoires.list[0]
-//currentPage = currentPage.veloId
 </script>
 
 <template>

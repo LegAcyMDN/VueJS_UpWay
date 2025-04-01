@@ -14,6 +14,27 @@ const props = defineProps({
 const { velo } = toRefs(props);
 const photos = ref({});
 
+// Récupération des données de l' API
+/*
+velos.getPhotoById(velo.value.veloId).then((photo) => {
+  photos.value = photo
+})
+
+const loadPhotos = () => {
+  if (velo.value && velo.value.veloId) {
+    velos.getPhotoById(velo.value.veloId).then((photo) => {
+      photos.value = photo
+    });
+  }
+};
+
+loadPhotos();
+
+watch(() => velo.value.veloId, () => {
+  loadPhotos();
+});
+*/
+
 const loadPhotos = () => {
   if (velo.value && velo.value.veloId) {
     velos.getPhotoById(velo.value.veloId).then(res => {
@@ -32,13 +53,22 @@ watch(() => velo.value.veloId, () => {
 
 
 <template>
-  
-    <div>
-      <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo"/>     
-      <h3 class="titre_velo">{{ velo.nomVelo}}</h3>
-      <p>{{ velo.anneeVelo }}  {{ velo.tailleMin  }}- {{  velo.tailleMax }}</p>
-      <p class="prixvelo">{{ velo.prixRemise }}€</p>
-    </div>
+  <div>
+    <router-link
+      :to="{
+        path: '/velo/' + velo.veloId,
+        params: { id: velo.veloId },
+      }"
+    >
+      <button class="velo">
+        <!-- Vérification si port 5173 si probléme cors -->
+        <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo"/>
+        <h3 class="titre_velo">{{ velo.nomVelo}}</h3>
+        <p>{{ velo.anneeVelo }}  {{ velo.tailleMin  }}- {{  velo.tailleMax }}</p>
+        <p class="prixvelo">{{ velo.prixRemise }}€</p>
+      </button>
+    </router-link>    
+  </div>
 </template>
 
 <style scoped>
@@ -48,12 +78,13 @@ img{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-div{
-    border: 2px solid white;
-    margin: 10px 10px 10px;
-    width: 350px;
-    height: 350px;
-    cursor: pointer;
+.velo {
+  background-color: white;
+  border: 2px solid white;
+  margin: 10px 10px 10px;
+  width: 350px;
+  height: 350px;
+  cursor: pointer;
 }
 .titre_velo{
   font-size: 20px;
