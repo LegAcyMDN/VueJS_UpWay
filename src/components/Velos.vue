@@ -61,7 +61,7 @@ div{
   text-align: center;
 }
 .prixvelo{
-  font-size: 15px;
+  font-size: 25px;
   font-weight: bold;
 }
 p{

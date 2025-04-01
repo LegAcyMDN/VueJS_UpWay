@@ -14,7 +14,6 @@ export const useVelosStore = defineStore('velos', () => {
             list.value = response.data
         })
     function fetchBikes(page) {
-        //location.reload();
         axios.get(`${window.VITE_BACKEND_URL}/Velos?page=${page}`)
             .then(response => {
                 list.value = response.data
