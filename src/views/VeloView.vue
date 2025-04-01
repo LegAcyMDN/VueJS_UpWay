@@ -1,5 +1,5 @@
 <script setup>
-import Velo from '../components/Velo.vue'
+import Velo from '../components/Velos.vue'
 import { useVelosStore } from '@/stores/velos';
 
 const velos = useVelosStore()
