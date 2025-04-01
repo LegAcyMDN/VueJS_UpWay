@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 import { toRefs } from '@vue/reactivity'
 import axios from 'axios'
 import { useAccessoiresStore } from '@/stores/accessoires'
@@ -32,6 +32,20 @@ axios
 accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
   photos.value = photo
 })
+
+const loadPhotos = () => {
+  if (accessoire.value && accessoire.value.accessoireId) {
+    accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
+      photos.value = photo
+    });
+  }
+};
+
+loadPhotos();
+
+watch(() => accessoire.value.accessoireId, () => {
+  loadPhotos();
+});
 </script>
 
 <template>
@@ -58,15 +72,32 @@ accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
 
 <style scoped>
 img {
-  width: 500px;
+  width: 450px;
+  height:350px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   background-color: lightgrey;
-}
-div {
-  margin: 50px;
 }
 .accessoire {
   background-color: white;
   border-color: white;
   border: 0px;
+}
+div{
+    border: 2px solid white;
+    margin: 10px 100px 100px 10px;
+    width: 400px;
+    height: 400px;
+    cursor: pointer;
+    
+}
+h3{
+  width: 400px;
+  font-size: 17px;
+}
+p{
+  width: 400px;
+  font-size: 25px;
+  font-weight: bold;
 }
 </style>
