@@ -22,9 +22,9 @@ const currentPage = velos.list[0]
       <Velo v-for="velo in velos.list" :velo="velo"/>
     </div>
     <div class="pagination">
-      <button @click="velos.fetchBikes(0)">Page 1</button>
-      <button @click="fetchBikes(1)">Page 2</button>
-      <button @click="fetchBikes(2)">Page 3</button>
+      <button class="button_velos_page" @click="velos.fetchBikes(0)">Page 1</button>
+      <button class="button_velos_page" @click="fetchBikes(1)">Page 2</button>
+      <button class="button_velos_page" @click="fetchBikes(2)">Page 3</button>
       
     </div>
   </main>
@@ -40,7 +40,7 @@ const currentPage = velos.list[0]
   margin-left: 44%;
 }
 
-button {
+.button_velos_page {
   margin: 10px;
   margin-bottom: 50px;
   width: 50px;

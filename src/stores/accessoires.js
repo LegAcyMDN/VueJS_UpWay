@@ -10,6 +10,14 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     list.value = response.data
   })
 
+  async function fetchAccessoires(page) {
+    this.currentPage = page;
+    response = await axios.get(
+      `${window.VITE_BACKEND_URL}/Accessoires?=${page}`
+    );
+    list.value = response.data; 
+  }
+
   async function add(accessoire) {
     return (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)).data
   }
