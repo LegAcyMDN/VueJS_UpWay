@@ -24,7 +24,7 @@ const accessoires = useAccessoiresStore()
   </div>
 </template>
 
-<style>
+<style scoped>
 .accessoires_container {
   display: flex;
   flex-wrap: wrap;
