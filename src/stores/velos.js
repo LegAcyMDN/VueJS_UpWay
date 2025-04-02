@@ -14,7 +14,9 @@ export const useVelosStore = defineStore('velos', () => {
     return (await axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo)).data
   }
 
-  const countVelos = computed(() => list.value.length)
+  async function count() {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/Velos/count`)).data
+  }
 
-  return { list, cart, add, countVelos }
+  return { list, cart, add, count }
 })
