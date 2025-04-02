@@ -2,34 +2,25 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-export const useArticleStore = defineStore('article', () => {
-  const listarticle = ref([])
-  const connected = ref(false)
-  const nouvelart = 
-  {
-    titreCategorieArticle: "",
-    contenuCategorieArticle : "",
-    imageCategorie: "",
-  }
-  function ajouter(){
-    axios.post(`${window.VITE_BACKEND_URL}/CategorieArticles`,this.nouvelart).then(response =>
-      {
-        if(response.data.console.error == true)
-          {
-            console.log("ptdr t'es qui")
-          }
-          else
-            {
+export const useArticleStore = defineStore('article_categories', () => {
+  const list = ref([])
 
-            }
-      })
+  async function add(article) {
+    await axios.post(`${window.VITE_BACKEND_URL}/CategorieArticles`, article)
   }
-  axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles`).then((response) => {
-    listarticle.value = response.data
-  })
+
+  fetchArticles(0)
+
   async function getById(id) {
+    const entry = list.value.find((v) => v.categorieArticleId == id)
+    if (entry != undefined) return entry
+
     return (await axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles/GetByID/${id}`)).data
   }
 
-  return { listarticle, connected, nouvelart, ajouter, getById}
+  async function fetchArticles(page) {
+    list.value = (await axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles?page=${page}`)).data
+  }
+
+  return { list, add, getById, fetchArticles }
 })

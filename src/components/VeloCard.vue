@@ -16,7 +16,7 @@ const photos = ref({})
 
 const loadPhotos = () => {
   if (velo.value && velo.value.veloId) {
-    velos.getPhotoById(velo.value.veloId).then((data) => {
+    velos.getPhotosById(velo.value.veloId).then((data) => {
       photos.value = data
     })
   }

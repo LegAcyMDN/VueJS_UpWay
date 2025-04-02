@@ -1,5 +1,5 @@
 <script setup>
-import { ref,watch } from 'vue'
+import { ref, watch } from 'vue'
 import { toRefs } from '@vue/reactivity'
 import { useAccessoiresStore } from '@/stores/accessoires'
 
@@ -14,24 +14,22 @@ const props = defineProps({
 const { accessoire } = toRefs(props)
 const photos = ref({})
 
-// Récupération des données de l' API
-accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
-  photos.value = photo
-})
-
 const loadPhotos = () => {
   if (accessoire.value && accessoire.value.accessoireId) {
-    accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
+    accessoires.getPhotosById(accessoire.value.accessoireId).then((photo) => {
       photos.value = photo
-    });
+    })
   }
-};
+}
 
-loadPhotos();
+loadPhotos()
 
-watch(() => accessoire.value.accessoireId, () => {
-  loadPhotos();
-});
+watch(
+  () => accessoire.value.accessoireId,
+  () => {
+    loadPhotos()
+  },
+)
 </script>
 
 <template>
@@ -59,7 +57,7 @@ watch(() => accessoire.value.accessoireId, () => {
 <style scoped>
 img {
   width: 450px;
-  height:350px;
+  height: 350px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-color: lightgrey;
@@ -69,19 +67,18 @@ img {
   border-color: white;
   border: 0px;
 }
-div{
-    border: 2px solid white;
-    margin: 10px 100px 100px 10px;
-    width: 400px;
-    height: 400px;
-    cursor: pointer;
-    
+div {
+  border: 2px solid white;
+  margin: 10px 100px 100px 10px;
+  width: 400px;
+  height: 400px;
+  cursor: pointer;
 }
-h3{
+h3 {
   width: 400px;
   font-size: 17px;
 }
-p{
+p {
   width: 400px;
   font-size: 25px;
   font-weight: bold;

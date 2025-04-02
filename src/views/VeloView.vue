@@ -31,7 +31,7 @@ velosStore.getById(id).then((data) => {
   categoriesStore.getById(velo.value.categorieId).then((category) => {
     categorie.value = category
   })
-  velosStore.getPhotoById(velo.value.veloId).then((data) => {
+  velosStore.getPhotosById(velo.value.veloId).then((data) => {
     photos.value = data
   })
 })
