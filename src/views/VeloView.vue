@@ -18,6 +18,7 @@ const velo = ref({})
 const marque = ref({})
 const categorie = ref({})
 const photos = ref({})
+const mention = ref([])
 
 // Récupération de le velo par ID
 velosStore.getById(id).then((data) => {
@@ -34,20 +35,24 @@ velosStore.getById(id).then((data) => {
   velosStore.getPhotosById(velo.value.veloId).then((data) => {
     photos.value = data
   })
+  velosStore.getMentionById(velo.value.veloId).then((data) => {
+    mention.value = data
+  })
 })
 </script>
 
 <template>
   <div class="velo">
     <div>
-      <div>
-        <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo" />
-
+      
+      <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo" />
+      <div class="nom">
         <h3 class="titre_velo">{{ velo.nomVelo }}</h3>
         <p>{{ velo.anneeVelo }} {{ velo.tailleMin }}- {{ velo.tailleMax }}</p>
         <p class="prixvelo">{{ velo.prixNeuf }}€</p>
         <p class="prixvelo">{{ velo.prixRemise }}€</p>
-        <button @click="velos.cart.push(velo)">Ajouter au panier</button>
+        <p class="ideal">{{mention[0].libelleMention}}</p>
+        <button class="panier" @click="velos.cart.push(velo)">Ajouter au panier</button>
       </div>
     </div>
     <div>
@@ -60,7 +65,7 @@ velosStore.getById(id).then((data) => {
 
 <style scoped>
 img {
-  width: 500px;
+  width: 70%;
   background-color: lightgrey;
 }
 .velo {
@@ -77,5 +82,21 @@ img {
 .prixvelo {
   font-size: 25px;
   font-weight: bold;
+}
+.nom{
+  position: absolute;
+  top: 20%;
+  left: 71%;
+}
+
+.panier {
+    width: 170px;
+    background-color: #d57a12;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 </style>

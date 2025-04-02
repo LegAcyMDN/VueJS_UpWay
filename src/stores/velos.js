@@ -6,6 +6,7 @@ export const useVelosStore = defineStore('velos', () => {
   const list = ref([])
   const photos = ref([])
   const cart = ref([])
+  const mention = ref([])
 
   fetchBikes(0)
 
@@ -38,6 +39,24 @@ export const useVelosStore = defineStore('velos', () => {
     return entries
   }
 
+  async function getMentionById(id) {
+    let entries = mention.value.filter((v) => v.veloId == id)
+
+    if (entries.length > 0) {
+      return entries
+    }
+
+    entries = (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetMentionById/${id}`)).data
+
+    if (list.value.length >= 100) {
+      mention.value = entries
+    } else {
+      mention.value = mention.value.concat(entries)
+    }
+
+    return entries
+  }
+
   async function count() {
     return (await axios.get(`${window.VITE_BACKEND_URL}/Velos/count`)).data
   }
@@ -46,5 +65,5 @@ export const useVelosStore = defineStore('velos', () => {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Velos?page=${page}`)).data
   }
 
-  return { list, cart, add, getPhotosById, getById, fetchBikes, count }
+  return { list, cart, add, getPhotosById, getById, fetchBikes, count, getMentionById }
 })
