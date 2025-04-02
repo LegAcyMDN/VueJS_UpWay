@@ -52,15 +52,36 @@
         </div>
       </div>  
       
-      <!--div id="carrousel">
-        <button @click="prevCategorie" class="arrow-left">&#9665;</button>
+      <div id="container-carrousel" style="margin: 5% 15%;">
+            <div id="carrousel-vel">
+                <div id="entete-vel">
+                    <div id="titre-vel">
+                      <h2 style="color: black;">Les catégories de vélos électriques</h2>
+                      <span style="color: black;">On vous guide dans le choix de votre vélo</span>
+                    </div>
+                    <div id="curseur-vel">
+                        <div id="curseur-left">
+                            <div id="left">
+                                <svg class="caroussel-left-arrow" focusable="false" aria-hidden="true" viewBox="0 0 24 24" height="24" width="24" fill="white">
+                                    <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="curseur-right">
+                            <div id="right">
+                                <svg class="caroussel-right-arrow" focusable="false" aria-hidden="true" viewBox="0 0 24 24" height="24" width="24" fill="white">
+                                    <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="carousel-content" v-if="categoriesStore.list.length">
-          <span style="color: black;">{{ filteredCategories.list[currentIndex].libelleCategorie }}</span>
+                <div id="carrousel-track">
+                    <!--A finir-->
+                </div>
+            </div>
         </div>
-
-        <button @click="nextCategorie" class="arrow right">&#9655;</button>
-      </div-->
     </main>
   </template>
 
@@ -157,5 +178,25 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 15px;
+}
+
+#entete-vel {
+    display: flex;
+    justify-content: space-between;
+}
+
+#curseur-vel {
+    display: flex;
+    gap: 25px;
+}
+
+#left, #right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(71, 51, 255, 1);
+    border-radius: 50%;
 }
 </style>

@@ -1,8 +1,15 @@
 <script setup>
-import VeloCard from '../components/VeloCard.vue'
+import ProductCard from '../components/ProductCard.vue'
 import { useVelosStore } from '@/stores/velos'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { ref } from 'vue'
+import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const velos = useVelosStore()
+
+async function loadImage(velo) {
+  return (await velos.getPhotosById(velo.veloId))[0].urlPhotoVelo
+}
 </script>
 
 <template>
@@ -13,24 +20,76 @@ const velos = useVelosStore()
       professionnels, accessibles à tous et garantis un an.
     </p>
     <div class="velos_container">
-      <VeloCard v-for="velo in velos.list" :velo="velo" />
+      <ProductCard
+        :key="velo.veloId"
+        v-for="velo in velos.list"
+        :title="velo.nomVelo"
+        :description="`${velo.anneeVelo} ${velo.tailleMin}- ${velo.tailleMax}`"
+        :price="velo.prixRemise"
+        :imgFuture="loadImage(velo)"
+        :link="{
+          path: '/velo/' + velo.veloId,
+        }"
+      />
     </div>
     <div class="pagination">
-      <button @click="velos.fetchBikes(0)">1</button>
-      <button @click="velos.fetchBikes(1)">2</button>
-      <button @click="velos.fetchBikes(2)">3</button>
+      <button v-if="velos.current_page > 0" @click="velos.fetchBikes(0)">
+        <FontAwesomeIcon :icon="faBackward" />
+      </button>
+      <button v-if="velos.current_page > 0" @click="velos.fetchBikes(velos.current_page - 1)">
+        <FontAwesomeIcon :icon="faArrowLeft" />
+      </button>
+
+      <div v-for="i in [3, 2, 1]" :key="i">
+        <button
+          v-if="velos.current_page - i >= 0"
+          @click="velos.fetchBikes(velos.current_page - i)"
+        >
+          {{ velos.current_page - i + 1 }}
+        </button>
+      </div>
+
+      <button disabled>{{ velos.current_page + 1 }}</button>
+
+      <div v-for="i in 3" :key="i">
+        <button
+          v-if="velos.current_page + i <= velos.total_pages"
+          @click="velos.fetchBikes(velos.current_page + i)"
+        >
+          {{ velos.current_page + i + 1 }}
+        </button>
+      </div>
+
+      <button
+        v-if="velos.current_page < velos.total_pages"
+        @click="velos.fetchBikes(velos.current_page + 1)"
+      >
+        <FontAwesomeIcon :icon="faArrowRight" />
+      </button>
+      <button
+        v-if="velos.current_page != velos.total_pages"
+        @click="velos.fetchBikes(velos.total_pages)"
+      >
+        <FontAwesomeIcon :icon="faForward" />
+      </button>
     </div>
   </main>
 </template>
 
 <style scoped>
+main {
+  width: 100%;
+}
 .velos_container {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 6%;
+  justify-content: center;
 }
+
 .pagination {
-  margin-left: 44%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 button {
