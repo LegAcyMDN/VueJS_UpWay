@@ -72,6 +72,5 @@ export const useVelosStore = defineStore('velos', () => {
     current_page.value = page
   }
 
-  return { list, cart, add, getPhotosById, getById, fetchBikes, count, current_page, total_pages }
-  return { list, cart, add, getPhotosById, getById, fetchBikes, count, getMentionById }
+  return { list, cart, add, getPhotosById, getById, fetchBikes, count, current_page, total_pages, getMentionById }
 })
