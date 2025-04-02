@@ -23,7 +23,7 @@ const velos = useVelosStore()
   </main>
 </template>
 
-<style>
+<style scoped>
 .velos_container {
   display: flex;
   flex-wrap: wrap;
