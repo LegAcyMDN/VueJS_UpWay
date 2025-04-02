@@ -26,7 +26,7 @@ export const usePanierStore = defineStore('paniers', () => {
             $cookies.set('panier', JSON.stringify(list.value), {expires: 7})
         }
     }
-
+    
     watch(list, savePanier, { deep: true })
 
     return { list, loadPanier }

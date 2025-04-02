@@ -6,11 +6,13 @@ import { useMarquesStore } from '../stores/marques.js'
 import { useCategoriesStore } from '../stores/category.js'
 import axios from 'axios'
 import { useAccessoiresStore } from '@/stores/accessoires.js'
+import { usePanierStore } from '@/stores/paniers.js'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
 const categoriesStore = useCategoriesStore()
 const accessoiresStore = useAccessoiresStore()
+const panierStore = usePanierStore()
 
 const id = route.params.id
 const accessoire = ref({})
@@ -34,6 +36,18 @@ accessoiresStore.getById(id).then((data) => {
     photos.value = data
   })
 })
+
+// Ajouter un accessoire au panier
+const ajouterAuPanier = () => {
+  panierStore.list.push({
+    produitId: accessoire.value.accessoireId,
+    nom: accessoire.value.nomAccessoire,
+    prix: accessoire.value.prixAccessoire,
+    quantite: 1,
+  })
+  // Optionnel : vous pouvez afficher une notification ou un message pour informer l'utilisateur
+  alert(`${accessoire.value.nomAccessoire} ajouté au panier !`)
+}
 </script>
 
 <template>
@@ -47,7 +61,7 @@ accessoiresStore.getById(id).then((data) => {
       <div class="nom">
         <h3 class="name">{{ accessoire.nomAccessoire }}</h3>
         <p class="prix">{{ accessoire.prixAccessoire }}€</p>
-        <button class="panier" @click="accessoires.cart.push(accessoire)">Ajouter au panier</button>
+        <button class="panier" @click="ajouterAuPanier">Ajouter au panier</button>
       </div>
     </div>
     <div>
