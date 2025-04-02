@@ -37,30 +37,29 @@ accessoiresStore.getById(id).then((data) => {
 </script>
 
 <template>
-  <div class="accessoire">
+  <div class="accessoire"> 
     <div>
       <img
         v-if="photos[0]?.urlPhotoAccessoire"
         :src="photos[0].urlPhotoAccessoire"
         alt="Image de l'accessoire"
       />
-      <div>
-        <h3>{{ accessoire.nomAccessoire }}</h3>
-        <p>{{ accessoire.prixAccessoire }}€</p>
-        <button @click="accessoires.cart.push(accessoire)">Ajouter au panier</button>
+      <div class="nom">
+        <h3 class="name">{{ accessoire.nomAccessoire }}</h3>
+        <p class="prix">{{ accessoire.prixAccessoire }}€</p>
+        <button class="panier" @click="accessoires.cart.push(accessoire)">Ajouter au panier</button>
       </div>
     </div>
     <div>
-      <p>{{ marque.nomMarque }}</p>
-      <p>{{ categorie.libelleCategorie }}</p>
-      <p>{{ accessoire.descriptionAccessoire }}</p>
+      <h2 class="Titre_Desc">Description du produit</h2>
+      <p class="description">{{ accessoire.descriptionAccessoire }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
 img {
-  width: 500px;
+  width: 70%;
   background-color: lightgrey;
 }
 .accessoire {
@@ -68,5 +67,40 @@ img {
   border-color: white;
   border: 0px;
   margin: 50px;
+}
+.nom{
+  position: absolute;
+  top: 20%;
+  left: 71%;
+}
+.name{
+  font-size: 35px;
+  font-weight: bold;
+}
+.prix{
+  margin-left: 0%;
+  margin-top: 5%;
+  font-size: 25px;
+  font-weight: bold;
+}
+.panier {
+    width: 170px;
+    background-color: #d57a12;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.Titre_Desc{
+  margin-left:6%;
+  margin-bottom: 3%;
+  font-size: 25px;
+}
+.description{
+  line-height: 2.5;
+  font-size: 16px;
+  margin-left:6%;
 }
 </style>
