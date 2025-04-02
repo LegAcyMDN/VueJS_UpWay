@@ -52,7 +52,6 @@ velosStore.getById(id).then((data) => {
         <p class="prixvelo">{{ velo.prixNeuf }}€</p>
         <p class="prixvelo">{{ velo.prixRemise }}€</p>
         <!--<p class="ideal">{{mention[0].libelleMention}}</p>-->
-        <p></p>
         <button class="panier" @click="velos.cart.push(velo)">Ajouter au panier</button>
       </div>
     </div>
