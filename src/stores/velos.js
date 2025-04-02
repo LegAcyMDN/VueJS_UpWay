@@ -6,8 +6,11 @@ export const useVelosStore = defineStore('velos', () => {
   const list = ref([])
   const photos = ref([])
   const cart = ref([])
+  const current_page = ref(0)
+  const total_pages = ref(0)
 
   fetchBikes(0)
+  count()
 
   function add(velo) {
     return axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo.value)
@@ -39,12 +42,16 @@ export const useVelosStore = defineStore('velos', () => {
   }
 
   async function count() {
-    return (await axios.get(`${window.VITE_BACKEND_URL}/Velos/count`)).data
+    count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Velos/count`)).data)
+    total_pages.value = Math.floor(count / 20)
+
+    return count
   }
 
   async function fetchBikes(page) {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Velos?page=${page}`)).data
+    current_page.value = page
   }
 
-  return { list, cart, add, getPhotosById, getById, fetchBikes, count }
+  return { list, cart, add, getPhotosById, getById, fetchBikes, count, current_page, total_pages }
 })

@@ -6,8 +6,11 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
   const photos = ref([])
   const cart = ref([])
+  const current_page = ref(0)
+  const total_pages = ref(0)
 
   fetchAccessories(0)
+  count()
 
   async function add(accessoire) {
     return (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)).data
@@ -22,7 +25,6 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   async function getPhotosById(id) {
     let entries = photos.value.filter((v) => v.accessoireId == id)
-    console.log(entries.length)
 
     if (entries.length > 0) {
       return entries
@@ -41,7 +43,25 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   async function fetchAccessories(page) {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires?page=${page}`)).data
+    current_page.value = page
   }
 
-  return { list, cart, add, getPhotosById, getById, fetchAccessories }
+  async function count() {
+    count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/count`)).data)
+    total_pages.value = Math.floor(count / 20)
+
+    return count
+  }
+
+  return {
+    list,
+    cart,
+    add,
+    getPhotosById,
+    getById,
+    fetchAccessories,
+    count,
+    current_page,
+    total_pages,
+  }
 })
