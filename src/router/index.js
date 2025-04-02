@@ -8,6 +8,7 @@ import AccessoireView from '../views/AccessoireView.vue'
 import ArticleView from '../views/ArticleView.vue'
 import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
+import PanierView from '@/views/PanierView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +67,11 @@ const router = createRouter({
       path: '/magasins',
       name: 'magasins',
       component: MagasinView,
+    },
+    {
+      path: '/panier',
+      name: 'panier',
+      component: PanierView,
     },
   ],
 })

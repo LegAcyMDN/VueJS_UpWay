@@ -1,53 +1,68 @@
-<script setup>
-import { useVelosStore } from '@/stores/velos'
+  <script setup>
+  import { ref, computed, onMounted } from 'vue'
+  import { useVelosStore } from '@/stores/velos'
+  import { useCategoriesStore } from '@/stores/category'
 
-const veloStore = useVelosStore()
-</script>
+  const velosCount = ref("")
+  const velosStore = useVelosStore()
 
-<template>
-  <main>
-    <div id="position">
-      <div class="overlay"></div>
-      <div id="diapo">
-        <h1 style="line-height: 0.8; margin: 0 0 20px 0;">L'expert du vélo<br> électrique reconditionné</h1>
-        <p style="font-size: 1.5rem; line-height: 1.5;">Votre vélo électrique à petit prix. 14 jours<br> pour changer d'avis, 1 an de garantie.</p>
-      </div>
-  
-  
-      <div id="ideal-velo">
-        <h2 style="font-size: 1.35rem;">Trouver le vélo idéal</h2>
-  
-        <p style="font-size: 1rem;">Quelle est votre taille ?</p>
-  
-        <div id="input-size">
-          <div id="input-container">
-            <input type="text" name="size" id="size" placeholder="175" style="color: gray;">
+  velosStore.count().then(count => velosCount.value = count)
+  </script>
+
+  <template>
+    <main>
+      <div id="position">
+        <div class="overlay"></div>
+        <div id="diapo">
+          <h1 style="line-height: 0.8; margin: 0 0 20px 0;">L'expert du vélo<br> électrique reconditionné</h1>
+          <p style="font-size: 1.5rem; line-height: 1.5;">Votre vélo électrique à petit prix. 14 jours<br> pour changer d'avis, 1 an de garantie.</p>
+        </div>
     
-            <span style="color: black;">cm</span>
+    
+        <div id="ideal-velo">
+          <h2 style="font-size: 1.35rem;">Trouver le vélo idéal</h2>
+    
+          <p style="font-size: 1rem;">Quelle est votre taille ?</p>
+    
+          <div id="input-size">
+            <div id="input-container">
+              <input type="text" name="size" id="size" placeholder="175" style="color: gray;">
+      
+              <span style="color: black;">cm</span>
+            </div>
           </div>
-        </div>
-  
-        <p style="font-size: 1rem;">Quel type de vélo électrique cherchez-vous ?</p>
-  
-        <div id="input-category">
-          <div id="select-container">
-            <select name="category" id="category" style="color: gray;">
-              <option value="">Sélectionner une catégorie</option>
-            </select>
+    
+          <p style="font-size: 1rem;">Quel type de vélo électrique cherchez-vous ?</p>
+    
+          <div id="input-category">
+            <div id="select-container">
+              <select name="category" id="category" style="color: gray;">
+                <option value="">Sélectionner une catégorie</option>
+              </select>
+            </div>
           </div>
+    
+          <button id="search-velo">
+            <span>Voir nos {{ velosCount }} vélos</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.62012 3.95333L13.6668 8L9.62012 12.0467" stroke="#EDEDED" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.3335 8H13.5535" stroke="#EDEDED" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
-  
-        <button id="search-velo">
-          <span>Voir nos {{ veloStore.countVelos }} vélos</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.62012 3.95333L13.6668 8L9.62012 12.0467" stroke="#EDEDED" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2.3335 8H13.5535" stroke="#EDEDED" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </main>
-</template>
+      </div>  
+      
+      <!--div id="carrousel">
+        <button @click="prevCategorie" class="arrow-left">&#9665;</button>
+
+        <div class="carousel-content" v-if="categoriesStore.list.length">
+          <span style="color: black;">{{ filteredCategories.list[currentIndex].libelleCategorie }}</span>
+        </div>
+
+        <button @click="nextCategorie" class="arrow right">&#9655;</button>
+      </div-->
+    </main>
+  </template>
 
 <style scoped>
 * {
