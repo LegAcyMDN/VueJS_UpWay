@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 import { toRefs } from '@vue/reactivity'
-import { useMarquesStore } from '../stores/marques.js'
-import { useCategoriesStore } from '../stores/category.js'
-import axios from 'axios'
+import { useAccessoiresStore } from '@/stores/accessoires'
+
+const accessoires = useAccessoiresStore()
 
 const props = defineProps({
   accessoire: {
@@ -12,20 +12,26 @@ const props = defineProps({
 })
 
 const { accessoire } = toRefs(props)
-const brandStore = useMarquesStore()
-const categoriesStore = useCategoriesStore()
-
-const marque = ref({})
-const categorie = ref({})
+const photos = ref({})
 
 // Récupération des données de l' API
-brandStore.getById(accessoire.value.marqueId).then((brand) => {
-  marque.value = brand
+accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
+  photos.value = photo
 })
 
-categoriesStore.getById(accessoire.value.categorieId).then((category) => {
-  categorie.value = category
-})
+const loadPhotos = () => {
+  if (accessoire.value && accessoire.value.accessoireId) {
+    accessoires.getPhotoById(accessoire.value.accessoireId).then((photo) => {
+      photos.value = photo
+    });
+  }
+};
+
+loadPhotos();
+
+watch(() => accessoire.value.accessoireId, () => {
+  loadPhotos();
+});
 </script>
 
 <template>
@@ -38,26 +44,46 @@ categoriesStore.getById(accessoire.value.categorieId).then((category) => {
     >
       <button class="accessoire">
         <!-- Vérification si port 5173 si probléme cors -->
-        <img :src="accessoire.image" alt="Image de l'accessoire" />
+        <img
+          v-if="photos[0]?.urlPhotoAccessoire"
+          :src="photos[0].urlPhotoAccessoire"
+          alt="Image de l'accessoire"
+        />
         <h3>{{ accessoire.nomAccessoire }}</h3>
         <p>{{ accessoire.prixAccessoire }}€</p>
       </button>
     </router-link>
-    <button @click="accessoires.cart.push(accessoire)">Ajouter au panier</button>
   </div>
 </template>
 
 <style scoped>
 img {
-  width: 500px;
+  width: 450px;
+  height:350px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   background-color: lightgrey;
-}
-div {
-  margin: 50px;
 }
 .accessoire {
   background-color: white;
   border-color: white;
   border: 0px;
+}
+div{
+    border: 2px solid white;
+    margin: 10px 100px 100px 10px;
+    width: 400px;
+    height: 400px;
+    cursor: pointer;
+    
+}
+h3{
+  width: 400px;
+  font-size: 17px;
+}
+p{
+  width: 400px;
+  font-size: 25px;
+  font-weight: bold;
 }
 </style>

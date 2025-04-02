@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AuthView from '../views/AuthView.vue'
 import VeloView from '../views/VeloView.vue'
+import VelosView from '../views/VelosView.vue'
 import AccessoiresView from '../views/AccessoiresView.vue'
 import AccessoireView from '../views/AccessoireView.vue'
 import ArticleView from '../views/ArticleView.vue'
@@ -33,7 +34,13 @@ const router = createRouter({
     {
       path: '/velos',
       name: 'velos',
+      component: VelosView,
+    },
+    {
+      path: '/velo/:id',
+      name: 'velo',
       component: VeloView,
+      props: true 
     },
     {
       path: '/accessoires',

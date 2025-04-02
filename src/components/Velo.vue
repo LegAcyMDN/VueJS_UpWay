@@ -1,52 +1,74 @@
 <script setup>
-import { ref } from 'vue';
-import { toRefs } from '@vue/reactivity'
-import axios from 'axios';
+import { ref, watch } from 'vue';
+import { toRefs } from '@vue/reactivity';
+import { useRoute } from 'vue-router'
+import { useMarquesStore } from '../stores/marques.js'
+import { useCategoriesStore } from '../stores/category.js'
+import axios from 'axios'
+import { useVelosStore } from '@/stores/velos';
 
+const route = useRoute()
+const brandStore = useMarquesStore()
+const categoriesStore = useCategoriesStore()
+const velosStore = useVelosStore()
 
-const props = defineProps({
-  velo: {
-    required: true,
-  },
+const id = route.params.id
+const velo = ref({})
+const marque = ref({})
+const categorie = ref({})
+const photos = ref({})
+
+// Récupération de le velo par ID
+axios.get(import.meta.env.VITE_BACKEND_URL + '/Velos/GetById/' + id).then((res) => {
+  velo.value = res.data
+  // Récupération données supplémentaires (marque et catégorie)
+  brandStore.getById(velo.value.marqueId).then((brand) => {
+    marque.value = brand
+  })
+  brandStore.getById(velo.value.categorieId).then((brand) => {
+    categorie.value = brand
+  })
+  velosStore.getPhotoById(velo.value.veloId).then((brand) => {
+    photos.value = brand
+  })
 })
- 
-const { velo } = toRefs(props);
-var photos = ref({});
-// Récupération des données de l' API
-
-
-axios.get("https://s401-dev.redboxing.moe/api/Velos/GetPhotosById/" + velo.value.veloId).then(res => {
-   photos.value = res.data
-})
-
 </script>
 
+
 <template>
-    <!-- <img :src="{{ photos[0].urlPhotoVelo }}"/> -->
-    <RouterLink to="/">
+  <div class="velo">
     <div>
-      <img v-if="photos.length > 0" :src="photos[0].urlPhotoVelo" alt="Photo du vélo"/>     
+      <img
+        v-if="photos[0]?.urlPhotoVelo"
+        :src="photos[0].urlPhotoVelo"
+        alt="Photo du vélo"
+      />
+      <div>
       <h3 class="titre_velo">{{ velo.nomVelo}}</h3>
       <p>{{ velo.anneeVelo }}  {{ velo.tailleMin  }}- {{  velo.tailleMax }}</p>
+      <p class="prixvelo">{{ velo.prixNeuf }}€</p>
       <p class="prixvelo">{{ velo.prixRemise }}€</p>
+        <button @click="velos.cart.push(velo)">Ajouter au panier</button>
+      </div>
     </div>
-  </RouterLink>
-    <!-- <button @click="accessoires.cart.push(data)"> Ajouter au panier</button> -->
+    <div>
+      <p>{{ marque.nomMarque }}</p>
+      <p>{{ categorie.libelleCategorie }}</p>
+      <p>{{ velo.descriptifVelo }}</p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-img{
-    width: 100%;
-    height:250px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+img {
+  width: 500px;
+  background-color: lightgrey;
 }
-div{
-    border: 2px solid white;
-    margin: 10px 10px 10px;
-    width: 350px;
-    height: 350px;
-    cursor: pointer;
+.velo {
+  background-color: white;
+  border-color: white;
+  border: 0px;
+  margin: 50px;
 }
 .titre_velo{
   font-size: 20px;
@@ -54,10 +76,7 @@ div{
   text-align: center;
 }
 .prixvelo{
-  font-size: 15px;
+  font-size: 25px;
   font-weight: bold;
-}
-p{
-  text-align: center;
 }
 </style>

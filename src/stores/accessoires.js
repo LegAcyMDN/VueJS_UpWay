@@ -18,5 +18,16 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     return (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetById/${id}`)).data
   }
 
-  return { list, cart, add, getById }
+  async function getPhotoById(id) {
+    return (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetPhotosById/${id}`)).data
+  }
+
+  function fetchAccessories(page) {
+    axios.get(`${window.VITE_BACKEND_URL}/Accessoires?page=${page}`)
+      .then(response => {
+          list.value = response.data
+      })
+  }
+
+  return { list, cart, add, getPhotoById, getById, fetchAccessories }
 })
