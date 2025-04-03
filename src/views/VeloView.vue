@@ -57,12 +57,58 @@ velosStore.getById(id).then((data) => {
         <button class="panier" @click="velos.cart.push(velo)">Ajouter au panier</button>
       </div>
     </div>
-    <div class="aime">
-      <p class="aimetitre">{{mention[2].libelleMention}}</p>
-      <p class="aimecont">{{mention[2].valeurMention}}</p>
+    <div class="sous_image">
+      <div class="aime">
+        <p class="aimetitre">{{mention[2].libelleMention}}</p>
+        <p class="aimecont">{{mention[2].valeurMention}}</p>
+      </div>
+      <div>
+        <p class="desc">{{ velo.descriptifVelo }}</p>
+      </div>
     </div>
-    <div>
-      <p class="desc">{{ velo.descriptifVelo }}</p>
+    <h2 class="caratitre">Caractéristique</h2>
+    <div class="Caracteristique">
+      <div class="cara">
+        <h3 class="carastitre">Générales</h3>
+        <p>Marque : {{ marque.nomMarque }}</p>
+        <p>Usage : {{ categorie.libelleCategorie }}</p>
+        <p>Couleur :</p>
+        <p>Année : {{ velo.anneeVelo }}</p>
+        <p>Kilométrage : {{  velo.nombreKms }} km</p>
+        <p>Poids : </p>
+        <p>Type de cadre : </p>
+        <h4 class="caradetails">Taille</h4>
+        <p>Taille du constructeur : {{ velo.tailleMin }} - {{ velo.tailleMax }}</p>
+        <p>Tube selle :</p>
+      </div>
+      <div class="cara">
+        <h3 class="carastitre">Électrique</h3>
+        <h4 class="caradetails">Batterie</h4>
+        <p>État origine :</p>
+        <p>Capacité batteire : {{ velo.capaciteBatterie }}</p>
+        <p>Nombre de cycle de charge de la batterie :</p>
+        <p>Position batterie : </p>
+        <p>Batterie amovible :</p>
+        <h4 class="caradetails">Moteur</h4>
+        <p>Marque :</p>
+        <p>Modèle :</p>
+        <p>Position moteur : {{ velo.positionMoteur }}</p>
+        <p>Couple moteur :</p>
+        <p>Vitesse maximale :</p>
+      </div>
+      <div class="cara">
+        <h3 class="carastitre">Mécanique</h3>
+        <h4 class="caradetails">Transmission et freins </h4>
+        <p>Passage de vitesse :</p>
+        <p>Chaine de transmission :</p>
+        <p>Modèle de transmission :</p>
+        <p>Nombre de vitesses :</p>
+        <p>Freins :</p>
+        <h4 class="caradetails">Roues et pneus</h4>
+        <p>Taille de roues :</p>
+        <p>Pneus :</p>
+        <p>Position porte-bagages :</p>
+      </div>
     </div>
   </div>
 </template>
@@ -76,8 +122,7 @@ img {
   background-color: white;
   border-color: white;
   border: 0px;
-  margin: 50px;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
 }
 .titre_velo {
   font-size: 20px;
@@ -127,10 +172,13 @@ img {
   margin-right: 12%;
 }
 
-.aime{
-  position: absolute;
-  top: 105%;
-  left: 10%;
+.sous_image{
+  display: flex;
+  gap: 50px;
+  flex-direction: row;
+  justify-content: center;
+  margin-left:8%;
+  margin-top: 3%;
 }
 
 .aimetitre{
@@ -140,13 +188,35 @@ img {
 
 .aimecont{
   margin-top: 30px;
-  width: 40%;
+  width: 85%;
 }
 
 .desc{
-  position: absolute;
-  top: 110%;
-  left: 55%;
-  width: 29%
+  width: 80%
+}
+.Caracteristique{
+  display: flex;
+  gap: 50px;
+  flex-direction: row;
+  margin-top: 5%;
+  margin-left: 8%;
+}
+.caratitre{
+  margin-top: 7%;
+  margin-left: 8%;
+  font-size: 30px;
+}
+.carastitre{
+  font-size: 25px;
+  margin-bottom: 5%;
+}
+.cara{
+  width: 90%;
+  line-height: 1.7;
+}
+
+.caradetails{
+  font-size: 20px;
+  margin: 10px 0px 10px 0px;
 }
 </style>

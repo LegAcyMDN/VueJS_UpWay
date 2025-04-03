@@ -72,8 +72,6 @@ export const useVelosStore = defineStore('velos', () => {
       photos.value = { ...photos.value, ...newEntries }
     }
 
-    console.log(photos.value)
-
     return entries
   }
 
