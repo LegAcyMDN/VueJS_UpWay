@@ -2,9 +2,11 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const CACHE_SIZE = 200
+
 export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
-  const photos = ref([])
+  const photos = ref({})
   const cart = ref([])
   const current_page = ref(0)
   const total_pages = ref(0)
@@ -24,19 +26,53 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   }
 
   async function getPhotosById(id) {
-    let entries = photos.value.filter((v) => v.accessoireId == id)
+    let entries = photos.value[id]
 
-    if (entries.length > 0) {
+    if (entries != undefined && entries.length > 0) {
       return entries
     }
 
     entries = (await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetPhotosById/${id}`)).data
 
-    if (list.value.length >= 100) {
+    if (Object.keys(photos.value).length >= CACHE_SIZE) {
+      photos.value = { id: entries }
+    } else {
+      photos.value[id] = entries
+    }
+
+    return entries
+  }
+
+  async function getPhotosByIds(ids) {
+    const photoEntries = {}
+
+    for (const id of ids.slice()) {
+      let entries = photos.value[id]
+
+      if (entries != undefined && entries.length > 0) {
+        photoEntries[id] = entries
+
+        const index = ids.indexOf(id)
+        if (index > -1) {
+          ids.splice(index, 1)
+        }
+      }
+    }
+
+    let newEntries = {}
+    if (ids.length > 0) {
+      newEntries = (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires/GetPhotosByIds`, ids))
+        .data
+    }
+    const entries = { ...photoEntries, ...newEntries }
+
+    if (Object.keys(photos.value).length >= CACHE_SIZE) {
       photos.value = entries
     } else {
-      photos.value = photos.value.concat(entries)
+      photos.value = { ...photos.value, ...newEntries }
     }
+
+    console.log(photos.value)
 
     return entries
   }
@@ -58,6 +94,7 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     cart,
     add,
     getPhotosById,
+    getPhotosByIds,
     getById,
     fetchAccessories,
     count,

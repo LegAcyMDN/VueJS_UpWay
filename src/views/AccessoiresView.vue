@@ -3,12 +3,21 @@ import ProductCard from '../components/ProductCard.vue'
 import { useAccessoiresStore } from '@/stores/accessoires'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()
+const images = ref({})
 
-async function loadImage(accessoire) {
-  return (await accessoires.getPhotosById(accessoire.accessoireId))[0].urlPhotoAccessoire
+function getImage(id) {
+  return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoAccessoire
 }
+
+watch(
+  () => accessoires.list,
+  async () => {
+    images.value = await accessoires.getPhotosByIds(accessoires.list.map((a) => a.accessoireId))
+  },
+)
 </script>
 
 <template>
@@ -24,10 +33,8 @@ async function loadImage(accessoire) {
       v-for="accessoire in accessoires.list"
       :title="accessoire.nomAccessoire"
       :price="accessoire.prixAccessoire"
-      :imgFuture="loadImage(accessoire)"
-      :link="{
-        path: '/accessoire/' + accessoire.accessoireId,
-      }"
+      :img="getImage(accessoire.accessoireId)"
+      :link="{ path: '/accessoire/' + accessoire.accessoireId }"
     />
   </div>
   <div class="pagination">
