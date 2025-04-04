@@ -6,11 +6,13 @@ import { useMarquesStore } from '../stores/marques.js'
 import { useCategoriesStore } from '../stores/category.js'
 import axios from 'axios'
 import { useVelosStore } from '@/stores/velos'
+import { useCaracteristiqueVeloStore } from '@/stores/caracteristiqueVelo'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
 const categoriesStore = useCategoriesStore()
 const velosStore = useVelosStore()
+const caracteristiqueVeloStore = useCaracteristiqueVeloStore()
 
 const id = route.params.id
 
@@ -18,7 +20,8 @@ const velo = ref({})
 const marque = ref({})
 const categorie = ref({})
 const photos = ref({})
-const mention = ref([])
+const mention = ref({})
+const caracteristiqueVelo = ref({})
 
 // Récupération de le velo par ID
 velosStore.getById(id).then((data) => {
@@ -37,6 +40,9 @@ velosStore.getById(id).then((data) => {
   })
   velosStore.getMentionById(velo.value.veloId).then((data) => {
     mention.value = data
+  })
+  caracteristiqueVeloStore.getById(velo.value.caracteristiqueVeloId).then((data) => {
+    caracteristiqueVelo.value = data
   })
 })
 </script>
@@ -72,21 +78,20 @@ velosStore.getById(id).then((data) => {
         <h3 class="carastitre">Générales</h3>
         <p>Marque : {{ marque.nomMarque }}</p>
         <p>Usage : {{ categorie.libelleCategorie }}</p>
-        <p>Couleur :</p>
+        <p>Couleur : {{ caracteristiqueVelo.couleur }}</p>
         <p>Année : {{ velo.anneeVelo }}</p>
         <p>Kilométrage : {{  velo.nombreKms }} km</p>
-        <p>Poids : </p>
+        <p>Poids : {{ caracteristiqueVelo.poids }} kg</p>
         <p>Type de cadre : </p>
         <h4 class="caradetails">Taille</h4>
         <p>Taille du constructeur : {{ velo.tailleMin }} - {{ velo.tailleMax }}</p>
-        <p>Tube selle :</p>
+        <p>Tube selle : {{ caracteristiqueVelo.tubeSelle }}</p>
       </div>
       <div class="cara">
         <h3 class="carastitre">Électrique</h3>
         <h4 class="caradetails">Batterie</h4>
-        <p>État origine :</p>
+        <p>État origine : {{ caracteristiqueVelo.etatBatterie }}</p>
         <p>Capacité batteire : {{ velo.capaciteBatterie }}</p>
-        <p>Nombre de cycle de charge de la batterie :</p>
         <p>Position batterie : </p>
         <p>Batterie amovible :</p>
         <h4 class="caradetails">Moteur</h4>
@@ -101,12 +106,12 @@ velosStore.getById(id).then((data) => {
         <h4 class="caradetails">Transmission et freins </h4>
         <p>Passage de vitesse :</p>
         <p>Chaine de transmission :</p>
-        <p>Modèle de transmission :</p>
-        <p>Nombre de vitesses :</p>
-        <p>Freins :</p>
+        <p>Modèle de transmission : {{ caracteristiqueVelo.modelTransmission }}</p>
+        <p>Nombre de vitesses : {{ caracteristiqueVelo.nombreVitesse }}</p>
+        <p>Freins : {{ caracteristiqueVelo.freins }}</p>
         <h4 class="caradetails">Roues et pneus</h4>
-        <p>Taille de roues :</p>
-        <p>Pneus :</p>
+        <p>Taille de roues : {{ caracteristiqueVelo.taillesRoues }}</p>
+        <p>Pneus : {{ caracteristiqueVelo.pneus }}</p>
         <p>Position porte-bagages :</p>
       </div>
     </div>

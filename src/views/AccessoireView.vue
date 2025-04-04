@@ -6,12 +6,14 @@ import { useMarquesStore } from '../stores/marques.js'
 import { useCategoriesStore } from '../stores/category.js'
 import axios from 'axios'
 import { useAccessoiresStore } from '@/stores/accessoires.js'
+import { useAjoutAccessoiresStore } from '@/stores/ajoutAccessoires.js'
 import { usePanierStore } from '@/stores/paniers.js'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
 const categoriesStore = useCategoriesStore()
 const accessoiresStore = useAccessoiresStore()
+const ajoutAccessoireStore = useAjoutAccessoiresStore()
 const panierStore = usePanierStore()
 
 const id = route.params.id
@@ -38,15 +40,20 @@ accessoiresStore.getById(id).then((data) => {
 })
 
 // Ajouter un accessoire au panier
-const ajouterAuPanier = () => {
-  panierStore.list.push({
-    produitId: accessoire.value.accessoireId,
-    nom: accessoire.value.nomAccessoire,
-    prix: accessoire.value.prixAccessoire,
-    quantite: 1,
-  })
-  // Optionnel : vous pouvez afficher une notification ou un message pour informer l'utilisateur
-  alert(`${accessoire.value.nomAccessoire} ajouté au panier !`)
+const ajouterAuPanier = async () => {
+  try {
+    const panierId = panierStore.panierIdActif
+    const accessoireId = accessoire.value.accessoireId
+
+    await ajoutAccessoireStore.ajouterAccessoire({
+      accessoireId, panierId, quantiteAccessoire: 1
+    })
+
+    alert(`${accessoire.value.nomAccessoire} ajouté au panier ! ✅`)
+  } catch (err) {
+    console.error('Erreur lors de l’ajout au panier :', err)
+    alert('Une erreur est survenue lors de l’ajout 😢')
+  }
 }
 </script>
 

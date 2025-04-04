@@ -19,9 +19,9 @@ onMounted(() => {
                     <span>Votre panier est vide !</span>
                 </div>
                 <div id="but-panier">
-                    <a style="text-decoration: none; color: white; font-style: normal;">
+                    <router-link to="/velos" style="text-decoration: none; color: white; font-style: normal;">
                         CONTINUER VOTRE SHOPPING
-                    </a>
+                    </router-link>
                 </div>
             </div>
             <div id="fill-panier" v-else>
