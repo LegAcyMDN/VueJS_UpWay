@@ -42,17 +42,22 @@ accessoiresStore.getById(id).then((data) => {
 // Ajouter un accessoire au panier
 const ajouterAuPanier = async () => {
   try {
+    await panierStore.loadPanier()
     const panierId = panierStore.panierIdActif
+
+    if (!panierId) {
+      console.error('Aucun panier actif trouvé.') 
+      return
+    }
+
     const accessoireId = accessoire.value.accessoireId
+    const quantiteAccessoire = 1
 
-    await ajoutAccessoireStore.ajouterAccessoire({
-      accessoireId, panierId, quantiteAccessoire: 1
-    })
-
-    alert(`${accessoire.value.nomAccessoire} ajouté au panier ! ✅`)
-  } catch (err) {
-    console.error('Erreur lors de l’ajout au panier :', err)
-    alert('Une erreur est survenue lors de l’ajout 😢')
+    await ajoutAccessoireStore.ajouterAccessoire(accessoireId, panierId, quantiteAccessoire)
+    alert('Accessoire ajouté au panier !')
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout au panier :', error)
+    alert('Aucun ajout n\'a été fait au panier !')
   }
 }
 </script>

@@ -11,7 +11,6 @@ defineProps({
 </script>
 
 <template>
-    {{ accessoire.getPhotosById()}}
     {{ panier.nom }}
     {{ panier.prix }}
     {{  panier.quantite }}
