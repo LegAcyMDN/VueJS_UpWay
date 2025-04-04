@@ -7,8 +7,10 @@ import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()
 const images = ref({})
-const prixMin = 0
-const prixMax = 799
+// Valeurs des filtres
+const categoryId = ref(null)
+const prixMin = ref(0)
+const prixMax = ref(799)
 
 function getImage(id) {
   return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoAccessoire
@@ -20,6 +22,19 @@ watch(
     images.value = await accessoires.getPhotosByIds(accessoires.list.map((a) => a.accessoireId))
   },
 )
+
+// Fonction qui appelle `getByCategoryPrix` dès qu'un filtre est modifié
+const updateAccessoires = async () => {
+  await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, accessoires.current_page)
+}
+
+// Observer les changements de prixMin, prixMax et de catégorie pour mettre à jour les accessoires
+watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
+
+// Pagination: on appelle cette fonction pour charger la page suivante ou précédente
+const changePage = async (page) => {
+  await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, page)
+}
 </script>
 
 <template>
@@ -29,7 +44,10 @@ watch(
     ainsi que nos conseils pour sécuriser votre vélo, profiter d’une amélioration du confort de
     conduite, personnaliser ou encore entretenir votre VAE.
   </p>
+  
+  <!-- Main -->
   <div class="accessoires_fitre_container">
+    <!-- Filtrage par prix -->
     <div class="accessoires_fitre">
       <div class="fitre_prix">
         <h2>FILTRER</h2>
@@ -46,6 +64,8 @@ watch(
         </div>
       </div>
     </div>
+
+    <!-- Affichage des accessoires filtrés -->
     <div class="accessoires_container">
       <ProductCard
         :key="accessoire.accessoireId"
@@ -57,27 +77,18 @@ watch(
       />
     </div>
   </div>
-  <div class="pagination">
+
+   <!-- Pagination -->
+   <div class="pagination">
     <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button
-      v-if="accessoires.current_page > 0"
-      @click="accessoires.fetchAccessories(accessoires.current_page - 1)"
-    >
+    <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(accessoires.current_page - 1)">
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
-    <div
-      v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()]
-        .slice()
-        .reverse()"
-      :key="i"
-    >
-      <button
-        v-if="accessoires.current_page - i - 1 >= 0"
-        @click="accessoires.fetchAccessories(accessoires.current_page - i - 1)"
-      >
+    <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].slice().reverse()":key="i">
+      <button v-if="accessoires.current_page - i - 1 >= 0" @click="accessoires.fetchAccessories(accessoires.current_page - i - 1)">
         {{ accessoires.current_page - i }}
       </button>
     </div>
@@ -85,24 +96,15 @@ watch(
     <button disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button
-        v-if="accessoires.current_page + i <= accessoires.total_pages"
-        @click="accessoires.fetchAccessories(accessoires.current_page + i)"
-      >
+      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.current_page + i)">
         {{ accessoires.current_page + i + 1 }}
       </button>
     </div>
 
-    <button
-      v-if="accessoires.current_page < accessoires.total_pages"
-      @click="accessoires.fetchAccessories(accessoires.current_page + 1)"
-    >
+    <button v-if="accessoires.current_page < accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.current_page + 1)">
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button
-      v-if="accessoires.current_page != accessoires.total_pages"
-      @click="accessoires.fetchAccessories(accessoires.total_pages)"
-    >
+    <button v-if="accessoires.current_page != accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.total_pages)">
       <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>

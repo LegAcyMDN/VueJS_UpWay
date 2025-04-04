@@ -74,30 +74,13 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     return entries
   }
 
-  async function getByPrix(min, max, page = 0) {
-    list.value = (
-      await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetByPrix`, {
-        params: { min, max, page },
-      })
-    ).data
-    current_page.value = page
-  }
-
-  async function getByCategory(category, page = 0) {
-    list.value = (
-      await axios.get(
-        `${window.VITE_BACKEND_URL}/Accessoires/GetByCategory/${category}?page=${page}`,
-      )
-    ).data
-    current_page.value = page
-  }
-
-  async function getByCategoryPrix(category, min, max, page = 0) {
-    list.value = (
-      await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetByCategoryPrix`, {
-        params: { category, min, max, page },
-      })
-    ).data
+  async function getByCategoryPrix(categoryId, min, max, page = 0) {
+    list.value = (await axios.get(
+      `${window.VITE_BACKEND_URL}/Accessoires/GetByCategoryPrix`,
+      {
+        params: { categoryId, min, max, page }
+      }
+    )).data
     current_page.value = page
   }
 
@@ -119,8 +102,6 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     getPhotosById,
     getPhotosByIds,
     getById,
-    getByPrix,
-    getByCategory,
     getByCategoryPrix,
     fetchAccessories,
     count,

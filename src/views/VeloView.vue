@@ -7,12 +7,14 @@ import { useCategoriesStore } from '../stores/category.js'
 import axios from 'axios'
 import { useVelosStore } from '@/stores/velos'
 import { useCaracteristiqueVeloStore } from '@/stores/caracteristiqueVelo'
+import { useMoteursStore } from '@/stores/moteur'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
 const categoriesStore = useCategoriesStore()
 const velosStore = useVelosStore()
 const caracteristiqueVeloStore = useCaracteristiqueVeloStore()
+const moteursStore = useMoteursStore()
 
 const id = route.params.id
 
@@ -22,6 +24,8 @@ const categorie = ref({})
 const photos = ref({})
 const mention = ref({})
 const caracteristiqueVelo = ref({})
+const moteur = ref({})
+const marquemoteur = ref({})
 
 // Récupération de le velo par ID
 velosStore.getById(id).then((data) => {
@@ -31,6 +35,7 @@ velosStore.getById(id).then((data) => {
   brandStore.getById(velo.value.marqueId).then((brand) => {
     marque.value = brand
   })
+
 
   categoriesStore.getById(velo.value.categorieId).then((category) => {
     categorie.value = category
@@ -44,6 +49,13 @@ velosStore.getById(id).then((data) => {
   caracteristiqueVeloStore.getById(velo.value.caracteristiqueVeloId).then((data) => {
     caracteristiqueVelo.value = data
   })
+  moteursStore.getById(velo.value.moteurId).then((data) => {
+    moteur.value = data
+    brandStore.getById(moteur.value.marqueId).then((brand) => {
+      marquemoteur.value = brand
+    })
+  })
+  
 })
 </script>
 
@@ -95,11 +107,11 @@ velosStore.getById(id).then((data) => {
         <p>Position batterie : </p>
         <p>Batterie amovible :</p>
         <h4 class="caradetails">Moteur</h4>
-        <p>Marque :</p>
-        <p>Modèle :</p>
+        <p>Marque : {{ marquemoteur.nomMarque }}</p>
+        <p>Modèle : {{ moteur.modeleMoteur }}</p>
         <p>Position moteur : {{ velo.positionMoteur }}</p>
-        <p>Couple moteur :</p>
-        <p>Vitesse maximale :</p>
+        <p>Couple moteur : {{ moteur.coupleMoteur }}</p>
+        <p>Vitesse maximale : {{ moteur.vitesseMaximal }}</p>
       </div>
       <div class="cara">
         <h3 class="carastitre">Mécanique</h3>
