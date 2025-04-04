@@ -2,14 +2,22 @@
 import ProductCard from '../components/ProductCard.vue'
 import { useVelosStore } from '@/stores/velos'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const velos = useVelosStore()
+const images = ref({})
 
-async function loadImage(velo) {
-  return (await velos.getPhotosById(velo.veloId))[0].urlPhotoVelo
+function getImage(id) {
+  return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoVelo
 }
+
+watch(
+  () => velos.list,
+  async () => {
+    images.value = await velos.getPhotosByIds(velos.list.map((a) => a.veloId))
+  },
+)
 </script>
 
 <template>
@@ -26,7 +34,7 @@ async function loadImage(velo) {
         :title="velo.nomVelo"
         :description="`${velo.anneeVelo} ${velo.tailleMin}- ${velo.tailleMax}`"
         :price="velo.prixRemise"
-        :imgFuture="loadImage(velo)"
+        :img="getImage(velo.veloId)"
         :link="{
           path: '/velo/' + velo.veloId,
         }"

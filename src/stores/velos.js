@@ -2,6 +2,8 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const CACHE_SIZE = 200
+
 export const useVelosStore = defineStore('velos', () => {
   const list = ref([])
   const photos = ref([])
@@ -33,10 +35,41 @@ export const useVelosStore = defineStore('velos', () => {
 
     entries = (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetPhotosById/${id}`)).data
 
-    if (list.value.length >= 100) {
+    if (list.value.length >= CACHE_SIZE) {
       photos.value = entries
     } else {
       photos.value = photos.value.concat(entries)
+    }
+
+    return entries
+  }
+
+  async function getPhotosByIds(ids) {
+    const photoEntries = {}
+
+    for (const id of ids.slice()) {
+      let entries = photos.value[id]
+
+      if (entries != undefined && entries.length > 0) {
+        photoEntries[id] = entries
+
+        const index = ids.indexOf(id)
+        if (index > -1) {
+          ids.splice(index, 1)
+        }
+      }
+    }
+
+    let newEntries = {}
+    if (ids.length > 0) {
+      newEntries = (await axios.post(`${window.VITE_BACKEND_URL}/Velos/GetPhotosByIds`, ids)).data
+    }
+    const entries = { ...photoEntries, ...newEntries }
+
+    if (Object.keys(photos.value).length >= CACHE_SIZE) {
+      photos.value = entries
+    } else {
+      photos.value = { ...photos.value, ...newEntries }
     }
 
     return entries
@@ -72,5 +105,17 @@ export const useVelosStore = defineStore('velos', () => {
     current_page.value = page
   }
 
-  return { list, cart, add, getPhotosById, getById, fetchBikes, count, current_page, total_pages, getMentionById }
+  return {
+    list,
+    cart,
+    add,
+    getPhotosById,
+    getPhotosByIds,
+    getById,
+    fetchBikes,
+    count,
+    current_page,
+    total_pages,
+    getMentionById,
+  }
 })
