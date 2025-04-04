@@ -5,7 +5,6 @@ import axios from 'axios'
 export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
   const photos = ref([])
-  const cart = ref([])
   const current_page = ref(0)
   const total_pages = ref(0)
 
@@ -55,7 +54,6 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   return {
     list,
-    cart,
     add,
     getPhotosById,
     getById,
