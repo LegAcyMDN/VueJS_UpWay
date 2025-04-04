@@ -30,6 +30,7 @@ const updateAccessoires = async () => {
 
 // Observer les changements de prixMin, prixMax et de catégorie pour mettre à jour les accessoires
 watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
+console.log('Images:', images.value)
 
 // Pagination: on appelle cette fonction pour charger la page suivante ou précédente
 const changePage = async (page) => {
@@ -47,19 +48,29 @@ const changePage = async (page) => {
   
   <!-- Main -->
   <div class="accessoires_fitre_container">
-    <!-- Filtrage par prix -->
     <div class="accessoires_fitre">
+      <h2>FILTRER</h2>
+      <!-- Filtrage par prix -->
       <div class="fitre_prix">
-        <h2>FILTRER</h2>
         <h2>Prix</h2>
         <div class="depliant_prix">
           <div class="input_box_prix">
             <label>De</label>
-            <input class="input_prix" type="text" v-model="prixMin" />€
+            <input class="input_prix" type="number" v-model="prixMin" />€
           </div>
           <div class="input_box_prix">
             <label>à</label>
-            <input class="input_prix" type="text" v-model="prixMax" />€
+            <input class="input_prix" type="number" v-model="prixMax" />€
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par categorie -->
+      <div class="fitre_prix">
+        <h2>Categorie</h2>
+        <div class="depliant_prix">
+          <div class="input_box_prix">
+            <label>De</label>
+            <input class="input_prix" type="number" v-model="categoryId" />€
           </div>
         </div>
       </div>
@@ -80,15 +91,15 @@ const changePage = async (page) => {
 
    <!-- Pagination -->
    <div class="pagination">
-    <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(0)">
+    <button v-if="accessoires.current_page > 0" @click="changePage(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(accessoires.current_page - 1)">
+    <button v-if="accessoires.current_page > 0" @click="changePage(accessoires.current_page - 1)">
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
-    <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].slice().reverse()":key="i">
-      <button v-if="accessoires.current_page - i - 1 >= 0" @click="accessoires.fetchAccessories(accessoires.current_page - i - 1)">
+    <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].reverse()" :key="i">
+      <button v-if="accessoires.current_page - i - 1 >= 0" @click="changePage(accessoires.current_page - i - 1)">
         {{ accessoires.current_page - i }}
       </button>
     </div>
@@ -96,15 +107,15 @@ const changePage = async (page) => {
     <button disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.current_page + i)">
+      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="changePage(accessoires.current_page + i)">
         {{ accessoires.current_page + i + 1 }}
       </button>
     </div>
 
-    <button v-if="accessoires.current_page < accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.current_page + 1)">
+    <button v-if="accessoires.current_page < accessoires.total_pages" @click="changePage(accessoires.current_page + 1)">
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button v-if="accessoires.current_page != accessoires.total_pages" @click="accessoires.fetchAccessories(accessoires.total_pages)">
+    <button v-if="accessoires.current_page != accessoires.total_pages" @click="changePage(accessoires.total_pages)">
       <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
