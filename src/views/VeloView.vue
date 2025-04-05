@@ -26,6 +26,12 @@ const mention = ref({})
 const caracteristiqueVelo = ref({})
 const moteur = ref({})
 const marquemoteur = ref({})
+const caracteristique = ref({})
+let pbat = ref({})
+let abat = ref({})
+let pbag = ref({})
+let pv   = ref({})
+let ct   = ref({})    
 
 // Récupération de le velo par ID
 velosStore.getById(id).then((data) => {
@@ -46,6 +52,31 @@ velosStore.getById(id).then((data) => {
   velosStore.getMentionById(velo.value.veloId).then((data) => {
     mention.value = data
   })
+  velosStore.getCaracteristiqueById(velo.value.veloId).then((data) => {
+    caracteristique.value = data
+    data.forEach(cara => {
+      if (cara.caracteristiqueId == 34 || cara.caracteristiqueId == 35 || cara.caracteristiqueId == 36)
+      {
+        pbat = cara.libelleCaracteristique;
+      }
+      if (cara.caracteristiqueId == 38 || cara.caracteristiqueId == 39)
+      {
+        abat = cara.libelleCaracteristique;
+      }
+      if (cara.caracteristiqueId == 41 || cara.caracteristiqueId == 42 || cara.caracteristiqueId == 43 || cara.caracteristiqueId == 44)
+      {
+        pbag = cara.libelleCaracteristique;
+      }
+      if (cara.caracteristiqueId == 51 || cara.caracteristiqueId == 52 || cara.caracteristiqueId == 53)
+      {
+        pv = cara.libelleCaracteristique;
+      }
+      if (cara.caracteristiqueId == 47 || cara.caracteristiqueId == 48 || cara.caracteristiqueId == 49)
+      {
+        ct = cara.libelleCaracteristique;
+      }
+    });
+  })
   caracteristiqueVeloStore.getById(velo.value.caracteristiqueVeloId).then((data) => {
     caracteristiqueVelo.value = data
   })
@@ -57,6 +88,11 @@ velosStore.getById(id).then((data) => {
   })
   
 })
+
+
+
+
+
 </script>
 
 <template>
@@ -84,47 +120,49 @@ velosStore.getById(id).then((data) => {
         <p class="desc">{{ velo.descriptifVelo }}</p>
       </div>
     </div>
-    <h2 class="caratitre">Caractéristique</h2>
     <div class="Caracteristique">
-      <div class="cara">
-        <h3 class="carastitre">Générales</h3>
-        <p>Marque : {{ marque.nomMarque }}</p>
-        <p>Usage : {{ categorie.libelleCategorie }}</p>
-        <p>Couleur : {{ caracteristiqueVelo.couleur }}</p>
-        <p>Année : {{ velo.anneeVelo }}</p>
-        <p>Kilométrage : {{  velo.nombreKms }} km</p>
-        <p>Poids : {{ caracteristiqueVelo.poids }} kg</p>
-        <p>Type de cadre : </p>
-        <h4 class="caradetails">Taille</h4>
-        <p>Taille du constructeur : {{ velo.tailleMin }} - {{ velo.tailleMax }}</p>
-        <p>Tube selle : {{ caracteristiqueVelo.tubeSelle }}</p>
-      </div>
-      <div class="cara">
-        <h3 class="carastitre">Électrique</h3>
-        <h4 class="caradetails">Batterie</h4>
-        <p>État origine : {{ caracteristiqueVelo.etatBatterie }}</p>
-        <p>Capacité batteire : {{ velo.capaciteBatterie }}</p>
-        <p>Position batterie : </p>
-        <p>Batterie amovible :</p>
-        <h4 class="caradetails">Moteur</h4>
-        <p>Marque : {{ marquemoteur.nomMarque }}</p>
-        <p>Modèle : {{ moteur.modeleMoteur }}</p>
-        <p>Position moteur : {{ velo.positionMoteur }}</p>
-        <p>Couple moteur : {{ moteur.coupleMoteur }}</p>
-        <p>Vitesse maximale : {{ moteur.vitesseMaximal }}</p>
-      </div>
-      <div class="cara">
-        <h3 class="carastitre">Mécanique</h3>
-        <h4 class="caradetails">Transmission et freins </h4>
-        <p>Passage de vitesse :</p>
-        <p>Chaine de transmission :</p>
-        <p>Modèle de transmission : {{ caracteristiqueVelo.modelTransmission }}</p>
-        <p>Nombre de vitesses : {{ caracteristiqueVelo.nombreVitesse }}</p>
-        <p>Freins : {{ caracteristiqueVelo.freins }}</p>
-        <h4 class="caradetails">Roues et pneus</h4>
-        <p>Taille de roues : {{ caracteristiqueVelo.taillesRoues }}</p>
-        <p>Pneus : {{ caracteristiqueVelo.pneus }}</p>
-        <p>Position porte-bagages :</p>
+      <h2 class="caratitre">Caractéristique</h2>
+      <div class="Caracteristiquec">
+        <div class="cara">
+          <h3 class="carastitre">Générales</h3>
+          <p>Marque : {{ marque.nomMarque }}</p>
+          <p>Usage : {{ categorie.libelleCategorie }}</p>
+          <p>Couleur : {{ caracteristiqueVelo.couleur }}</p>
+          <p>Année : {{ velo.anneeVelo }}</p>
+          <p>Kilométrage : {{  velo.nombreKms }} km</p>
+          <p>Poids : {{ caracteristiqueVelo.poids }} kg</p>
+          <p>Type de cadre : {{  caracteristique[0].libelleCaracteristique }} </p>
+          <h4 class="caradetails">Taille</h4>
+          <p>Taille du constructeur : {{ velo.tailleMin }} - {{ velo.tailleMax }}</p>
+          <p>Tube selle : {{ caracteristiqueVelo.tubeSelle }}</p>
+        </div>
+        <div class="cara">
+          <h3 class="carastitre">Électrique</h3>
+          <h4 class="caradetails">Batterie</h4>
+          <p>État origine : {{ caracteristiqueVelo.etatBatterie }}</p>
+          <p>Capacité batteire : {{ velo.capaciteBatterie }}</p>
+          <p>Position batterie : {{  pbat }}</p>
+          <p>Batterie amovible : {{  abat }}</p>
+          <h4 class="caradetails">Moteur</h4>
+          <p>Marque : {{ marquemoteur.nomMarque }}</p>
+          <p>Modèle : {{ moteur.modeleMoteur }}</p>
+          <p>Position moteur : {{ velo.positionMoteur }}</p>
+          <p>Couple moteur : {{ moteur.coupleMoteur }}</p>
+          <p>Vitesse maximale : {{ moteur.vitesseMaximal }}</p>
+        </div>
+        <div class="cara">
+          <h3 class="carastitre">Mécanique</h3>
+          <h4 class="caradetails">Transmission et freins </h4>
+          <p>Passage de vitesse : {{  ct }}</p>
+          <p>Chaine de transmission : {{  pv }}</p>
+          <p>Modèle de transmission : {{ caracteristiqueVelo.modelTransmission }}</p>
+          <p>Nombre de vitesses : {{ caracteristiqueVelo.nombreVitesse }}</p>
+          <p>Freins : {{ caracteristiqueVelo.freins }}</p>
+          <h4 class="caradetails">Roues et pneus</h4>
+          <p>Taille de roues : {{ caracteristiqueVelo.taillesRoues }}</p>
+          <p>Pneus : {{ caracteristiqueVelo.pneus }}</p>
+          <p>Position porte-bagages : {{  pbag }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -211,12 +249,16 @@ img {
 .desc{
   width: 80%
 }
-.Caracteristique{
+.Caracteristiquec{
   display: flex;
   gap: 50px;
   flex-direction: row;
   margin-top: 5%;
   margin-left: 8%;
+}
+
+.Caracteristique{
+  background-color: lightgray;
 }
 .caratitre{
   margin-top: 7%;
