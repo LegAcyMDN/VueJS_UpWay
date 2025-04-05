@@ -7,6 +7,11 @@ import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()
 const images = ref({})
+
+// ref pour contrôler l'affichage des filtre
+const afficherPrix = ref(true)
+const afficherCategorie = ref(false)
+
 // Valeurs des filtres
 const categoryId = ref(null)
 const prixMin = ref(0)
@@ -23,16 +28,13 @@ watch(
   },
 )
 
-// Fonction qui appelle `getByCategoryPrix` dès qu'un filtre est modifié
+// appelle `getByCategoryPrix` dès qu'un filtre est modifié
 const updateAccessoires = async () => {
   await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, accessoires.current_page)
 }
-
-// Observer les changements de prixMin, prixMax et de catégorie pour mettre à jour les accessoires
 watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
-console.log('Images:', images.value)
 
-// Pagination: on appelle cette fonction pour charger la page suivante ou précédente
+// Pagination:
 const changePage = async (page) => {
   await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, page)
 }
@@ -53,21 +55,27 @@ const changePage = async (page) => {
       <!-- Filtrage par prix -->
       <div class="fitre_prix">
         <h2>Prix</h2>
-        <div class="depliant_prix">
+        <button @click="afficherPrix = !afficherPrix" class="toggle-button">
+          {{ afficherPrix ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_prix" v-show="afficherPrix">
           <div class="input_box_prix">
             <label>De</label>
-            <input class="input_prix" type="number" v-model="prixMin" />€
+            <input class="input_prix" type="text" v-model="prixMin" />€
           </div>
           <div class="input_box_prix">
             <label>à</label>
-            <input class="input_prix" type="number" v-model="prixMax" />€
+            <input class="input_prix" type="text" v-model="prixMax" />€
           </div>
         </div>
       </div>
       <!-- Filtrage par categorie -->
       <div class="fitre_prix">
         <h2>Categorie</h2>
-        <div class="depliant_prix">
+        <button @click="afficherCategorie = !afficherCategorie" class="toggle-button">
+          {{ afficherCategorie ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_prix" v-show="afficherCategorie">
           <div class="input_box_prix">
             <label>De</label>
             <input class="input_prix" type="number" v-model="categoryId" />€
@@ -122,6 +130,19 @@ const changePage = async (page) => {
 </template>
 
 <style scoped>
+.toggle-button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.toggle-button:hover {
+  background-color: #0056b3;
+}
 .accessoires_container {
   display: flex;
   flex-wrap: wrap;
@@ -131,21 +152,21 @@ const changePage = async (page) => {
 }
 .accessoires_fitre_container {
   display: flex;
-  gap: 20px; /* Ajoute un espace entre les éléments */
-  align-items: flex-start; /* Aligner en haut */
+  gap: 20px;
+  align-items: flex-start; 
   margin: 0 auto;
 }
 .accessoires_fitre {
   position: sticky;
   justify-content: center;
-  top: 20px; /* Ajout d'un espace en haut */
-  height: auto; /* Permet à la hauteur de s'adapter au contenu */
+  top: 20px;
+  height: auto;
   min-height: 300px;
-  background: rgba(240, 240, 240, 0.9); /* Gris clair avec transparence */
+  background: rgba(240, 240, 240, 0.9);
   width: 20%;
   padding: 20px;
-  border-radius: 10px; /* Coins arrondis */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   min-width: 141px;
 }
 .fitre_prix h2 {
