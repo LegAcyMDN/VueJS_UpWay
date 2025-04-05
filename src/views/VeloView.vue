@@ -89,11 +89,9 @@ velosStore.getById(id).then((data) => {
   
 })
 
-
-
-
-
 </script>
+
+
 
 <template>
   <div class="velo">
@@ -122,7 +120,7 @@ velosStore.getById(id).then((data) => {
     </div>
     <div class="Caracteristique">
       <h2 class="caratitre">Caractéristique</h2>
-      <div class="Caracteristiquec">
+      <div id="Caracteristiquec" class="column">
         <div class="cara">
           <h3 class="carastitre">Générales</h3>
           <p>Marque : {{ marque.nomMarque }}</p>
@@ -162,6 +160,39 @@ velosStore.getById(id).then((data) => {
           <p>Taille de roues : {{ caracteristiqueVelo.taillesRoues }}</p>
           <p>Pneus : {{ caracteristiqueVelo.pneus }}</p>
           <p>Position porte-bagages : {{  pbag }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="histrapp">
+      <h2>Historique et rapport d'inspection</h2>
+      <div class="column">
+        <div class="inspection">
+          <h2>Inspection</h2>
+          <p>Tous les vélos Upway ont été inspectés et reconditionnés par nos mécaniciens professionnels selon un cahier des charges précis. Notre savoir-faire vous permet de profiter d'un vélo en parfait état mécanique et électrique.</p>
+          <modale :revele="revele" :toggleModale="toggleModale"></modale>
+          <div v-on:click="toggleModale" class="btn btn-success" id="buttmodale">
+            <h3>{{ velo.nomVelo }} ( {{ velo.anneeVelo }} )</h3>
+            <div class="info">
+              <p>Cadre, transmission, freinage, roues et pneus inspectés et testés  </p>
+              <p><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Icon/Check Circle"><path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" fill="#09D192"></path><path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></p>
+            </div>
+            <div class="info">
+              <p>Batterie, moteur et console diagnostiqués et en parfait état de fonctionnement</p>
+              <p><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Icon/Check Circle"><path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" fill="#09D192"></path><path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></p>
+            </div>
+            <div class="info">
+              <p>Logiciel mis à jour</p>
+              <p><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Icon/Check Circle"><path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" fill="#09D192"></path><path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></p>
+            </div>
+            <div class="info">
+              <p>Essai en conditions réelles, nettoyage complet et contrôle final en sortie d'atelier</p>
+              <p><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Icon/Check Circle"><path d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z" fill="#09D192"></path><path d="M7.5 10L9.16667 11.6667L12.5 8.33337" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg></p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>Historique du vélo</h2>
+          <h2>Commentaires du mécanicien</h2>
         </div>
       </div>
     </div>
@@ -249,16 +280,13 @@ img {
 .desc{
   width: 80%
 }
-.Caracteristiquec{
-  display: flex;
-  gap: 50px;
-  flex-direction: row;
+#Caracteristiquec{
   margin-top: 5%;
   margin-left: 8%;
 }
 
 .Caracteristique{
-  background-color: lightgray;
+  background-color: rgb(227, 245, 252);
 }
 .caratitre{
   margin-top: 7%;
@@ -266,7 +294,6 @@ img {
   font-size: 30px;
 }
 .carastitre{
-  font-size: 25px;
   margin-bottom: 5%;
 }
 .cara{
@@ -278,4 +305,62 @@ img {
   font-size: 20px;
   margin: 10px 0px 10px 0px;
 }
+
+h2{
+  font-size: 25px;
+}
+
+.histrapp{
+  margin-left: 8%;
+  margin-top: 5%;
+}
+
+.column{
+  display: flex;
+  gap: 50px;
+  flex-direction: row;
+}
+
+#buttmodale{
+  box-shadow: 0px 0px 10px 7px rgb(58, 58, 58,0.5);
+  background-color: rgb(216, 216, 216, 0.5);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 3px;
+  cursor: pointer;
+}
+.inspection{
+  width: 45%;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 2;
+}
+
 </style>
+
+
+<script>
+import Modale from "@/components/ModaleInspection.vue";
+
+export default {
+  name: "Contenu",
+  data() {
+    return {
+      revele: false
+    };
+  },
+  components: {
+    modale: Modale
+  },
+  methods: {
+    toggleModale: function() {
+      this.revele = !this.revele;
+    }
+  }
+};
+</script>
