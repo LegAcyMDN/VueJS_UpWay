@@ -53,32 +53,29 @@ const changePage = async (page) => {
     <div class="accessoires_fitre">
       <h2>FILTRER</h2>
       <!-- Filtrage par prix -->
-      <div class="fitre_prix">
+      <div class="fitre">
         <h2>Prix</h2>
         <button @click="afficherPrix = !afficherPrix" class="toggle-button">
           {{ afficherPrix ? '⬇' : '➡' }}
         </button>
-        <div class="depliant_prix" v-show="afficherPrix">
-          <div class="input_box_prix">
+        <div class="depliant_fitre" v-show="afficherPrix">
+          <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_prix" type="text" v-model="prixMin" />€
-          </div>
-          <div class="input_box_prix">
+            <input class="input_fitre" type="text" v-model="prixMin" />€
             <label>à</label>
-            <input class="input_prix" type="text" v-model="prixMax" />€
+            <input class="input_fitre" type="text" v-model="prixMax" />€
           </div>
         </div>
       </div>
       <!-- Filtrage par categorie -->
-      <div class="fitre_prix">
+      <div class="fitre">
         <h2>Categorie</h2>
         <button @click="afficherCategorie = !afficherCategorie" class="toggle-button">
           {{ afficherCategorie ? '⬇' : '➡' }}
         </button>
-        <div class="depliant_prix" v-show="afficherCategorie">
-          <div class="input_box_prix">
-            <label>De</label>
-            <input class="input_prix" type="number" v-model="categoryId" />€
+        <div class="depliant_fitre" v-show="afficherCategorie">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="text" v-model="categoryId" />
           </div>
         </div>
       </div>
@@ -167,25 +164,25 @@ const changePage = async (page) => {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  min-width: 141px;
+  min-width: 280px;
 }
-.fitre_prix h2 {
+.fitre h2 {
   font-size: 18px;
   margin-bottom: 15px;
   color: #333;
 }
-.depliant_prix {
+.depliant_fitre {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
 }
-.input_box_prix {
+.input_box_fitre {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.input_prix {
+.input_fitre {
   width: 80px;
   padding: 5px;
   border: 2px solid #ccc;
@@ -195,11 +192,11 @@ const changePage = async (page) => {
   text-align: center;
   transition: all 0.3s ease;
 }
-.input_prix:focus {
+.input_fitre:focus {
   border-color: #007bff;
   background-color: white;
 }
-.fitre_prix {
+.fitre {
   justify-content: center;
 }
 .pagination {
