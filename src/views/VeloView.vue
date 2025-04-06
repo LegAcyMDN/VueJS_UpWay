@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { toRefs } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
 import { useMarquesStore } from '../stores/marques.js'
@@ -286,7 +286,8 @@ img {
 }
 
 .desc{
-  width: 80%
+  width: 80%;
+  margin-top: 50px;
 }
 #Caracteristiquec{
   margin-top: 5%;

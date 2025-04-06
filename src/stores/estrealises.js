@@ -9,24 +9,22 @@ export const useEstRealisesStore = defineStore('EstRealise', () => {
       list.value = response.data
     })
   
-    async function getByVeloId(id) {
-      let entry = list.value.find((v) => v.veloId == id)
-  
-      if (entry != undefined) {
-        return entry
+    async function getByVeloId(id, type = "Mécanique") {
+      const response = await axios.get(`${window.VITE_BACKEND_URL}/EstRealises/GetByVeloId/${id}/${type}`)
+      const entries = response.data
+    
+      if (!Array.isArray(entries)) {
+        console.warn("La réponse attendue est un tableau :", entries)
+        return []
       }
-  
-      entry = (await axios.get(`${window.VITE_BACKEND_URL}/EstRealises/GetByVeloId/${id}`)).data
-      console.log(entry)
-  
-      if (list.value.length >= 100) {
-        list.value = [entry]
-      } else {
-        list.value.push(entry)
-      }
-  
-      return entry
+    
+      list.value = list.value.filter((e) => !(e.veloId === id && e.estRealiseRapportInspection?.typeInspection === type))
+    
+      list.value.push(...entries)
+    
+      return entries
     }
+    
 
     async function getByIds(id) {
         let entry = list.value.find((v) => v.veloId == id)
@@ -46,6 +44,5 @@ export const useEstRealisesStore = defineStore('EstRealise', () => {
     
         return entry
       }
-  
-    return { list, getByVeloId, getByIds }
+    return { list, getByVeloId, getByIds}
   })
