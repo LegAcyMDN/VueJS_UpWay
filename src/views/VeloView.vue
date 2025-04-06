@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useVelosStore } from '@/stores/velos'
 import { useCaracteristiqueVeloStore } from '@/stores/caracteristiqueVelo'
 import { useMoteursStore } from '@/stores/moteur'
+import { useEstRealisesStore } from '@/stores/estrealises.js'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
@@ -15,6 +16,7 @@ const categoriesStore = useCategoriesStore()
 const velosStore = useVelosStore()
 const caracteristiqueVeloStore = useCaracteristiqueVeloStore()
 const moteursStore = useMoteursStore()
+const estrealisesStore = useEstRealisesStore()
 
 const id = route.params.id
 
@@ -27,6 +29,7 @@ const caracteristiqueVelo = ref({})
 const moteur = ref({})
 const marquemoteur = ref({})
 const caracteristique = ref({})
+const estrealises = ref({})
 let pbat = ref({})
 let abat = ref({})
 let pbag = ref({})
@@ -85,6 +88,9 @@ velosStore.getById(id).then((data) => {
     brandStore.getById(moteur.value.marqueId).then((brand) => {
       marquemoteur.value = brand
     })
+  })
+  estrealisesStore.getByIds(velo.value.veloId).then((data) => {
+    estrealises.value = data
   })
   
 })
@@ -167,7 +173,7 @@ velosStore.getById(id).then((data) => {
       <h2>Historique et rapport d'inspection</h2>
       <div class="column">
         <div class="inspection">
-          <h2>Inspection</h2>
+          <h2 class="titreInspection">Inspection</h2>
           <p>Tous les vélos Upway ont été inspectés et reconditionnés par nos mécaniciens professionnels selon un cahier des charges précis. Notre savoir-faire vous permet de profiter d'un vélo en parfait état mécanique et électrique.</p>
           <modale :revele="revele" :toggleModale="toggleModale"></modale>
           <div v-on:click="toggleModale" class="btn btn-success" id="buttmodale">
@@ -191,8 +197,10 @@ velosStore.getById(id).then((data) => {
           </div>
         </div>
         <div>
-          <h2>Historique du vélo</h2>
-          <h2>Commentaires du mécanicien</h2>
+          <h2 class="titreInspection">Historique du vélo</h2>
+          <p>{{ estrealises.historiqueInspection}}</p>
+          <h2 class="titreInspection">Commentaires du mécanicien</h2>
+          <p>{{ estrealises.commentaireInspection }}</p>
         </div>
       </div>
     </div>
@@ -339,6 +347,11 @@ h2{
   justify-content: space-between;
   align-items: center;
   line-height: 2;
+}
+
+.titreInspection{
+  margin-top: 8%;
+  margin-bottom: 3%;
 }
 
 </style>
