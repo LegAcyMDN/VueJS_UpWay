@@ -95,6 +95,18 @@ velosStore.getById(id).then((data) => {
   
 })
 
+const currentPhoto = ref(0)
+
+function prevPhoto() {
+  if (photos.value.length === 0) return
+  currentPhoto.value = (currentPhoto.value - 1 + photos.value.length) % photos.value.length
+}
+
+function nextPhoto() {
+  if (photos.value.length === 0) return
+  currentPhoto.value = (currentPhoto.value + 1) % photos.value.length
+}
+
 </script>
 
 
@@ -103,7 +115,12 @@ velosStore.getById(id).then((data) => {
   <div class="velo">
     <div>
       
-      <img v-if="photos[0]?.urlPhotoVelo" :src="photos[0].urlPhotoVelo" alt="Photo du vélo" />
+      <div class="carousel">
+        <button class="nav left" @click="prevPhoto">‹</button>
+        <img :src="photos[currentPhoto]?.urlPhotoVelo" alt="Photo du vélo" class="carousel-img" />
+        <button class="nav right" @click="nextPhoto">›</button>
+      </div>
+
       <div class="nom">
         <h3 class="name">{{ velo.nomVelo }}</h3>
         <!--<p class="prixvelo">{{ velo.prixNeuf }}€</p>-->
@@ -353,6 +370,40 @@ h2{
 .titreInspection{
   margin-top: 8%;
   margin-bottom: 3%;
+}
+
+.carousel {
+  position: relative;
+  width: 70%;
+  background-color: lightgrey;
+}
+
+.carousel-img {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+}
+
+.left {
+  left: 10px;
+}
+
+.right {
+  right: 10px;
 }
 
 </style>

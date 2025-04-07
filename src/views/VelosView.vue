@@ -1,9 +1,7 @@
 <script setup>
 import ProductCard from '../components/ProductCard.vue'
 import { useVelosStore } from '@/stores/velos'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { ref, watch } from 'vue'
-import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const velos = useVelosStore()
 const images = ref({})

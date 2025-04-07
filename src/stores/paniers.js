@@ -39,5 +39,5 @@ export const usePanierStore = defineStore('paniers', () => {
 
     watch(list, savePanier, { deep: true })
 
-    return { list, loadPanier, panierIdActif, addToPanier }
+    return { list, loadPanier, panierIdActif }
 })
