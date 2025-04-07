@@ -9,28 +9,37 @@
 
   
     <div class="modale-content">
-      <h3>{{ velo.nomVelo }}</h3>
-      <p>{{ velo.anneeVelo }} - {{ velo.nombreKms }} km</p>
-      <h2 class="titreInspection">Rapport d'inspection complet</h2>
-      <p class="butt">
-        <button @click="loadInspection('Mécanique')">Mécanique</button> |
-        <button @click="loadInspection('Electrique')">Électrique</button> |
-        <button @click="loadInspection('Vérifications finales')">Vérifications finales</button>
-      </p>
+  <h3>{{ velo.nomVelo }}</h3>
+  <p>{{ velo.anneeVelo }} - {{ velo.nombreKms }} km</p>
+  <h2 class="titreInspection">Rapport d'inspection complet</h2>
+  <p class="butt">
+    <button @click="loadInspection('Mécanique')">Mécanique</button> |
+    <button @click="loadInspection('Electrique')">Électrique</button> |
+    <button @click="loadInspection('Vérifications finales')">Vérifications finales</button>
+  </p>
 
-      <div>
-        <div class="info" id="entête">
-          <p class="critère">{{ estrealises[0].estRealiseRapportInspection.typeInspection }}</p>
-          <p>Réparé / remplacé</p>
-          <p>Validé</p>
-        </div>
-        <div class="info" v-for="(inspection) in estrealises" :key="inspection.id">
-          <p class="critère">{{ inspection.estRealiseRapportInspection.pointDInspection }}</p>
-          <p v-if="inspection.estRealiseReparationVelo?.checkReparation">✅</p>
-          <p v-if="inspection.estRealiseReparationVelo?.checkValidation">✅</p>
-        </div>
-      </div>
-    </div>
+  <table class="table-inspection">
+    <thead>
+      <tr>
+        <th>{{estrealises[0].estRealiseRapportInspection.typeInspection}}</th>
+        <th class="repare">Réparé / remplacé</th>
+        <th>Validé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(inspection) in estrealises" :key="inspection.id">
+        <td>{{ inspection.estRealiseRapportInspection.pointDInspection }}</td>
+        <td class="check">
+          <span v-if="inspection.estRealiseReparationVelo?.checkReparation">✅</span>
+        </td>
+        <td class="check">
+          <span v-if="inspection.estRealiseReparationVelo?.checkValidation">✅</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   </div>
 
   </div>
@@ -138,12 +147,38 @@
     align-items: center;
     line-height: 2;
   }
-  .critère{
-    width: 70%;
-  }
+
   #entête{
     background-color: darkblue;
     color: white;
   }
+
+  .table-inspection {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table-inspection th, .table-inspection td {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.table-inspection thead {
+  background-color: darkblue;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.check {
+  text-align: center;
+  width: 120px;
+}
+.repare{
+  width: 15%;
+}
   </style>
   
