@@ -25,9 +25,9 @@ const afficherPositionBatterie = ref(false)
 const afficherBatterieAmovible = ref(false)
 //
 const afficherPositionPB = ref(false)
-const afficherSystemeTransmission = ref(false)
+const afficherTypeTransmission = ref(false)
+const afficherPassageVitesse = ref(false)
 const afficherPoids = ref(false)
-const afficherSimilaires = ref(false)
 
 // Valeurs des filtres
 const votreTaille = ref(170)
@@ -46,6 +46,27 @@ const positionMPedalier = ref(false)
 const positionMRArriere = ref(false)
 const positionMRAvant = ref(false)
 const marqueMoteurId = ref(null)
+const coupleMoteur = ref(70)
+//
+const capaciteBatterie = ref(500)
+const positionBCadre = ref(false)
+const positionBPorteBagages = ref(false)
+const positionBTigeSelle = ref(false)
+const batterieAmovible = ref(false)
+const batterieNonAmovible = ref(false)
+//
+const positionPBAvant = ref(false)
+const positionPBArriere = ref(false)
+const positionPBAvantArriere = ref(false)
+const positionPBAucun = ref(false)
+const typeTransChaine = ref(false)
+const typeTransCourroie = ref(false)
+const typeTransCardan = ref(false)
+const passageVitesseDerailleur = ref(false)
+const passageVitesseMoyeu = ref(false)
+const passageVitesseAutomatique = ref(false)
+const poids= ref(23)
+
 
 function getImage(id) {
   return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoVelo
@@ -183,7 +204,7 @@ watch(
           </div>
         </div>
       </div>
-      <!-- Filtrage par MarqueMoteur -->
+      <!-- Filtrage par Marque Moteur -->
       <div class="fitre">
         <h2>Marque du Moteur</h2>
         <button @click="afficherMarqueMoteur = !afficherMarqueMoteur" class="toggle-button">
@@ -192,6 +213,134 @@ watch(
         <div class="depliant_fitre" v-show="afficherMarqueMoteur">
           <div class="input_box_fitre">
             <input class="input_fitre" type="text" v-model="marqueMoteurId"/>
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Couple moteur -->
+      <div class="fitre">
+        <h2>Couple moteur</h2>
+        <button @click="afficherCoupleMoteur = !afficherCoupleMoteur" class="toggle-button">
+          {{ afficherCoupleMoteur ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherCoupleMoteur">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="text" v-model="coupleMoteur"/>+ Nm
+          </div>
+        </div>
+      </div>
+      <h2>BATTERIE ET AUTONOMIE</h2>
+      <!-- Filtrage par Capacité batterie -->
+      <div class="fitre">
+        <h2>Capacité batterie</h2>
+        <button @click="afficherCapaciteBatterie = !afficherCapaciteBatterie" class="toggle-button">
+          {{ afficherCapaciteBatterie ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherCapaciteBatterie">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="text" v-model="capaciteBatterie"/>+ Wh
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Position Batterie -->
+      <div class="fitre">
+        <h2>Position Batterier</h2>
+        <button @click="afficherPositionBatterie = !afficherPositionBatterie" class="toggle-button">
+          {{ afficherPositionBatterie ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherPositionBatterie">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionBCadre" />Cadre
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionBPorteBagages" />Porte Bagages
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionBTigeSelle" />Tige de Selle
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Batterie Amovible -->
+      <div class="fitre">
+        <h2>Batterie Amovible</h2>
+        <button @click="afficherBatterieAmovible = !afficherBatterieAmovible" class="toggle-button">
+          {{ afficherBatterieAmovible ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherBatterieAmovible">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="batterieAmovible" />Amovible
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="batterieNonAmovible" />Non Amovible
+          </div>
+        </div>
+      </div>
+      <h2>COMPOSANTS ET EQUIPEMENT</h2>
+      <!-- Filtrage par Position Porte Baguage -->
+      <div class="fitre">
+        <h2>Position Porte Baguage</h2>
+        <button @click="afficherPositionPB = !afficherPositionPB" class="toggle-button">
+          {{ afficherPositionPB ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherPositionPB">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionPBAvant"/>Avant
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionPBArriere"/>Arriere
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionPBAvantArriere"/>Avant et Arriere
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="positionPBAucun"/>Aucun
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Type de Transmission -->
+      <div class="fitre">
+        <h2>Type de Transmission</h2>
+        <button @click="afficherTypeTransmission = !afficherTypeTransmission" class="toggle-button">
+          {{ afficherTypeTransmission ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherTypeTransmission">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="typeTransChaine" />Chaine
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="typeTransCourroie" />Courroie
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="typeTransCardan" />Cardan
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Passage de vitesse -->
+      <div class="fitre">
+        <h2>Passage de vitesse</h2>
+        <button @click="afficherPassageVitesse = !afficherPassageVitesse" class="toggle-button">
+          {{ afficherPassageVitesse ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherPassageVitesse">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="passageVitesseDerailleur" />Derailleur
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="passageVitesseMoyeu" />Moyeu
+          </div>
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="checkbox" v-model="passageVitesseAutomatique" />Automatique
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par Poids -->
+      <div class="fitre">
+        <h2>Poids</h2>
+        <button @click="afficherPoids = !afficherPoids" class="toggle-button">
+          {{ afficherPoids ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherPoids">
+          <div class="input_box_fitre">
+            < <input class="input_fitre" type="text" v-model="poids" />kg
           </div>
         </div>
       </div>
