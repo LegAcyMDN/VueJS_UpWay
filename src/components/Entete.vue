@@ -70,7 +70,7 @@ const userStore = useUserStore()
         </div>
         
         <div id="nav-connection">
-          <div id="login-user" v-if="userStore.connected">
+          <router-link v-if="userStore.connected && userStore.current && userStore.current.usertype === 'Admin'" to="/admin"><div id="login-user" >
             <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.096"></g>
@@ -78,7 +78,7 @@ const userStore = useUserStore()
               </g>
             </svg>
             <p v-if="userStore.connected" id="user-name">{{ userStore.current.loginClient }}</p>
-          </div>
+          </div></router-link>
           <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Login / Register</router-link>
           <button id="but-logout" @click="userStore.logout()" v-else>Logout</button>
         </div>

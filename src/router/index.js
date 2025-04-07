@@ -10,6 +10,7 @@ import ArticlesView from '@/views/ArticlesView.vue'
 import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
 import PanierView from '@/views/PanierView.vue'
+import AdminView from '@/views/AdminView.vue'
 
 
 const router = createRouter({
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/panier',
       name: 'panier',
       component: PanierView,
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
     },
   ],
 })
