@@ -5,8 +5,15 @@ import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()
 const images = ref({})
-const prixMin = 0
-const prixMax = 799
+
+// ref pour contrôler l'affichage des filtre
+const afficherPrix = ref(true)
+const afficherCategorie = ref(false)
+
+// Valeurs des filtres
+const categoryId = ref(null)
+const prixMin = ref(0)
+const prixMax = ref(799)
 
 function getImage(id) {
   return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoAccessoire
@@ -18,6 +25,17 @@ watch(
     images.value = await accessoires.getPhotosByIds(accessoires.list.map((a) => a.accessoireId))
   },
 )
+
+// appelle `getByCategoryPrix` dès qu'un filtre est modifié
+const updateAccessoires = async () => {
+  await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, accessoires.current_page)
+}
+watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
+
+// Pagination:
+const changePage = async (page) => {
+  await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, page)
+}
 </script>
 
 <template>
@@ -27,23 +45,41 @@ watch(
     ainsi que nos conseils pour sécuriser votre vélo, profiter d’une amélioration du confort de
     conduite, personnaliser ou encore entretenir votre VAE.
   </p>
+  
+  <!-- Main -->
   <div class="accessoires_fitre_container">
     <div class="accessoires_fitre">
-      <div class="fitre_prix">
-        <h2>FILTRER</h2>
+      <h2>FILTRER</h2>
+      <!-- Filtrage par prix -->
+      <div class="fitre">
         <h2>Prix</h2>
-        <div class="depliant_prix">
-          <div class="input_box_prix">
+        <button @click="afficherPrix = !afficherPrix" class="toggle-button">
+          {{ afficherPrix ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherPrix">
+          <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_prix" type="text" v-model="prixMin" />€
-          </div>
-          <div class="input_box_prix">
+            <input class="input_fitre" type="text" v-model="prixMin" />€
             <label>à</label>
-            <input class="input_prix" type="text" v-model="prixMax" />€
+            <input class="input_fitre" type="text" v-model="prixMax" />€
+          </div>
+        </div>
+      </div>
+      <!-- Filtrage par categorie -->
+      <div class="fitre">
+        <h2>Categorie</h2>
+        <button @click="afficherCategorie = !afficherCategorie" class="toggle-button">
+          {{ afficherCategorie ? '⬇' : '➡' }}
+        </button>
+        <div class="depliant_fitre" v-show="afficherCategorie">
+          <div class="input_box_fitre">
+            <input class="input_fitre" type="text" v-model="categoryId" />
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Affichage des accessoires filtrés -->
     <div class="accessoires_container">
       <ProductCard
         :key="accessoire.accessoireId"
@@ -55,25 +91,18 @@ watch(
       />
     </div>
   </div>
-  <div class="pagination">
-    <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(0)">
+
+   <!-- Pagination -->
+   <div class="pagination">
+    <button v-if="accessoires.current_page > 0" @click="changePage(0)">
+      <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button
-      v-if="accessoires.current_page > 0"
-      @click="accessoires.fetchAccessories(accessoires.current_page - 1)"
-    >
+    <button v-if="accessoires.current_page > 0" @click="changePage(accessoires.current_page - 1)">
+      <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
-    <div
-      v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()]
-        .slice()
-        .reverse()"
-      :key="i"
-    >
-      <button
-        v-if="accessoires.current_page - i - 1 >= 0"
-        @click="accessoires.fetchAccessories(accessoires.current_page - i - 1)"
-      >
+    <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].reverse()" :key="i">
+      <button v-if="accessoires.current_page - i - 1 >= 0" @click="changePage(accessoires.current_page - i - 1)">
         {{ accessoires.current_page - i }}
       </button>
     </div>
@@ -81,28 +110,34 @@ watch(
     <button disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button
-        v-if="accessoires.current_page + i <= accessoires.total_pages"
-        @click="accessoires.fetchAccessories(accessoires.current_page + i)"
-      >
+      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="changePage(accessoires.current_page + i)">
         {{ accessoires.current_page + i + 1 }}
       </button>
     </div>
 
-    <button
-      v-if="accessoires.current_page < accessoires.total_pages"
-      @click="accessoires.fetchAccessories(accessoires.current_page + 1)"
-    >
+    <button v-if="accessoires.current_page < accessoires.total_pages" @click="changePage(accessoires.current_page + 1)">
+      <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button
-      v-if="accessoires.current_page != accessoires.total_pages"
-      @click="accessoires.fetchAccessories(accessoires.total_pages)"
-    >
+    <button v-if="accessoires.current_page != accessoires.total_pages" @click="changePage(accessoires.total_pages)">
+      <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
 </template>
 
 <style scoped>
+.toggle-button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.toggle-button:hover {
+  background-color: #0056b3;
+}
 .accessoires_container {
   display: flex;
   flex-wrap: wrap;
@@ -112,40 +147,40 @@ watch(
 }
 .accessoires_fitre_container {
   display: flex;
-  gap: 20px; /* Ajoute un espace entre les éléments */
-  align-items: flex-start; /* Aligner en haut */
+  gap: 20px;
+  align-items: flex-start; 
   margin: 0 auto;
 }
 .accessoires_fitre {
   position: sticky;
   justify-content: center;
-  top: 20px; /* Ajout d'un espace en haut */
-  height: auto; /* Permet à la hauteur de s'adapter au contenu */
+  top: 20px;
+  height: auto;
   min-height: 300px;
-  background: rgba(240, 240, 240, 0.9); /* Gris clair avec transparence */
+  background: rgba(240, 240, 240, 0.9);
   width: 20%;
   padding: 20px;
-  border-radius: 10px; /* Coins arrondis */
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
-  min-width: 141px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 280px;
 }
-.fitre_prix h2 {
+.fitre h2 {
   font-size: 18px;
   margin-bottom: 15px;
   color: #333;
 }
-.depliant_prix {
+.depliant_fitre {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
 }
-.input_box_prix {
+.input_box_fitre {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.input_prix {
+.input_fitre {
   width: 80px;
   padding: 5px;
   border: 2px solid #ccc;
@@ -155,11 +190,11 @@ watch(
   text-align: center;
   transition: all 0.3s ease;
 }
-.input_prix:focus {
+.input_fitre:focus {
   border-color: #007bff;
   background-color: white;
 }
-.fitre_prix {
+.fitre {
   justify-content: center;
 }
 .pagination {

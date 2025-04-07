@@ -6,8 +6,7 @@ const CACHE_SIZE = 200
 
 export const useAccessoiresStore = defineStore('accesoires', () => {
   const list = ref([])
-  const photos = ref({})
-  const cart = ref([])
+  const photos = ref([])
   const current_page = ref(0)
   const total_pages = ref(0)
 
@@ -75,30 +74,13 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     return entries
   }
 
-  async function getByPrix(min, max, page = 0) {
-    list.value = (
-      await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetByPrix`, {
-        params: { min, max, page },
-      })
-    ).data
-    current_page.value = page
-  }
-
-  async function getByCategory(category, page = 0) {
-    list.value = (
-      await axios.get(
-        `${window.VITE_BACKEND_URL}/Accessoires/GetByCategory/${category}?page=${page}`,
-      )
-    ).data
-    current_page.value = page
-  }
-
-  async function getByCategoryPrix(category, min, max, page = 0) {
-    list.value = (
-      await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/GetByCategoryPrix`, {
-        params: { category, min, max, page },
-      })
-    ).data
+  async function getByCategoryPrix(categoryId, min, max, page = 0) {
+    list.value = (await axios.get(
+      `${window.VITE_BACKEND_URL}/Accessoires/GetByCategoryPrix`,
+      {
+        params: { categoryId, min, max, page }
+      }
+    )).data
     current_page.value = page
   }
 
@@ -116,13 +98,10 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   return {
     list,
-    cart,
     add,
     getPhotosById,
     getPhotosByIds,
     getById,
-    getByPrix,
-    getByCategory,
     getByCategoryPrix,
     fetchAccessories,
     count,
