@@ -1,8 +1,6 @@
 <script setup>
 import ProductCard from '../components/ProductCard.vue'
 import { useAccessoiresStore } from '@/stores/accessoires'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()

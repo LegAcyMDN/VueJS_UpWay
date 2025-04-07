@@ -6,9 +6,11 @@ import VelosView from '../views/VelosView.vue'
 import AccessoiresView from '../views/AccessoiresView.vue'
 import AccessoireView from '../views/AccessoireView.vue'
 import ArticleView from '../views/ArticleView.vue'
+import ArticlesView from '@/views/ArticlesView.vue'
 import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
 import PanierView from '@/views/PanierView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,7 +58,13 @@ const router = createRouter({
     {
       path: '/articles',
       name: 'articles',
+      component: ArticlesView,
+    },
+    {
+      path: '/article/:id',  // :id est un paramètre dynamique
+      name: 'article',
       component: ArticleView,
+      props: true  // Permet de passer l'ID à la props du composant,
     },
     {
       path: '/marques',
