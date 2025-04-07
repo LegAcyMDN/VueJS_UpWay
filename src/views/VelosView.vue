@@ -1,9 +1,7 @@
 <script setup>
 import ProductCard from '../components/ProductCard.vue'
 import { useVelosStore } from '@/stores/velos'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { ref, watch } from 'vue'
-import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const velos = useVelosStore()
 const images = ref({})
@@ -42,10 +40,8 @@ watch(
     </div>
     <div class="pagination">
       <button v-if="velos.current_page > 0" @click="velos.fetchBikes(0)">
-        <FontAwesomeIcon :icon="faBackward" />
       </button>
       <button v-if="velos.current_page > 0" @click="velos.fetchBikes(velos.current_page - 1)">
-        <FontAwesomeIcon :icon="faArrowLeft" />
       </button>
 
       <div v-for="i in [3, 2, 1]" :key="i">
@@ -72,13 +68,11 @@ watch(
         v-if="velos.current_page < velos.total_pages"
         @click="velos.fetchBikes(velos.current_page + 1)"
       >
-        <FontAwesomeIcon :icon="faArrowRight" />
       </button>
       <button
         v-if="velos.current_page != velos.total_pages"
         @click="velos.fetchBikes(velos.total_pages)"
       >
-        <FontAwesomeIcon :icon="faForward" />
       </button>
     </div>
   </main>

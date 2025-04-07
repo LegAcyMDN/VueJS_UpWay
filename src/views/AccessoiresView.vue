@@ -1,8 +1,6 @@
 <script setup>
 import ProductCard from '../components/ProductCard.vue'
 import { useAccessoiresStore } from '@/stores/accessoires'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faBackward, faArrowLeft, faForward, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { ref, watch } from 'vue'
 
 const accessoires = useAccessoiresStore()
@@ -59,13 +57,11 @@ watch(
   </div>
   <div class="pagination">
     <button v-if="accessoires.current_page > 0" @click="accessoires.fetchAccessories(0)">
-      <FontAwesomeIcon :icon="faBackward" />
     </button>
     <button
       v-if="accessoires.current_page > 0"
       @click="accessoires.fetchAccessories(accessoires.current_page - 1)"
     >
-      <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
     <div
@@ -97,13 +93,11 @@ watch(
       v-if="accessoires.current_page < accessoires.total_pages"
       @click="accessoires.fetchAccessories(accessoires.current_page + 1)"
     >
-      <FontAwesomeIcon :icon="faArrowRight" />
     </button>
     <button
       v-if="accessoires.current_page != accessoires.total_pages"
       @click="accessoires.fetchAccessories(accessoires.total_pages)"
     >
-      <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
 </template>
