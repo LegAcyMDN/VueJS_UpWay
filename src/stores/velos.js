@@ -11,6 +11,7 @@ export const useVelosStore = defineStore('velos', () => {
   const current_page = ref(0)
   const total_pages = ref(0)
   const mention = ref([])
+  const caracteristique = ref([])
 
   fetchBikes(0)
   count()
@@ -93,6 +94,24 @@ export const useVelosStore = defineStore('velos', () => {
     return entries
   }
 
+  async function getCaracteristiqueById(id) {
+    let entries = caracteristique.value.filter((v) => v.veloId == id)
+
+    if (entries.length > 0) {
+      return entries
+    }
+
+    entries = (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetCaracteristiqueById/${id}`)).data
+
+    if (list.value.length >= 100) {
+      caracteristique.value = entries
+    } else {
+      caracteristique.value = caracteristique.value.concat(entries)
+    }
+
+    return entries
+  }
+
   async function count() {
     count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Velos/count`)).data)
     total_pages.value = Math.floor(count / 20)
@@ -117,5 +136,6 @@ export const useVelosStore = defineStore('velos', () => {
     current_page,
     total_pages,
     getMentionById,
+    getCaracteristiqueById,
   }
 })
