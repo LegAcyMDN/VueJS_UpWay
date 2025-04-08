@@ -6,6 +6,7 @@ export const useMarquesStore = defineStore('marques', () => {
   const list = ref([])
   const current_page = ref(0)
   const total_pages = ref(0)
+  const token = ref($cookies.get('jwt_token'))
   fetchMarque(0)
   count()
 
@@ -44,27 +45,7 @@ export const useMarquesStore = defineStore('marques', () => {
     return count
   }
 
-  async function post(nom) {
-    if (!nom || nom.trim().length === 0) {
-      console.error("Le nom de la catégorie est vide.");
-      return;
-    }
-    const category = {
-      libelleCategorie: nom
-    };
-    
-    try {
-      await axios.post(`${window.VITE_BACKEND_URL}/Categories`, category, {
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
-        withCredentials: true,
-      });
-      console.log("Catégorie créée avec succès !");
-    } catch (error) {
-      console.error("Erreur lors de la création :", error.response?.data || error.message);
-    }
-  }
+  
   
   async function deleteMarque(id){
     await axios.delete(`${window.VITE_BACKEND_URL}/Marque/${id}`, {

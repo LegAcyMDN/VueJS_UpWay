@@ -45,6 +45,7 @@ export const useCategoriesStore = defineStore('categories', () => {
         },
         withCredentials: true,
       });
+      await fetchAll();
       console.log("Catégorie créée avec succès !");
     } catch (error) {
       console.error("Erreur lors de la création :", error.response?.data || error.message);
@@ -58,8 +59,19 @@ export const useCategoriesStore = defineStore('categories', () => {
       },
       withCredentials: true,
     });
+    await fetchAll();
+  }
+
+  async function fetchAll() {
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Categories`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+    list.value = response.data;
   }
 
 
-  return { list, getById, post, deleteCategory}
+  return { list, getById, post, deleteCategory, fetchAll}
 })
