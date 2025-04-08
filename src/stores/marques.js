@@ -4,6 +4,8 @@ import axios from 'axios'
 
 export const useMarquesStore = defineStore('marques', () => {
   const list = ref([])
+  const current_page = ref(0)
+  const total_pages = ref(0)
 
   axios.get(`${window.VITE_BACKEND_URL}/Marques`).then((response) => {
     list.value = response.data
@@ -28,5 +30,17 @@ export const useMarquesStore = defineStore('marques', () => {
     return entry
   }
 
-  return { list, getById }
+  async function fetchMarque(page) {
+    list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Marques?page=${page}`)).data
+    current_page.value = page
+  }
+
+  async function count() {
+    count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Marques/count`)).data)
+    total_pages.value = Math.floor(count / 20)
+
+    return count
+  }
+
+  return { list, current_page, total_pages , getById, fetchMarque, count }
 })
