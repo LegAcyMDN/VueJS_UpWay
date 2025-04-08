@@ -39,6 +39,45 @@ function deleteMarque(id) {
         </label>
       </div>
     </div>
+
+    <div class="pagination">
+      <button class="page" v-if="marquesStore.current_page > 0" @click="marquesStore.fetchMarque(0)">
+        <FontAwesomeIcon :icon="faBackward" />
+      </button>
+      <button class="page" v-if="marquesStore.current_page > 0" @click="marquesStore.fetchMarque(marquesStore.current_page - 1)">
+        <FontAwesomeIcon :icon="faArrowLeft" />
+      </button>
+
+      <div v-for="i in [3, 2, 1]" :key="i">
+        <button class="page" v-if="marquesStore.current_page - i >= 0" @click="marquesStore.fetchMarque(marquesStore.current_page - i)">
+          {{ marquesStore.current_page - i + 1 }}
+        </button>
+      </div>
+
+      <button class="page" disabled>{{ marquesStore.current_page + 1 }}</button>
+
+      <div v-for="i in 3" :key="i">
+        <button class="page"
+          v-if="marquesStore.current_page + i <= marquesStore.total_pages"
+          @click="marquesStore.fetchMarque(marquesStore.current_page + i)"
+        >
+          {{ marquesStore.current_page + i + 1 }}
+        </button>
+      </div>
+
+      <button class="page"
+        v-if="marquesStore.current_page < marquesStore.total_pages"
+        @click="marquesStore.fetchMarque(marquesStore.current_page + 1)"
+      >
+        <FontAwesomeIcon :icon="faArrowRight" />
+      </button>
+      <button class="page"
+        v-if="marquesStore.current_page != marquesStore.total_pages"
+        @click="marquesStore.fetchMarque(marquesStore.total_pages)"
+      >
+        <FontAwesomeIcon :icon="faForward" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -57,7 +96,7 @@ function deleteMarque(id) {
     .list{
         margin-left: 3%;
         display: flex;
-        gap: 40%;
+        gap: 50px;
         flex-direction: row;
     }
     .listcont{
@@ -67,5 +106,17 @@ function deleteMarque(id) {
     p{
         width: 300px;
         line-height: 2;
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .page {
+      margin: 10px;
+      margin-bottom: 50px;
+      width: 50px;
+      height: 50px;
     }
 </style>

@@ -20,6 +20,7 @@ import GestionCategorieView from '@/views/admin/GestionCatégorieView.vue'
 import GestionMoteursView from '@/views/admin/GestionMoteursView.vue'
 import { useUserStore } from '@/stores/user';
 import PotitArticleView from '@/views/PotitArticleView.vue'
+import ClientView from '@/views/ClientView.vue'
 
 
 const router = createRouter({
@@ -96,6 +97,11 @@ const router = createRouter({
       path: '/panier',
       name: 'panier',
       component: PanierView,
+    },
+    {
+      path: '/client',
+      name: 'client',
+      component: ClientView,
     },
     {
       path: '/admin',
