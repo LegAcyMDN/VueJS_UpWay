@@ -10,6 +10,8 @@ import ArticlesView from '@/views/ArticlesView.vue'
 import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
 import PanierView from '@/views/PanierView.vue'
+import AdminView from '@/views/AdminView.vue'
+import { useUserStore } from '@/stores/user';
 import PotitArticleView from '@/views/PotitArticleView.vue'
 
 
@@ -88,7 +90,28 @@ const router = createRouter({
       name: 'panier',
       component: PanierView,
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
+      meta: { requiresAdmin: true }
+    },
   ],
-})
+
+});
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+
+  if (to.meta.requiresAdmin) {
+    if (userStore.connected && userStore.current?.usertype === 'Admin') {
+      next();
+    } else {
+      next('/auth');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
