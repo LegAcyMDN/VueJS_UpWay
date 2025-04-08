@@ -19,6 +19,7 @@ import GestionMarquesView from '@/views/admin/GestionMarquesView.vue'
 import GestionCategorieView from '@/views/admin/GestionCatégorieView.vue'
 import GestionMoteursView from '@/views/admin/GestionMoteursView.vue'
 import { useUserStore } from '@/stores/user';
+import PotitArticleView from '@/views/PotitArticleView.vue'
 
 
 const router = createRouter({
@@ -74,6 +75,12 @@ const router = createRouter({
       name: 'article',
       component: ArticleView,
       props: true  // Permet de passer l'ID à la props du composant,
+    },
+    {
+      path: '/article/:id/:id',
+      name: 'arti',
+      component: PotitArticleView,
+      props: true
     },
     {
       path: '/marques',
