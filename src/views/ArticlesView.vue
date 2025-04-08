@@ -24,9 +24,8 @@ const nouvelart = ref({
     <p>Articles</p>
     <ArticlesComponent 
     :key="article.categorieArticleId"
-    v-for="article in articles.list" :article="article"
-    :title="article.titreCategorieArticle"
-    :content="article.content"
+    v-for="article in articles.list" 
+    :article="article"
     :link="{path: '/article/' + article.categorieArticleId}"/>
   </main>
 </template>

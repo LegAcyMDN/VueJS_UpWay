@@ -10,6 +10,7 @@ import ArticlesView from '@/views/ArticlesView.vue'
 import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
 import PanierView from '@/views/PanierView.vue'
+import PotitArticleView from '@/views/PotitArticleView.vue'
 
 
 const router = createRouter({
@@ -65,6 +66,12 @@ const router = createRouter({
       name: 'article',
       component: ArticleView,
       props: true  // Permet de passer l'ID à la props du composant,
+    },
+    {
+      path: '/article/:id/:id',
+      name: 'arti',
+      component: PotitArticleView,
+      props: true
     },
     {
       path: '/marques',
