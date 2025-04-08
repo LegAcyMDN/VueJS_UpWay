@@ -5,6 +5,13 @@ import { useMarquesStore } from '@/stores/marques.js'
 const marquesStore = useMarquesStore()
 const nomMarque = ref('')
 
+function addMarque() {
+  if (nomMarque.value.trim() === '') {
+    alert("Le nom ne peut pas être vide !");
+    return;
+  }
+  marquesStore.post(nomMarques.value.trim())
+}
 
 function deleteMarque(id) {
     marquesStore.deleteMarque(id)
@@ -28,7 +35,7 @@ function deleteMarque(id) {
         <label>
           Nom de la Marque :
           <input v-model="nomMarque" type="text" />
-          <button>Valider</button>
+          <button @click="addMarque">Valider</button>
         </label>
       </div>
     </div>
