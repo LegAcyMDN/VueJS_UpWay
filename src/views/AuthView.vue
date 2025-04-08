@@ -76,7 +76,7 @@ function register() {
       <div class="container2">
         <p class="error">{{ msg }}</p>
         <p v-if="newUser">
-          <label>Username</label>
+          <label>Pseudo</label>
           <input type="text" name="username" v-model="credentials.username" />
         </p>
 
@@ -86,17 +86,17 @@ function register() {
         </p>
 
         <p>
-          <label>Password</label>
+          <label>Mot de passe</label>
           <input type="password" name="password" v-model="credentials.password" />
         </p>
 
         <p v-if="newUser">
-          <label>First Name</label>
+          <label>Prénom</label>
           <input type="text" name="first_name" v-model="credentials.first_name" />
         </p>
 
         <p v-if="newUser">
-          <label>Last Name</label>
+          <label>Nom</label>
           <input type="text" name="last_name" v-model="credentials.last_name" />
         </p>
 
@@ -106,7 +106,7 @@ function register() {
             @click="login()"
             :disabled="credentials.email == '' || credentials.password == ''"
           >
-            Login
+            Connexion
           </button>
           <button
             v-if="newUser"
@@ -119,7 +119,7 @@ function register() {
               credentials.last_name == ''
             "
           >
-            Register
+            S'inscrire
           </button>
         </p>
       </div>

@@ -77,7 +77,7 @@ const router = createRouter({
       props: true  // Permet de passer l'ID à la props du composant,
     },
     {
-      path: '/article/:id/:id',
+      path: '/article/:catid/:id',
       name: 'arti',
       component: PotitArticleView,
       props: true
