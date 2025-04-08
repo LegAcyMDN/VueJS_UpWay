@@ -65,8 +65,7 @@ const typeTransCardan = ref(false)
 const passageVitesseDerailleur = ref(false)
 const passageVitesseMoyeu = ref(false)
 const passageVitesseAutomatique = ref(false)
-const poids= ref(23)
-
+const poids = ref(23)
 
 function getImage(id) {
   return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoVelo
@@ -151,9 +150,9 @@ watch(
         <div class="depliant_fitre" v-show="afficherPrix">
           <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_fitre" type="text" v-model="prixMin"/>€
+            <input class="input_fitre" type="text" v-model="prixMin" id="prixMin" />€
             <label>à</label>
-            <input class="input_fitre" type="text" v-model="prixMax"/>€
+            <input class="input_fitre" type="text" v-model="prixMax" id="prixMax" />€
           </div>
         </div>
       </div>
@@ -179,9 +178,9 @@ watch(
         <div class="depliant_fitre" v-show="afficherKilometrage">
           <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_fitre" type="text" v-model="kilometrageMin"/>km
+            <input class="input_fitre" type="text" v-model="kilometrageMin" />km
             <label>à</label>
-            <input class="input_fitre" type="text" v-model="kilometrageMax"/>km
+            <input class="input_fitre" type="text" v-model="kilometrageMax" />km
           </div>
         </div>
       </div>
@@ -212,7 +211,7 @@ watch(
         </button>
         <div class="depliant_fitre" v-show="afficherMarqueMoteur">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="marqueMoteurId"/>
+            <input class="input_fitre" type="text" v-model="marqueMoteurId" />
           </div>
         </div>
       </div>
@@ -224,7 +223,7 @@ watch(
         </button>
         <div class="depliant_fitre" v-show="afficherCoupleMoteur">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="coupleMoteur"/>+ Nm
+            <input class="input_fitre" type="text" v-model="coupleMoteur" />+ Nm
           </div>
         </div>
       </div>
@@ -237,7 +236,7 @@ watch(
         </button>
         <div class="depliant_fitre" v-show="afficherCapaciteBatterie">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="capaciteBatterie"/>+ Wh
+            <input class="input_fitre" type="text" v-model="capaciteBatterie" />+ Wh
           </div>
         </div>
       </div>
@@ -252,7 +251,8 @@ watch(
             <input class="input_fitre" type="checkbox" v-model="positionBCadre" />Cadre
           </div>
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="positionBPorteBagages" />Porte Bagages
+            <input class="input_fitre" type="checkbox" v-model="positionBPorteBagages" />Porte
+            Bagages
           </div>
           <div class="input_box_fitre">
             <input class="input_fitre" type="checkbox" v-model="positionBTigeSelle" />Tige de Selle
@@ -283,16 +283,17 @@ watch(
         </button>
         <div class="depliant_fitre" v-show="afficherPositionPB">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="positionPBAvant"/>Avant
+            <input class="input_fitre" type="checkbox" v-model="positionPBAvant" />Avant
           </div>
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="positionPBArriere"/>Arriere
+            <input class="input_fitre" type="checkbox" v-model="positionPBArriere" />Arriere
           </div>
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="positionPBAvantArriere"/>Avant et Arriere
+            <input class="input_fitre" type="checkbox" v-model="positionPBAvantArriere" />Avant et
+            Arriere
           </div>
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="positionPBAucun"/>Aucun
+            <input class="input_fitre" type="checkbox" v-model="positionPBAucun" />Aucun
           </div>
         </div>
       </div>
@@ -322,13 +323,21 @@ watch(
         </button>
         <div class="depliant_fitre" v-show="afficherPassageVitesse">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="passageVitesseDerailleur" />Derailleur
+            <input
+              class="input_fitre"
+              type="checkbox"
+              v-model="passageVitesseDerailleur"
+            />Derailleur
           </div>
           <div class="input_box_fitre">
             <input class="input_fitre" type="checkbox" v-model="passageVitesseMoyeu" />Moyeu
           </div>
           <div class="input_box_fitre">
-            <input class="input_fitre" type="checkbox" v-model="passageVitesseAutomatique" />Automatique
+            <input
+              class="input_fitre"
+              type="checkbox"
+              v-model="passageVitesseAutomatique"
+            />Automatique
           </div>
         </div>
       </div>
@@ -372,10 +381,7 @@ watch(
     </button>
 
     <div v-for="i in [3, 2, 1]" :key="i">
-      <button
-        v-if="velos.current_page - i >= 0"
-        @click="velos.fetchBikes(velos.current_page - i)"
-      >
+      <button v-if="velos.current_page - i >= 0" @click="velos.fetchBikes(velos.current_page - i)">
         {{ velos.current_page - i + 1 }}
       </button>
     </div>

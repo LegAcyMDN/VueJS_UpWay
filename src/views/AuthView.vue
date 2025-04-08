@@ -61,7 +61,7 @@ function register() {
 
 <template>
   <div class="container">
-    <div class="login">
+    <div v-if="!requireOtp" class="login">
       <div class="auth-type-container">
         <p>
           <input type="radio" :value="false" id="not_new" v-model="newUser" checked />
@@ -82,7 +82,7 @@ function register() {
 
         <p>
           <label>Email</label>
-          <input type="email" name="email" v-model="credentials.email" />
+          <input type="email" name="email" id="email-field" v-model="credentials.email" />
         </p>
 
         <p>
@@ -104,6 +104,7 @@ function register() {
           <button
             v-if="!newUser"
             @click="login()"
+            id="login_btn"
             :disabled="credentials.email == '' || credentials.password == ''"
           >
             Login

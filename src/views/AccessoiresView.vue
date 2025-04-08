@@ -28,7 +28,12 @@ watch(
 
 // appelle `getByCategoryPrix` dès qu'un filtre est modifié
 const updateAccessoires = async () => {
-  await accessoires.getByCategoryPrix(categoryId.value, prixMin.value, prixMax.value, accessoires.current_page)
+  await accessoires.getByCategoryPrix(
+    categoryId.value,
+    prixMin.value,
+    prixMax.value,
+    accessoires.current_page,
+  )
 }
 watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
 
@@ -45,7 +50,7 @@ const changePage = async (page) => {
     ainsi que nos conseils pour sécuriser votre vélo, profiter d’une amélioration du confort de
     conduite, personnaliser ou encore entretenir votre VAE.
   </p>
-  
+
   <!-- Main -->
   <div class="accessoires_fitre_container">
     <div class="accessoires_fitre">
@@ -59,9 +64,9 @@ const changePage = async (page) => {
         <div class="depliant_fitre" v-show="afficherPrix">
           <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_fitre" type="text" v-model="prixMin" />€
+            <input class="input_fitre" type="text" v-model="prixMin" id="prixMin" />€
             <label>à</label>
-            <input class="input_fitre" type="text" v-model="prixMax" />€
+            <input class="input_fitre" type="text" v-model="prixMax" id="prixMax" />€
           </div>
         </div>
       </div>
@@ -80,7 +85,7 @@ const changePage = async (page) => {
     </div>
 
     <!-- Affichage des accessoires filtrés -->
-    <div class="accessoires_container">
+    <div class="accessoires_container" id="accessoires_container">
       <ProductCard
         :key="accessoire.accessoireId"
         v-for="accessoire in accessoires.list"
@@ -92,8 +97,8 @@ const changePage = async (page) => {
     </div>
   </div>
 
-   <!-- Pagination -->
-   <div class="pagination">
+  <!-- Pagination -->
+  <div class="pagination">
     <button v-if="accessoires.current_page > 0" @click="changePage(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
@@ -101,8 +106,16 @@ const changePage = async (page) => {
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
-    <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].reverse()" :key="i">
-      <button v-if="accessoires.current_page - i - 1 >= 0" @click="changePage(accessoires.current_page - i - 1)">
+    <div
+      v-for="i in [
+        ...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys(),
+      ].reverse()"
+      :key="i"
+    >
+      <button
+        v-if="accessoires.current_page - i - 1 >= 0"
+        @click="changePage(accessoires.current_page - i - 1)"
+      >
         {{ accessoires.current_page - i }}
       </button>
     </div>
@@ -110,15 +123,24 @@ const changePage = async (page) => {
     <button disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="changePage(accessoires.current_page + i)">
+      <button
+        v-if="accessoires.current_page + i <= accessoires.total_pages"
+        @click="changePage(accessoires.current_page + i)"
+      >
         {{ accessoires.current_page + i + 1 }}
       </button>
     </div>
 
-    <button v-if="accessoires.current_page < accessoires.total_pages" @click="changePage(accessoires.current_page + 1)">
+    <button
+      v-if="accessoires.current_page < accessoires.total_pages"
+      @click="changePage(accessoires.current_page + 1)"
+    >
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button v-if="accessoires.current_page != accessoires.total_pages" @click="changePage(accessoires.total_pages)">
+    <button
+      v-if="accessoires.current_page != accessoires.total_pages"
+      @click="changePage(accessoires.total_pages)"
+    >
       <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
@@ -148,7 +170,7 @@ const changePage = async (page) => {
 .accessoires_fitre_container {
   display: flex;
   gap: 20px;
-  align-items: flex-start; 
+  align-items: flex-start;
   margin: 0 auto;
 }
 .accessoires_fitre {
