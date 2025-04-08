@@ -15,13 +15,13 @@ export const useContentArticleStore = defineStore('article_content', () => {
     const entry = list.value.find((v) => v.contenueId == id)
     if (entry != undefined) return entry
 
-    return (await axios.get(`${window.VITE_BACKEND_URL}/ContenuArticles/GetByID/${id}`)).data
+    return (await axios.get(`${window.VITE_BACKEND_URL}/ContenuArticles/${id}`)).data
   }
   async function getByArticleId(id) {
     const entry = list.value.find((v) => v.articleId == id)
     if (entry != undefined) return entry
 
-    return (await axios.get(`${window.VITE_BACKEND_URL}/ContenuArticles/GetByID/${id}`)).data
+    return (await axios.get(`${window.VITE_BACKEND_URL}/ContenuArticles/GetByArticleID/${id}`)).data
   }
 
   async function fetchArticles(page) {

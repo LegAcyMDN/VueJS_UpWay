@@ -5,39 +5,73 @@ import axios from 'axios'
 
 export const usePanierStore = defineStore('paniers', () => {
     const $cookies = inject('$cookies')
-    const list = ref([])
+    const panier = ref({})
     const userStore = useUserStore()
     
     const loadPanier = async () => {
         if (userStore.connected) {
-            const { data } = await axios.get(`${window.VITE_BACKEND_URL}/Panier`)
-            list.value = data
-            $cookies.remove('panier')
+            try {
+                console.log("j'ai mon panié")
+                const { data } = await axios.get(`${window.VITE_BACKEND_URL}/Panier/GetMine`, {
+                    headers: {
+                        Authorization: `Bearer ${userStore.token}`
+                    },
+                    withCredentials: true
+                })
+                
+                console.log("Betrix est ici")
+                panier.value = data
+                $cookies.remove('panier')
+            } catch (error) {
+                console.log(error)
+                if (error.status == 404) {
+                    console.log("je suis passé par là")
+                    const newPanier = {
+                        clientId: userStore.current.clientId,
+                        commandeId: null,
+                        prixPanier: 0
+                    }
+
+                    const { data } = await axios.post(`${window.VITE_BACKEND_URL}/Panier`, newPanier, {
+                        headers: {
+                            Authorization: `Bearer ${userStore.token}`
+                        },
+                        withCredentials: true
+                    })
+
+                    panier.value = data
+                } else {
+                    console.error('Erreur lors du chargement du panier', error)
+                }
+
+            }
         } else {
             const panierCookie = $cookies.get('panier')
-            list.value = panierCookie ? JSON.parse(panierCookie) : []
+            panier.value = panierCookie ? JSON.parse(panierCookie) : []
         }
     }
+
+    setTimeout(loadPanier, 1000);
     
-    const savePanier = (panier) => {
+    /*const savePanier = (panier) => {
         if (userStore.connected) {
             axios.post(`${window.VITE_BACKEND_URL}/Panier`, panier, {
                 headers: {
-                  Authorization: `Bearer ${userStore.token.value}`,
+                  Authorization: `Bearer ${userStore.token}`,
                 },
                 withCredentials: true
               });
         } else {
             $cookies.set('panier', JSON.stringify(list.value), {expires: 7})
         }
-    }
+    }*/
     
     const panierIdActif = computed(() => {
         if (!userStore.connected) return null
-        return list.value.length > 0 ? list.value[0].panierId : null
+        return panier.value != undefined ? panier.value.panierId : null
     }) 
 
-    watch(list, savePanier, { deep: true })
+    //watch(list, savePanier, { deep: true })
 
-    return { list, loadPanier, panierIdActif }
+    return { panier, loadPanier, panierIdActif }
 })

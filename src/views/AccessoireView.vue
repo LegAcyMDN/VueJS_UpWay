@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { toRefs } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
 import { useMarquesStore } from '../stores/marques.js'
@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useAccessoiresStore } from '@/stores/accessoires.js'
 import { useAjoutAccessoiresStore } from '@/stores/ajoutAccessoires.js'
 import { usePanierStore } from '@/stores/paniers.js'
+import { useUserStore } from '@/stores/user.js'
 
 const route = useRoute()
 const brandStore = useMarquesStore()
@@ -15,12 +16,19 @@ const categoriesStore = useCategoriesStore()
 const accessoiresStore = useAccessoiresStore()
 const ajoutAccessoireStore = useAjoutAccessoiresStore()
 const panierStore = usePanierStore()
+const userStore = useUserStore()
 
 const id = route.params.id
 const accessoire = ref({})
 const marque = ref({})
 const categorie = ref({})
 const photos = ref({})
+
+onMounted(async () => {
+  if (userStore.connected) {
+    await panierStore.loadPanier()
+  }
+})
 
 // Récupération de l'accessoire par ID
 accessoiresStore.getById(id).then((data) => {
@@ -41,23 +49,28 @@ accessoiresStore.getById(id).then((data) => {
 
 // Ajouter un accessoire au panier
 const ajouterAuPanier = async () => {
-  try {
+  if (!userStore.connected) {
+    alert("Vous devez être connecté pour ajouter un accessoire au panier.")
+    return
+  }
+
+  if (!panierStore.panierIdActif) {
     await panierStore.loadPanier()
-    const panierId = panierStore.panierIdActif
+  }
 
-    if (!panierId) {
-      console.error('Aucun panier actif trouvé.') 
-      return
-    }
+  const panierId = panierStore.panierIdActif
 
-    const accessoireId = accessoire.value.accessoireId
-    const quantiteAccessoire = 1
+  if (!panierId) {
+    alert("Erreur : aucun panier actif.")
+    return
+  }
 
-    await ajoutAccessoireStore.ajouterAccessoire(accessoireId, panierId, quantiteAccessoire)
-    alert('Accessoire ajouté au panier !')
+  try {
+    await ajoutAccessoireStore.ajouterAccessoire(accessoire.value.accessoireId, panierId, 1)
+    alert("Accessoire ajouté au panier !")
   } catch (error) {
-    console.error('Erreur lors de l\'ajout au panier :', error)
-    alert('Aucun ajout n\'a été fait au panier !')
+    console.error("Erreur lors de l'ajout au panier :", error)
+    alert("Une erreur est survenue lors de l'ajout au panier.")
   }
 }
 </script>

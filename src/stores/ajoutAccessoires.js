@@ -7,31 +7,51 @@ export const useAjoutAccessoiresStore = defineStore('ajoutaccessoires', () => {
     const list = ref([])
     const userStore = useUserStore()
     
-    async function ajouterAccessoire(accessoireId, panierId, quantiteAccessoire) {
+    async function ajouterAccessoire(accessoireId, panierId, quantiteAccessoire = 1) {
         try {
-            const data = {
-                accessoireId, panierId, quantiteAccessoire
-            }
-
-            const res = await axios.post(`${window.VITE_BACKEND_URL}/AjouterAccessoires`, data, {
+            const response = await axios.get(`${window.VITE_BACKEND_URL}/Panier/GetMine`, {
                 headers: {
-                  Authorization: `Bearer ${userStore.token}`,
+                    Authorization: `Bearer ${userStore.token}`,
                 },
                 withCredentials: true
-              })
-            return res.data
+            })
+
+            console.log('panier récupéré !')
+
+            const accessoireExistant = response.data.listeAjouterAccessoires.find(a => a.accessoireId === accessoireId)
+            if (accessoireExistant) {
+                await axios.put(`${window.VITE_BACKEND_URL}/AjouterAccessoires`, {
+                    accessoireId: accessoireId,
+                    panierId: panierId,
+                    quantiteAccessoire: accessoireExistant.quantiteAccessoire + quantiteAccessoire
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${userStore.token}`,
+                    },
+                    withCredentials: true
+                })
+                console.log('modification qauntité effectué !')
+            } else {
+                await axios.post(`${window.VITE_BACKEND_URL}/AjouterAccessoires`, {
+                    accessoireId: accessoireId,
+                    panierId: panierId,
+                    quantiteAccessoire: quantiteAccessoire 
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${userStore.token}`,
+                    },
+                    withCredentials: true 
+                })
+                console.log('ajout effectué !')
+            }
         } catch (error) {
-            console.error("Erreur lors de l'ajout d'accessoires :", error)
+            console.error("Erreur lors de l'ajout d'accessoire :", error)
             throw error
         }
     }
 
     async function supprimerAccessoire(id) {
-        try {
-            axios.delete(`${window.VITE_BACKEND_URL}/AjouterAccessoires/${id}`)
-        } catch (error) {
-            console.error("Erreur lors de la suppression de l'accessoire :", error)
-        }
+        
     }
 
     return { list, ajouterAccessoire, supprimerAccessoire }

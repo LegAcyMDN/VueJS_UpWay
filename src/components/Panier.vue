@@ -11,11 +11,14 @@ defineProps({
 </script>
 
 <template>
-    {{ panier.nom }}
-    {{ panier.prix }}
-    {{  panier.quantite }}
+    <img :src="panier.listeAjouterAccessoires[0].ajoutDAccessoire.listePhotoAccessoires[0].urlPhotoAccessoire" alt="Image Accessoire">
+    {{ panier.listeAjouterAccessoires[0].ajoutDAccessoire.nomAccessoire }}
+    {{ panier.listeAjouterAccessoires[0].ajoutDAccessoire.prixAccessoire }}
+    {{ panier.listeAjouterAccessoires[0].quantiteAccessoire }}
 </template>
 
 <style scoped>
-
+img{
+    width: 15%;
+}
 </style>
