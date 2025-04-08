@@ -114,7 +114,7 @@ const userStore = useUserStore()
       <div id="nav-connection">
         <router-link v-if="userStore.connected && userStore.current && userStore.current.usertype === 'Admin'" to="/admin">
           <div id="login-user">
-            <svg
+            <svg v-if="userStore.connected"
               viewBox="-2.4 -2.4 28.80 28.80"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +142,7 @@ const userStore = useUserStore()
         </router-link>
         <router-link v-else to="/client">
           <div id="login-user">
-            <svg
+            <svg v-if="userStore.connected"
               viewBox="-2.4 -2.4 28.80 28.80"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
