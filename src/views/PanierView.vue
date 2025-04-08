@@ -4,16 +4,12 @@ import Panier from '@/components/Panier.vue'
 import { usePanierStore} from '@/stores/paniers'
 
 const paniers = usePanierStore()
-
-onMounted(() => {
-    paniers.loadPanier()
-})
 </script>
 
 <template>
     <main>
         <div id="panier-container" style="margin: 15% 4.5%;">
-            <div id="void-panier" v-if="paniers.list.length === 0">
+            <div id="void-panier" v-if="paniers.panier == undefined || paniers.panier.listeAjouterAccessoires == undefined || paniers.panier.listeAjouterAccessoires.length === 0">
                 <h2>Panier vide</h2>
                 <div id="h-panier">
                     <span>Votre panier est vide !</span>
@@ -26,7 +22,7 @@ onMounted(() => {
             </div>
             <div id="fill-panier" v-else>
                 <h2>Mon panier</h2>
-                <Panier v-for="(panier, index) in paniers.list" :key="index" :panier="panier"/>
+                <Panier :panier="paniers.panier"/>
             </div>
         </div>
 

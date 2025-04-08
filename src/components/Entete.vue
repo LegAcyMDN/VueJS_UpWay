@@ -79,8 +79,8 @@ const userStore = useUserStore()
             </svg>
             <p v-if="userStore.connected" id="user-name">{{ userStore.current.loginClient }}</p>
           </div>
-          <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Login / Register</router-link>
-          <button id="but-logout" @click="userStore.logout()" v-else>Logout</button>
+          <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Connexion / S'inscrire</router-link>
+          <button id="but-logout" @click="userStore.logout()" v-else>Déconnexion</button>
         </div>
       </nav>
     </div>
