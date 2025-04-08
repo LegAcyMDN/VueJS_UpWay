@@ -29,10 +29,30 @@ export const useCategoriesStore = defineStore('categories', () => {
     return entry
   }
 
-  async function post(nom){
-    const id = list.length +1
-    const category = { categorieId : id ,libelleCategorie : nom };
-    await axios.post(`${window.VITE_BACKEND_URL}/Categories`, category, {
+  async function post(nom) {
+    if (!nom || nom.trim().length === 0) {
+      console.error("Le nom de la catégorie est vide.");
+      return;
+    }
+    const category = {
+      libelleCategorie: nom
+    };
+    
+    try {
+      await axios.post(`${window.VITE_BACKEND_URL}/Categories`, category, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        withCredentials: true,
+      });
+      console.log("Catégorie créée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la création :", error.response?.data || error.message);
+    }
+  }
+  
+  async function deleteCategory(id){
+    await axios.delete(`${window.VITE_BACKEND_URL}/Categories/${id}`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
@@ -40,5 +60,6 @@ export const useCategoriesStore = defineStore('categories', () => {
     });
   }
 
-  return { list, getById, post }
+
+  return { list, getById, post, deleteCategory}
 })
