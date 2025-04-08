@@ -11,6 +11,13 @@ import MarqueView from '@/views/MarqueView.vue'
 import MagasinView from '@/views/MagasinView.vue'
 import PanierView from '@/views/PanierView.vue'
 import AdminView from '@/views/AdminView.vue'
+import GestionVelosView from '@/views/admin/GestionVelosView.vue'
+import GestionAccessoiresView from '@/views/admin/GestionAccessoiresView.vue'
+import GestionArticleView from '@/views/admin/GestionArticleView.vue'
+import GestionCategorieArticlesView from '@/views/admin/GestionCategorieArticlesView.vue'
+import GestionMarquesView from '@/views/admin/GestionMarquesView.vue'
+import GestionCategorieView from '@/views/admin/GestionCatégorieView.vue'
+import GestionMoteursView from '@/views/admin/GestionMoteursView.vue'
 import { useUserStore } from '@/stores/user';
 
 
@@ -87,6 +94,48 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-velo',
+      name: 'gestion-velo',
+      component: GestionVelosView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-accessoire',
+      name: 'gestion-accessoire',
+      component: GestionAccessoiresView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-article',
+      name: 'gestion-article',
+      component: GestionArticleView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-categorie-article',
+      name: 'gestion-categorie-article',
+      component: GestionCategorieArticlesView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-marque',
+      name: 'gestion-marque',
+      component: GestionMarquesView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-categorie',
+      name: 'gestion-categorie',
+      component: GestionCategorieView,
+      meta: { requiresAdmin: true }
+    },
+    {
+      path: '/admin/gestion-moteur',
+      name: 'gestion-moteur',
+      component: GestionMoteursView,
       meta: { requiresAdmin: true }
     },
   ],

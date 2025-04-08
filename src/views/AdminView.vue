@@ -3,13 +3,13 @@
       <h1>Admin</h1>
       <h2 class="titrefonc">Fonctionnalité</h2>
       <div class="fonctionnalites">
-        <router-link to="/admin/ajout-velo">Ajouter des vélos</router-link>
-        <router-link to="/admin/ajout-accessoire">Ajouter des accessoires</router-link>
-        <router-link to="/admin/ajout-article">Ajouter des articles</router-link>
-        <router-link to="/admin/ajout-categorie-article">Ajouter des catégories d'articles</router-link>
-        <router-link to="/admin/ajout-marque">Ajouter des marques</router-link>
-        <router-link to="/admin/ajout-categorie">Ajouter des catégories</router-link>
-        <router-link to="/admin/ajout-moteur">Ajouter des moteurs</router-link>
+        <router-link to="/admin/gestion-velo">Gestion des vélos</router-link>
+        <router-link to="/admin/gestion-accessoire">Gestion des accessoires</router-link>
+        <router-link to="/admin/gestion-article">Gestion des articles</router-link>
+        <router-link to="/admin/gestion-categorie-article">Gestion des catégories d'articles</router-link>
+        <router-link to="/admin/gestion-marque">Gestion des marques</router-link>
+        <router-link to="/admin/gestion-categorie">Gestion des catégories</router-link>
+        <router-link to="/admin/gestion-moteur">Gestion des moteurs</router-link>
       </div>
     </div>
   </template>
