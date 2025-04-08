@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export const useCategoriesStore = defineStore('categories', () => {
   const list = ref([])
+  const token = ref($cookies.get('jwt_token'))
 
   axios.get(`${window.VITE_BACKEND_URL}/Categories`).then((response) => {
     list.value = response.data
@@ -28,5 +29,16 @@ export const useCategoriesStore = defineStore('categories', () => {
     return entry
   }
 
-  return { list, getById }
+  async function post(nom){
+    const id = list.length +1
+    const category = { categorieId : id ,libelleCategorie : nom };
+    await axios.post(`${window.VITE_BACKEND_URL}/Categories`, category, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+  }
+
+  return { list, getById, post }
 })
