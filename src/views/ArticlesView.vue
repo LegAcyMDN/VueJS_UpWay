@@ -13,15 +13,8 @@ const nouvelart = ref({
 </script>
 
 <template>
-  <article>
-    {{ nouvelart.titreCategorieArticle }}
-    <button @click="articles.ajouter">Ajouter un nouvel article</button>
-    <input v-model="nouvelart.titreCategorieArticle" />
-    <input v-model="nouvelart.contenuCategorieArticle" />
-    <input v-model="nouvelart.imageCategorie" />
-  </article>
   <main>
-    <p>Articles</p>
+    <h1 class="titre">Articles</h1>
     <ArticlesComponent 
     :key="article.categorieArticleId"
     v-for="article in articles.list" 
@@ -29,4 +22,10 @@ const nouvelart = ref({
     :link="{path: '/article/' + article.categorieArticleId}"/>
   </main>
 </template>
-<style></style>
+
+<style>
+.titre
+{
+  text-align: center;
+}
+</style>
