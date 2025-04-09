@@ -54,7 +54,12 @@ watch(
   },
 )
 
-// appelle `getByCategoryPrix` dès qu'un filtre est modifié
+/*
+// alor ici ce trouve le code pour utiliser les filtres
+// mais allors qu'il fait comme celui de accessoir
+// il renvoie une erreur lier au donner envoyer quand elle sont non null
+
+// appelle `getByFiltres` dès qu'un filtre est modifié
 const updateVelos = async () => {
   await velos.getByFiltres(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
   kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
@@ -69,7 +74,7 @@ const changePage = async (page) => {
   kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
   poids.value, prixMin.value, prixMax.value, page)
 }
-  
+*/  
 </script>
 
 <template>
