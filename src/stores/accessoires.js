@@ -14,7 +14,7 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   count()
 
   async function add(accessoire) {
-    return (await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)).data
+    await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)
   }
 
   async function getById(id) {
