@@ -158,7 +158,8 @@ export const useVelosStore = defineStore('velos', () => {
       return entries
     }
 
-    entries = (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetCaracteristiqueById/${id}`)).data
+    entries = (await axios.get(`${window.VITE_BACKEND_URL}/Velos/GetCaracteristiqueById/${id}`))
+      .data
 
     if (list.value.length >= 100) {
       caracteristique.value = entries
@@ -176,14 +177,45 @@ export const useVelosStore = defineStore('velos', () => {
     return count
   }
 
-  async function getByFiltres(taille, categorie, cara, marque, annee, kilomMin, kilomMax, posmot, motmarId, couplemot, capbat, poids, prixMin, prixMax, page = 0) {
-    list.value = (await axios.get(
-      `${window.VITE_BACKEND_URL}/Velos/getByFiltres`,
-      {
-        params: {taille, categorie, cara, marque, annee, kilomMin, kilomMax, posmot, motmarId, couplemot, capbat, poids, prixMin, prixMax, page}
-      }
-    )).data;
-    current_page.value = page;
+  async function getByFiltres(
+    taille,
+    categorie,
+    cara,
+    marque,
+    annee,
+    kilomMin,
+    kilomMax,
+    posmot,
+    motmarId,
+    couplemot,
+    capbat,
+    poids,
+    prixMin,
+    prixMax,
+    page = 0,
+  ) {
+    list.value = (
+      await axios.get(`${window.VITE_BACKEND_URL}/Velos/getByFilters`, {
+        params: {
+          taille,
+          categorie,
+          cara,
+          marque,
+          annee,
+          kilomMin,
+          kilomMax,
+          posmot,
+          motmarId,
+          couplemot,
+          capbat,
+          poids,
+          prixMin,
+          prixMax,
+          page,
+        },
+      })
+    ).data
+    current_page.value = page
   }
 
   async function fetchBikes(page) {

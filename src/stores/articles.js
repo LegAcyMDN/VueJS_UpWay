@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export const useArticleStore = defineStore('articles', () => {
   const list = ref([])
+  const token = ref($cookies.get('jwt_token'))
 
   async function add(article) {
     await axios.post(`${window.VITE_BACKEND_URL}/Articles`, article)
@@ -27,5 +28,15 @@ export const useArticleStore = defineStore('articles', () => {
   async function fetchArticles(page) {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Articles?page=${page}`)).data
   }
-  return { list, add, getById, fetchArticles, getByCategoryArticleId }
+
+  async function fetchAll() {
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Articles`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+    list.value = response.data;
+  }
+  return { list, add, getById, fetchArticles, getByCategoryArticleId,fetchAll }
 })

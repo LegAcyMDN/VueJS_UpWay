@@ -24,27 +24,28 @@ const afficherCapaciteBatterie = ref(false)
 const afficherPoids = ref(false)
 
 // Valeurs des filtres
-const votreTaille = ref(170)
+const votreTaille = ref(null)
 const categoryId = ref(null)
 const marqueId = ref(null)
-const prixMin = ref(0)
-const prixMax = ref(799)
+const prixMin = ref(null)
+const prixMax = ref(null)
 //
-const annee = ref(2025)
+const annee = ref(null)
 const caracteristiqueVeloId = ref(null)
-const kilometrageMin = ref(2)
-const kilometrageMax = ref(23218)
+const kilometrageMin = ref(null)
+const kilometrageMax = ref(null)
 //
 const positionMoteur = ref(null)
 const marqueMoteurId = ref(null)
-const coupleMoteur = ref(70)
+const coupleMoteur = ref(null)
 //
-const capaciteBatterie = ref(500)
-const poids= ref(23)
-
+const capaciteBatterie = ref(null)
+const poids = ref(null)
 
 function getImage(id) {
-  return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoVelo
+  return images.value[id] == undefined || images.value[id].length == 0
+    ? undefined
+    : images.value[id][0].urlPhotoVelo
 }
 
 watch(
@@ -54,27 +55,71 @@ watch(
   },
 )
 
-/*
 // alor ici ce trouve le code pour utiliser les filtres
 // mais allors qu'il fait comme celui de accessoir
 // il renvoie une erreur lier au donner envoyer quand elle sont non null
 
 // appelle `getByFiltres` dès qu'un filtre est modifié
 const updateVelos = async () => {
-  await velos.getByFiltres(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
-  kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
-  poids.value, prixMin.value, prixMax.value, velos.current_page)
+  await velos.getByFiltres(
+    votreTaille.value,
+    categoryId.value,
+    caracteristiqueVeloId.value,
+    marqueId.value,
+    annee.value,
+    kilometrageMin.value,
+    kilometrageMax.value,
+    null, //positionMoteur.value,
+    marqueMoteurId.value,
+    coupleMoteur.value == '' || coupleMoteur.value == null ? null : coupleMoteur.value + ' nm',
+    capaciteBatterie.value,
+    poids.value,
+    prixMin.value,
+    prixMax.value,
+    velos.current_page,
+  )
 }
-watch([votreTaille, categoryId, caracteristiqueVeloId, marqueId, annee, kilometrageMin, kilometrageMax, positionMoteur, 
-  marqueMoteurId, coupleMoteur, capaciteBatterie, poids, prixMin, prixMax,], updateVelos, { immediate: true })
+watch(
+  [
+    votreTaille,
+    categoryId,
+    caracteristiqueVeloId,
+    marqueId,
+    annee,
+    kilometrageMin,
+    kilometrageMax,
+    positionMoteur,
+    marqueMoteurId,
+    coupleMoteur,
+    capaciteBatterie,
+    poids,
+    prixMin,
+    prixMax,
+  ],
+  updateVelos,
+  { immediate: true },
+)
 
 // Pagination:
 const changePage = async (page) => {
-  await velos.getByFiltres(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
-  kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
-  poids.value, prixMin.value, prixMax.value, page)
+  await velos.getByFiltres(
+    votreTaille.value,
+    categoryId.value,
+    caracteristiqueVeloId.value,
+    marqueId.value,
+    annee.value,
+    kilometrageMin.value,
+    kilometrageMax.value,
+    positionMoteur.value,
+    marqueMoteurId.value,
+    coupleMoteur.value,
+    capaciteBatterie.value,
+    poids.value,
+    prixMin.value,
+    prixMax.value,
+    page,
+  )
 }
-*/  
 </script>
 
 <template>
@@ -241,7 +286,10 @@ const changePage = async (page) => {
       <div class="fitre">
         <div class="filtre_name_button">
           <h2>Capacité batterie</h2>
-          <button @click="afficherCapaciteBatterie = !afficherCapaciteBatterie" class="toggle-button">
+          <button
+            @click="afficherCapaciteBatterie = !afficherCapaciteBatterie"
+            class="toggle-button"
+          >
             {{ afficherCapaciteBatterie ? '⬇' : '➡' }}
           </button>
         </div>
@@ -289,12 +337,20 @@ const changePage = async (page) => {
     <button class="button_pagination" v-if="velos.current_page > 0" @click="velos.fetchBikes(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button class="button_pagination" v-if="velos.current_page > 0" @click="velos.fetchBikes(velos.current_page - 1)">
+    <button
+      class="button_pagination"
+      v-if="velos.current_page > 0"
+      @click="velos.fetchBikes(velos.current_page - 1)"
+    >
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
     <div v-for="i in [3, 2, 1]" :key="i">
-      <button class="button_pagination" v-if="velos.current_page - i >= 0" @click="velos.fetchBikes(velos.current_page - i)">
+      <button
+        class="button_pagination"
+        v-if="velos.current_page - i >= 0"
+        @click="velos.fetchBikes(velos.current_page - i)"
+      >
         {{ velos.current_page - i + 1 }}
       </button>
     </div>
@@ -302,23 +358,35 @@ const changePage = async (page) => {
     <button class="button_pagination" disabled>{{ velos.current_page + 1 }}</button>
 
     <div v-for="i in 3" :key="i">
-      <button class="button_pagination" v-if="velos.current_page + i <= velos.total_pages" @click="velos.fetchBikes(velos.current_page + i)">
+      <button
+        class="button_pagination"
+        v-if="velos.current_page + i <= velos.total_pages"
+        @click="velos.fetchBikes(velos.current_page + i)"
+      >
         {{ velos.current_page + i + 1 }}
       </button>
     </div>
 
-    <button class="button_pagination" v-if="velos.current_page < velos.total_pages" @click="velos.fetchBikes(velos.current_page + 1)">
+    <button
+      class="button_pagination"
+      v-if="velos.current_page < velos.total_pages"
+      @click="velos.fetchBikes(velos.current_page + 1)"
+    >
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button class="button_pagination" v-if="velos.current_page != velos.total_pages" @click="velos.fetchBikes(velos.total_pages)">
+    <button
+      class="button_pagination"
+      v-if="velos.current_page != velos.total_pages"
+      @click="velos.fetchBikes(velos.total_pages)"
+    >
       <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
 </template>
 
 <style scoped>
-.filtre_name_button{
-  display: flex;  
+.filtre_name_button {
+  display: flex;
   justify-content: space-between;
 }
 .toggle-button {
