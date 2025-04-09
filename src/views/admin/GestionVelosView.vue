@@ -123,7 +123,7 @@ function deleteVelo(id) {
                     Capacite de la Batterie du velo :
                     <input v-model="capaciteBatterie" type="text" />
                     Description du Velo :
-                    <textarea class="contenue" v-model="descriptifVelo" rows="5" cols="40"></textarea>
+                    <textarea class="contenue" v-model="description" rows="5" cols="40"></textarea>
                     <button @click="addVelo">Valider</button>
                 </label>
             </div>
