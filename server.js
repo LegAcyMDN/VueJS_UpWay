@@ -4,6 +4,14 @@ import path from 'path'
 const app = express()
 const indexFile = path.resolve('dist', 'index.html')
 
+import swStats from 'swagger-stats'
+import promClient from 'prom-client'
+
+app.use(swStats.getMiddleware())
+promClient.register.setDefaultLabels({
+  instance_name: process.env.INSTANCE_NAME == undefined ? 'upway-front' : process.env.INSTANCE_NAME,
+})
+
 app.get('/env.js', (req, res) => {
   let content = ''
 
