@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useUserStore } from '@/stores/user.js'
 
 const CACHE_SIZE = 200
 
@@ -223,6 +224,17 @@ export const useVelosStore = defineStore('velos', () => {
     current_page.value = page
   }
 
+  async function fetchAll() {
+    const userStore = useUserStore()
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Velos`, {
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+      withCredentials: true,
+    });
+    list.value = response.data;
+  }
+
   return {
     list,
     cart,
@@ -234,6 +246,7 @@ export const useVelosStore = defineStore('velos', () => {
     getById,
     getByFiltres,
     fetchBikes,
+    fetchAll,
     count,
     current_page,
     total_pages,
