@@ -20,6 +20,63 @@ export const useVelosStore = defineStore('velos', () => {
     return axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo.value)
   }
 
+  async function post(marque, categorie, moteur, caracteristiqueVelo, nom, annee, tailleMin, tailleMax, 
+    nombreKms, prixRemise, prixNeuf, pourcentageReduction, description, quantiteVelo, positionMoteur, capaciteBatterie) {
+    const userStore = useUserStore()
+    if (!nom || nom.trim().length === 0) {
+      console.error("Le nom de la categorie est vide.");
+      return;
+    }
+    const accessoire = {
+      marqueId: marque,//
+      categorieId: categorie,//
+      moteurId: moteur,
+      caracteristiqueVeloId: caracteristiqueVelo,
+      nomVelo: nom,//
+      anneeVelo: annee,
+      tailleMin: tailleMin,
+      tailleMax: tailleMax,
+      nombreKms: nombreKms,
+      //
+      prixRemise: prixRemise,
+      prixNeuf: prixNeuf,
+      pourcentageReduction: pourcentageReduction, 
+      descriptifVelo : description,//
+      quantiteVelo: quantiteVelo,
+      positionMoteur: positionMoteur,
+      capaciteBatterie: capaciteBatterie,
+    };
+    
+    try {
+      await axios.post(`${window.VITE_BACKEND_URL}/Velos`, velo, {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        withCredentials: true,
+      });
+      await fetchAll();
+      console.log("Catégorie créée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la création :", error.response?.data || error.message);
+    }
+  }
+
+  async function deleteVelo(id) {
+    try {
+      const userStore = useUserStore();
+      await axios.delete(`${window.VITE_BACKEND_URL}/Velos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        withCredentials: true,
+      });
+      await fetchVelos(current_page.value);
+    } catch (err) {
+      console.error("Erreur lors de la suppression :", err);
+      alert("Échec de la suppression du velo.");
+    }
+  }
+
   async function getById(id) {
     const entry = list.value.find((v) => v.veloId == id)
     if (entry != undefined) return entry
@@ -138,6 +195,8 @@ export const useVelosStore = defineStore('velos', () => {
     list,
     cart,
     add,
+    post,
+    deleteVelo,
     getPhotosById,
     getPhotosByIds,
     getById,

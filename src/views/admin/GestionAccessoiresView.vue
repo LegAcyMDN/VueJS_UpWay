@@ -42,6 +42,36 @@ function deleteAccessoire(id) {
                     <p>{{ accessoire.nomAccessoire }}</p>
                     <button @click="deleteAccessoire(accessoire.accessoireId)">supprimer</button>
                 </div>
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="button_pagination" v-if="accessoiresStore.current_page > 0" @click="accessoiresStore.fetchAccessories(0)">
+                        <FontAwesomeIcon :icon="faBackward" />
+                    </button>
+                    <button class="button_pagination" v-if="accessoiresStore.current_page > 0" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page - 1)">
+                        <FontAwesomeIcon :icon="faArrowLeft" />
+                    </button>
+
+                    <div v-for="i in [3, 2, 1]" :key="i">
+                        <button class="button_pagination" v-if="accessoiresStore.current_page - i >= 0" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page - i)">
+                            {{ accessoiresStore.current_page - i + 1 }}
+                        </button>
+                    </div>
+
+                    <button class="button_pagination" disabled>{{ accessoiresStore.current_page + 1 }}</button>
+
+                    <div v-for="i in 3" :key="i">
+                        <button class="button_pagination" v-if="accessoiresStore.current_page + i <= accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page + i)">
+                            {{ accessoiresStore.current_page + i + 1 }}
+                        </button>
+                    </div>
+
+                    <button class="button_pagination" v-if="accessoiresStore.current_page < accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page + 1)">
+                        <FontAwesomeIcon :icon="faArrowRight" />
+                    </button>
+                    <button class="button_pagination" v-if="accessoiresStore.current_page != accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.total_pages)">
+                        <FontAwesomeIcon :icon="faForward" />
+                    </button>
+                </div>
             </div>
             <div class="listadd">
                 <h2>Ajouter un accessoire :</h2>
@@ -71,36 +101,7 @@ function deleteAccessoire(id) {
             </div>
         </div>
     </div>
-    <!-- Pagination -->
-    <div class="pagination">
-        <button class="button_pagination" v-if="accessoiresStore.current_page > 0" @click="accessoiresStore.fetchAccessories(0)">
-            <FontAwesomeIcon :icon="faBackward" />
-        </button>
-        <button class="button_pagination" v-if="accessoiresStore.current_page > 0" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page - 1)">
-            <FontAwesomeIcon :icon="faArrowLeft" />
-        </button>
-
-        <div v-for="i in [3, 2, 1]" :key="i">
-            <button class="button_pagination" v-if="accessoiresStore.current_page - i >= 0" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page - i)">
-                {{ accessoiresStore.current_page - i + 1 }}
-            </button>
-        </div>
-
-        <button class="button_pagination" disabled>{{ accessoiresStore.current_page + 1 }}</button>
-
-        <div v-for="i in 3" :key="i">
-            <button class="button_pagination" v-if="accessoiresStore.current_page + i <= accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page + i)">
-                {{ accessoiresStore.current_page + i + 1 }}
-            </button>
-        </div>
-
-        <button class="button_pagination" v-if="accessoiresStore.current_page < accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.current_page + 1)">
-            <FontAwesomeIcon :icon="faArrowRight" />
-        </button>
-        <button class="button_pagination" v-if="accessoiresStore.current_page != accessoiresStore.total_pages" @click="accessoiresStore.fetchAccessories(accessoiresStore.total_pages)">
-            <FontAwesomeIcon :icon="faForward" />
-        </button>
-    </div>
+    
 </template>
 
 <style scoped>
