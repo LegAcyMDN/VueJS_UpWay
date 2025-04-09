@@ -1,9 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useArticleStore } from '@/stores/articles.js'
 import { useContentArticleStore } from '@/stores/contentarticles.js'
 import { useCategorieArticleStore } from '@/stores/categoriearticles.js'
 import axios from 'axios'
+import { computed } from 'vue'
+
+const titresArticles = computed(() => {
+  return contentarticlesStore.list.filter(c => c.prioriteContenu === 0)
+})
 
 const articlesStore = useArticleStore()
 const contentarticlesStore = useContentArticleStore()
@@ -51,15 +56,22 @@ async function addCategorie() {
 
     console.log("Article complet ajouté avec succès !");
 
-    articlesStore.fetchArticles(0);
-    contentarticlesStore.fetchArticles(0);
+    articlesStore.fetchAll();
+    contentarticlesStore.fetchAll();
   } catch (error) {
     console.error("Erreur lors de l'ajout :", error.response?.data || error.message);
     console.log("Une erreur est survenue lors de l'ajout.");
   }
 }
 
+function deleteCategorie(categorie){
+  contentarticlesStore.deleteContent(categorie)
+}
 
+
+onMounted(async () => {
+  await contentarticlesStore.fetchAllPages();
+});
 </script>
 
 
@@ -68,6 +80,13 @@ async function addCategorie() {
     <h1>Article</h1>
 
     <div class="list">
+      <div>
+        <h2>List :</h2>
+        <div class="list"  v-for="categorie in titresArticles" :key="categorie.id">
+            <p id="content">{{ categorie.contenu }}</p>
+            <button @click="deleteCategorie(categorie.articleId)">supprimer</button>
+          </div>
+      </div>
       <div class="listadd">
         <h2>Ajouter un article :</h2>
         <label class="add">
@@ -101,7 +120,6 @@ async function addCategorie() {
     .list{
         margin-left: 3%;
         display: flex;
-        gap: 50px;
         flex-direction: row;
     }
     .listcont{
@@ -130,12 +148,15 @@ async function addCategorie() {
         flex-direction: column;
     }
     .listadd{
-        margin-left: 30%;
+        margin-left: 10%;
     }
 
     .contenue{
         resize: vertical;
         min-height: 200px;
         width: 100%;
+    }
+    #content{
+      width : 100%;
     }
 </style>
