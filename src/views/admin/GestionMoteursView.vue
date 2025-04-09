@@ -11,14 +11,14 @@ const coupleMoteur = ref('')
 const vitesseMaximal = ref('')
 
 
-function addMoteur() {
+async function addMoteur() {
   if (modeleMoteur.value.trim() === '') {
     alert("Le nom ne peut pas être vide !");
     return;
   }
-  console.log(marqueMoteur)
-  //moteurStore.post(marqueMoteur.value.trim(),modeleMoteur.value.trim(),coupleMoteur.value.trim(),vitesseMaximal.value.trim())
+  moteurStore.post(marqueMoteur.value, modeleMoteur.value.trim(), coupleMoteur.value.trim(), vitesseMaximal.value.trim());
 }
+
 
 function deleteMoteur(id) {
     moteurStore.deleteMoteur(id)
@@ -48,7 +48,7 @@ onMounted(async () => {
         <label class="add">
         Marque du Moteur :
           <select name="marque" id="marque-select" v-model="marqueMoteur" >
-            <option v-for="marque in marqueStore.list" :key="marque.id" >{{ marque.nomMarque }}</option>
+            <option v-for="marque in marqueStore.list" :key="marque.id" :value="marque.marqueId">{{ marque.nomMarque }}</option>
           </select>
           Modele du Moteur :
           <input v-model="modeleMoteur" type="text" />

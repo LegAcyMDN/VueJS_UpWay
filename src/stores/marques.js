@@ -33,6 +33,25 @@ export const useMarquesStore = defineStore('marques', () => {
     return entry
   }
 
+  async function getByName(nom) {
+    let entry = list.value.find((v) => v.nomMarque == nom)
+
+    if (entry != undefined) {
+      return entry
+    }
+
+    entry = (await axios.get(`${window.VITE_BACKEND_URL}/Marques/GetByNom/${nom}`)).data
+    console.log(entry)
+
+    if (list.value.length >= 100) {
+      list.value = [entry]
+    } else {
+      list.value.push(entry)
+    }
+
+    return entry
+  }
+
   async function fetchMarque(page) {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Marques?page=${page}`)).data
     current_page.value = page
@@ -107,5 +126,5 @@ export const useMarquesStore = defineStore('marques', () => {
   }
   
 
-  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque, fetchAll, fetchAllPages }
+  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque, fetchAll, fetchAllPages, getByName }
 })

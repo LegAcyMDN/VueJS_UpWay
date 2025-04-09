@@ -9,7 +9,7 @@
         <router-link to="/admin/gestion-categorie-article">Gestion des catégories d'articles</router-link>
         <router-link to="/admin/gestion-marque">Gestion des marques</router-link>
         <router-link to="/admin/gestion-categorie">Gestion des catégories</router-link>
-        <router-link to="/admin/gestion-moteur">Gestion des moteurs</router-link>
+
       </div>
     </div>
   </template>

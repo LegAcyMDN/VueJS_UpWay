@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import Entete from './components/Entete.vue'
+import Footer from './components/Footer.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import Entete from './components/Entete.vue'
   </header>
 
   <RouterView />
+  <Footer></Footer>
 </template>
 
 <style scoped>
