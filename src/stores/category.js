@@ -30,10 +30,6 @@ export const useCategoriesStore = defineStore('categories', () => {
   }
 
   async function post(nom) {
-    if (!nom || nom.trim().length === 0) {
-      console.error("Le nom de la catégorie est vide.");
-      return;
-    }
     const category = {
       libelleCategorie: nom
     };
@@ -59,6 +55,7 @@ export const useCategoriesStore = defineStore('categories', () => {
       },
       withCredentials: true,
     });
+    console.log("Catégorie supprimer avec succès !");
     await fetchAll();
   }
 

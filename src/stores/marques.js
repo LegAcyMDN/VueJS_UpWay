@@ -75,10 +75,11 @@ export const useMarquesStore = defineStore('marques', () => {
       },
       withCredentials: true,
     });
+    console.log("Marque supprimer avec succès !");
     await fetchAll();
   }
   async function fetchAll() {
-    const response = await axios.get(`${window.VITE_BACKEND_URL}/Categories`, {
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Marques`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },

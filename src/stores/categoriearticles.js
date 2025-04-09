@@ -55,10 +55,11 @@ export const useCategorieArticleStore = defineStore('article_categories', () => 
       },
       withCredentials: true,
     });
+    console.log("Catégorie supprimer avec succès !");
     await fetchAll();
   }
   async function fetchAll() {
-    const response = await axios.get(`${window.VITE_BACKEND_URL}/Categories`, {
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/CategorieArticles`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
