@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useUserStore } from '@/stores/user.js'
 
 const CACHE_SIZE = 200
 
@@ -15,6 +16,44 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   async function add(accessoire) {
     await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire)
+  }
+
+  async function post(marque, categorie,nom, prix, description) {
+    const userStore = useUserStore()
+    if (!nom || nom.trim().length === 0) {
+      console.error("Le nom de la categorie est vide.");
+      return;
+    }
+    const accessoire = {
+      marqueId: marque,
+      categorieId: categorie,
+      nomAccessoire: nom,
+      prixAccessoire : prix,
+      descriptionAccessoire : description,
+    };
+    
+    try {
+      await axios.post(`${window.VITE_BACKEND_URL}/Accessoires`, accessoire, {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        withCredentials: true,
+      });
+      await fetchAll();
+      console.log("Catégorie créée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la création :", error.response?.data || error.message);
+    }
+  }
+
+  async function deleteAccessoire(id) {
+    try {
+      await axios.delete(`${window.VITE_BACKEND_URL}/Accessoires/${id}`)
+      await fetchAccessories(current_page.value)
+    } catch (err) {
+      console.error("Erreur lors de la suppression :", err)
+      alert("Échec de la suppression de l'accessoire.")
+    }
   }
 
   async function getById(id) {
@@ -89,6 +128,17 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
     current_page.value = page
   }
 
+  async function fetchAll() {
+    const userStore = useUserStore()
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Accessoires`, {
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+      withCredentials: true,
+    });
+    list.value = response.data;
+  }
+
   async function count() {
     count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Accessoires/count`)).data)
     total_pages.value = Math.floor(count / 20)
@@ -99,12 +149,15 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
   return {
     list,
     add,
+    post,
+    deleteAccessoire,
     getPhotosById,
     getPhotosByIds,
     getById,
     getByCategoryPrix,
     fetchAccessories,
     count,
+    fetchAll,
     current_page,
     total_pages,
   }

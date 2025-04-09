@@ -1,29 +1,77 @@
-<script>
-/*import { ref } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import { useAccessoiresStore } from '@/stores/accessoires.js'
+import { useMarquesStore } from '@/stores/marques.js'
+import { useCategoriesStore } from '@/stores/category.js'
 
 const accessoiresStore = useAccessoiresStore()
-const marqueId = ref('')
-const categorieId = ref('')
-const nomAccessoire = ref('')
-const prixAccessoire = ref('')
-const descriptionAccessoire = ref('')
+const marquesStore = useMarquesStore()
+const categoriesStore = useCategoriesStore()
+const marqueId = ref(15)
+const categorieId = ref(8)
+const nomAccessoire = ref('Chaîne de fer (170cm)')
+const prixAccessoire = ref(1.00)
+const descriptionAccessoire = ref('Notée /10')
 
 function addAccessoire() {
   if (nomAccessoire.value.trim() === '') {
     alert("Le nom ne peut pas être vide !");
     return;
   }
-  categoriearticlesStore.post(nomCategorie.value.trim(),contenueCategorie.value.trim(),urlPhotoCategorie.value.trim())
+    console.log("marque :", marqueId.value)
+    console.log("categorie :", categorieId.value)
+    console.log("nom :", nomAccessoire.value.trim())
+    console.log("prix :", prixAccessoire.value)
+    console.log("description :", descriptionAccessoire.value.trim())
+  accessoiresStore.post(marqueId.value,categorieId.value,nomAccessoire.value.trim(),prixAccessoire.value,descriptionAccessoire.value.trim())
 }
 
 function deleteAccessoire(id) {
-    categoriearticlesStore.deleteCategorie(id)
+    accessoiresStore.deleteAccessoire(id)
 }
-*/
 </script>
 
-<template></template>
+<template>
+    <div class="category">
+        <h1>Accessoire</h1>
+
+        <div class="list">
+            <div>
+                <h2>List :</h2>
+                <div class="list" v-for="accessoire in accessoiresStore.list" :key="accessoire.id">
+                    <p>{{ accessoire.nomAccessoire }}</p>
+                    <button @click="deleteAccessoire(accessoire.accessoireId)">supprimer</button>
+                </div>
+            </div>
+            <div class="listadd">
+                <h2>Ajouter un accessoire :</h2>
+                <label class="add">
+                    Nom de l'accessoire :
+                    <input v-model="nomAccessoire" type="text" />
+                    Nom de la marque de l'accessoire :
+                    <select v-model="marqueId">
+                        <div v-if="!marquesStore.list.length">
+                            <p>Les marques ne sont pas encore chargées. Veuillez patienter...</p>
+                        </div>
+                        <option v-for="marque in marquesStore.list" :key="marque.id" :value="marque.marqueId">{{ marque.nomMarque }}</option>
+                    </select>
+                    Nom de la categorie de l'accessoire :
+                    <select v-model="categorieId">
+                        <div v-if="!categoriesStore.list.length">
+                            <p>Les catégories ne sont pas encore chargées. Veuillez patienter...</p>
+                        </div>
+                        <option v-for="categorie in categoriesStore.list" :key="categorie.id" :value="categorie.categorieId">{{ categorie.libelleCategorie }}</option>
+                    </select>
+                    Prix de l'accessoire :
+                    <input v-model="prixAccessoire" type="text" />
+                    Description de l'accessoire :
+                    <textarea class="contenue" v-model="descriptionAccessoire" rows="5" cols="40"></textarea>
+                    <button @click="addAccessoire">Valider</button>
+                </label>
+            </div>
+        </div>
+    </div>
+</template>
 
 <style scoped>
 .category {
