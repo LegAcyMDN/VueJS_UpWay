@@ -157,9 +157,9 @@ const changePage = async (page) => {
         <div class="depliant_fitre" v-show="afficherPrix">
           <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_fitre" type="text" v-model="prixMin"/>€
+            <input class="input_fitre" type="text" v-model="prixMin" id="prixMin" />€
             <label>à</label>
-            <input class="input_fitre" type="text" v-model="prixMax"/>€
+            <input class="input_fitre" type="text" v-model="prixMax" id="prixMax" />€
           </div>
         </div>
       </div>
@@ -189,9 +189,9 @@ const changePage = async (page) => {
         <div class="depliant_fitre" v-show="afficherKilometrage">
           <div class="input_box_fitre">
             <label>De</label>
-            <input class="input_fitre" type="text" v-model="kilometrageMin"/>km
+            <input class="input_fitre" type="text" v-model="kilometrageMin" />km
             <label>à</label>
-            <input class="input_fitre" type="text" v-model="kilometrageMax"/>km
+            <input class="input_fitre" type="text" v-model="kilometrageMax" />km
           </div>
         </div>
       </div>
@@ -220,7 +220,7 @@ const changePage = async (page) => {
         </div>
         <div class="depliant_fitre" v-show="afficherMarqueMoteur">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="marqueMoteurId"/>
+            <input class="input_fitre" type="text" v-model="marqueMoteurId" />
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ const changePage = async (page) => {
         </div>
         <div class="depliant_fitre" v-show="afficherCoupleMoteur">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="coupleMoteur"/>+ Nm
+            <input class="input_fitre" type="text" v-model="coupleMoteur" />+ Nm
           </div>
         </div>
       </div>
@@ -249,7 +249,7 @@ const changePage = async (page) => {
         </div>
         <div class="depliant_fitre" v-show="afficherCapaciteBatterie">
           <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="capaciteBatterie"/>+ Wh
+            <input class="input_fitre" type="text" v-model="capaciteBatterie" />+ Wh
           </div>
         </div>
       </div>

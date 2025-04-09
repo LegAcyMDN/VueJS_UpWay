@@ -72,5 +72,14 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  return { current, token, connected, login, loginOtp, register, logout }
+  async function deleteClient(id){
+    await axios.delete(`${window.VITE_BACKEND_URL}/CompteClients/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+  }
+
+  return { current, token, connected, login, loginOtp, register, logout, deleteClient }
 })

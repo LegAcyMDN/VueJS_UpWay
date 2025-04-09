@@ -4,6 +4,11 @@ import axios from 'axios'
 
 export const useMarquesStore = defineStore('marques', () => {
   const list = ref([])
+  const current_page = ref(0)
+  const total_pages = ref(0)
+  const token = ref($cookies.get('jwt_token'))
+  fetchMarque(0)
+  count()
 
   axios.get(`${window.VITE_BACKEND_URL}/Marques`).then((response) => {
     list.value = response.data
@@ -28,5 +33,49 @@ export const useMarquesStore = defineStore('marques', () => {
     return entry
   }
 
-  return { list, getById }
+  async function fetchMarque(page) {
+    list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Marques?page=${page}`)).data
+    current_page.value = page
+  }
+
+  async function count() {
+    count = parseInt((await axios.get(`${window.VITE_BACKEND_URL}/Marques/count`)).data)
+    total_pages.value = Math.floor(count / 20)
+
+    return count
+  }
+
+  async function post(nom) {
+    if (!nom || nom.trim().length === 0) {
+      console.error("Le nom de la marque est vide.");
+      return;
+    }
+    const marque = {
+      nomMarque: nom
+    };
+    
+    try {
+      await axios.post(`${window.VITE_BACKEND_URL}/Marques`, marque, {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        withCredentials: true,
+      });
+      await fetchAll();
+      console.log("Catégorie créée avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de la création :", error.response?.data || error.message);
+    }
+  }
+  
+  async function deleteMarque(id){
+    await axios.delete(`${window.VITE_BACKEND_URL}/Marque/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+  }
+
+  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque }
 })
