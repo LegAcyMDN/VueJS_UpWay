@@ -43,7 +43,9 @@ const capaciteBatterie = ref(null)
 const poids = ref(null)
 
 function getImage(id) {
-  return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoVelo
+  return images.value[id] == undefined || images.value[id].length == 0
+    ? undefined
+    : images.value[id][0].urlPhotoVelo
 }
 
 watch(
