@@ -2,6 +2,10 @@
 
 Front for the Upway project
 
+## Features
+
+- [x] Prometheus metrics endpoint
+
 ## Configuration
 
 All configuration is done via environement variables, or with a .env file.
