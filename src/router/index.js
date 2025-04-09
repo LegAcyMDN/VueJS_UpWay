@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { useUserStore } from '@/stores/user'
+
+/*import HomeView from '../views/HomeView.vue'
 import AuthView from '../views/AuthView.vue'
 import VeloView from '../views/VeloView.vue'
 import VelosView from '../views/VelosView.vue'
@@ -18,10 +20,9 @@ import GestionCategorieArticlesView from '@/views/admin/GestionCategorieArticles
 import GestionMarquesView from '@/views/admin/GestionMarquesView.vue'
 import GestionCategorieView from '@/views/admin/GestionCatégorieView.vue'
 import GestionMoteursView from '@/views/admin/GestionMoteursView.vue'
-import { useUserStore } from '@/stores/user';
-import PotitArticleView from '@/views/PotitArticleView.vue'
-import ClientView from '@/views/ClientView.vue'
 
+import PotitArticleView from '@/views/PotitArticleView.vue'
+import ClientView from '@/views/ClientView.vue'*/
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +30,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: () => import('../views/HomeView.vue'),
     },
     {
       path: '/about',
@@ -42,131 +43,130 @@ const router = createRouter({
     {
       path: '/auth',
       name: 'auth',
-      component: AuthView,
+      component: () => import('../views/AuthView.vue'),
     },
     {
       path: '/velos',
       name: 'velos',
-      component: VelosView,
+      component: () => import('../views/VelosView.vue'),
     },
     {
       path: '/velo/:id',
       name: 'velo',
-      component: VeloView,
-      props: true 
+      component: () => import('../views/VeloView.vue'),
+      props: true,
     },
     {
       path: '/accessoires',
       name: 'accessoires',
-      component: AccessoiresView,
+      component: () => import('../views/AccessoiresView.vue'),
     },
     {
-      path: '/accessoire/:id',  // :id est un paramètre dynamique
+      path: '/accessoire/:id', // :id est un paramètre dynamique
       name: 'accessoire',
-      component: AccessoireView,
-      props: true  // Permet de passer l'ID à la props du composant,
+      component: () => import('../views/AccessoireView.vue'),
+      props: true, // Permet de passer l'ID à la props du composant,
     },
     {
       path: '/articles',
       name: 'articles',
-      component: ArticlesView,
+      component: () => import('../views/ArticlesView.vue'),
     },
     {
-      path: '/article/:id',  // :id est un paramètre dynamique
+      path: '/article/:id', // :id est un paramètre dynamique
       name: 'article',
-      component: ArticleView,
-      props: true  // Permet de passer l'ID à la props du composant,
+      component: () => import('../views/ArticleView.vue'),
+      props: true, // Permet de passer l'ID à la props du composant,
     },
     {
       path: '/article/:catid/:id',
       name: 'arti',
-      component: PotitArticleView,
-      props: true
+      component: () => import('../views/PotitArticleView.vue'),
+      props: true,
     },
     {
       path: '/marques',
       name: 'marques',
-      component: MarqueView,
+      component: () => import('../views/MarqueView.vue'),
     },
     {
       path: '/magasins',
       name: 'magasins',
-      component: MagasinView,
+      component: () => import('../views/MagasinView.vue'),
     },
     {
       path: '/panier',
       name: 'panier',
-      component: PanierView,
+      component: () => import('../views/PanierView.vue'),
     },
     {
       path: '/client',
       name: 'client',
-      component: ClientView,
+      component: () => import('../views/ClientView.vue'),
     },
     {
       path: '/admin',
       name: 'admin',
-      component: AdminView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/AdminView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-velo',
       name: 'gestion-velo',
-      component: GestionVelosView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionVelosView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-accessoire',
       name: 'gestion-accessoire',
-      component: GestionAccessoiresView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionAccessoiresView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-article',
       name: 'gestion-article',
-      component: GestionArticleView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionArticleView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-categorie-article',
       name: 'gestion-categorie-article',
-      component: GestionCategorieArticlesView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionCategorieArticlesView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-marque',
       name: 'gestion-marque',
-      component: GestionMarquesView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionMarquesView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-categorie',
       name: 'gestion-categorie',
-      component: GestionCategorieView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionCatégorieView.vue'),
+      meta: { requiresAdmin: true },
     },
     {
       path: '/admin/gestion-moteur',
       name: 'gestion-moteur',
-      component: GestionMoteursView,
-      meta: { requiresAdmin: true }
+      component: () => import('../views/admin/GestionMoteursView.vue'),
+      meta: { requiresAdmin: true },
     },
   ],
-
-});
+})
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
+  const userStore = useUserStore()
 
   if (to.meta.requiresAdmin) {
     if (userStore.connected && userStore.current?.usertype === 'Admin') {
-      next();
+      next()
     } else {
-      next('/auth');
+      next('/auth')
     }
   } else {
-    next();
+    next()
   }
-});
+})
 
 export default router

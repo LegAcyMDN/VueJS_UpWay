@@ -16,7 +16,9 @@ const prixMin = ref(0)
 const prixMax = ref(799)
 
 function getImage(id) {
-  return images.value[id] == undefined ? undefined : images.value[id][0].urlPhotoAccessoire
+  return images.value[id] == undefined || images.value[id].length == 0
+    ? undefined
+    : images.value[id][0].urlPhotoAccessoire
 }
 
 watch(
@@ -101,12 +103,16 @@ const changePage = async (page) => {
     </div>
   </div>
 
-   <!-- Pagination -->
-   <div class="pagination">
+  <!-- Pagination -->
+  <div class="pagination">
     <button class="button_pagination" v-if="accessoires.current_page > 0" @click="changePage(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button class="button_pagination" v-if="accessoires.current_page > 0" @click="changePage(accessoires.current_page - 1)">
+    <button
+      class="button_pagination"
+      v-if="accessoires.current_page > 0"
+      @click="changePage(accessoires.current_page - 1)"
+    >
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
@@ -116,7 +122,8 @@ const changePage = async (page) => {
       ].reverse()"
       :key="i"
     >
-      <button class="button_pagination"
+      <button
+        class="button_pagination"
         v-if="accessoires.current_page - i - 1 >= 0"
         @click="changePage(accessoires.current_page - i - 1)"
       >
@@ -127,7 +134,8 @@ const changePage = async (page) => {
     <button class="button_pagination" disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button class="button_pagination"
+      <button
+        class="button_pagination"
         v-if="accessoires.current_page + i <= accessoires.total_pages"
         @click="changePage(accessoires.current_page + i)"
       >
@@ -135,13 +143,15 @@ const changePage = async (page) => {
       </button>
     </div>
 
-    <button class="button_pagination"
+    <button
+      class="button_pagination"
       v-if="accessoires.current_page < accessoires.total_pages"
       @click="changePage(accessoires.current_page + 1)"
     >
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button class="button_pagination"
+    <button
+      class="button_pagination"
       v-if="accessoires.current_page != accessoires.total_pages"
       @click="changePage(accessoires.total_pages)"
     >
@@ -151,8 +161,8 @@ const changePage = async (page) => {
 </template>
 
 <style scoped>
-.filtre_name_button{
-  display: flex;  
+.filtre_name_button {
+  display: flex;
   justify-content: space-between;
 }
 .toggle-button {
