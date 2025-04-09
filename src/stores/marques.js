@@ -75,7 +75,17 @@ export const useMarquesStore = defineStore('marques', () => {
       },
       withCredentials: true,
     });
+    await fetchAll();
+  }
+  async function fetchAll() {
+    const response = await axios.get(`${window.VITE_BACKEND_URL}/Categories`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      withCredentials: true,
+    });
+    list.value = response.data;
   }
 
-  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque }
+  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque, fetchAll }
 })

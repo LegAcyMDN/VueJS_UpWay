@@ -10,7 +10,7 @@ function addMarque() {
     alert("Le nom ne peut pas être vide !");
     return;
   }
-  marquesStore.post(nomMarques.value.trim())
+  marquesStore.post(nomMarque.value.trim())
 }
 
 function deleteMarque(id) {
