@@ -23,4 +23,8 @@ Object.entries(import.meta.env).forEach(([key, value]) => {
 
 app.config.globalProperties.window = window
 
+if (window.VITE_BACKEND_URL.endsWith('/')) {
+  window.VITE_BACKEND_URL = window.VITE_BACKEND_URL.slice(0, -1)
+}
+
 app.mount('#app')

@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue'
+/*import { ref } from 'vue'
 import { useAccessoiresStore } from '@/stores/accessoires.js'
 
 const accessoiresStore = useAccessoiresStore()
@@ -20,39 +20,35 @@ function addAccessoire() {
 function deleteAccessoire(id) {
     categoriearticlesStore.deleteCategorie(id)
 }
-
+*/
 </script>
 
-
-<template>
-    
-</template>
-
+<template></template>
 
 <style scoped>
-.category{
-    margin-left: 10%;
-    margin-top: 3%;
-    margin-bottom:20%;
+.category {
+  margin-left: 10%;
+  margin-top: 3%;
+  margin-bottom: 20%;
 }
-h2{
-    font-size: 30px;
-    margin-top: 3%;
-    margin-bottom: 3%;
+h2 {
+  font-size: 30px;
+  margin-top: 3%;
+  margin-bottom: 3%;
 }
-.list{
-    margin-left: 3%;
-    display: flex;
-    gap: 50px;
-    flex-direction: row;
+.list {
+  margin-left: 3%;
+  display: flex;
+  gap: 50px;
+  flex-direction: row;
 }
-.listcont{
-    margin-left: 50%;
-    width:100%;
+.listcont {
+  margin-left: 50%;
+  width: 100%;
 }
-p{
-    width: 300px;
-    line-height: 2;
+p {
+  width: 300px;
+  line-height: 2;
 }
 .pagination {
   display: flex;
@@ -66,18 +62,18 @@ p{
   width: 50px;
   height: 50px;
 }
-.add{
-    display: flex;
-    gap: 50px;
-    flex-direction: column;
+.add {
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
 }
-.listadd{
-    margin-left: 30%;
+.listadd {
+  margin-left: 30%;
 }
 
-.contenue{
-    resize: vertical;
-    min-height: 200px;
-    width: 100%;
+.contenue {
+  resize: vertical;
+  min-height: 200px;
+  width: 100%;
 }
 </style>
