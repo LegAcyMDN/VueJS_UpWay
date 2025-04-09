@@ -1,14 +1,13 @@
 # front_UpWay
 
-This template should help get you started developing with Vue 3 in Vite.
+Front for the Upway project
 
-## Recommended IDE Setup
+## Configuration
+All configuration is done via environement variables, or with a .env file.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+### VITE_BACKEND_URL
+URL of the backend API. <br>
+Ex: https://api.upway.com
 
 ## Project Setup
 
@@ -26,6 +25,18 @@ npm run dev
 
 ```sh
 npm run build
+```
+
+### Run E2E tests
+```sh
+npm run test-ct
+```
+
+Warning: tests assume you are using the provided dummy inserts in the backend's database!
+
+### Run Unit tests
+```sh
+npm run test
 ```
 
 ## Docker Setup
