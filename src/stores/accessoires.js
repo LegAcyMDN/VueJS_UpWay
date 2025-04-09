@@ -48,11 +48,17 @@ export const useAccessoiresStore = defineStore('accesoires', () => {
 
   async function deleteAccessoire(id) {
     try {
-      await axios.delete(`${window.VITE_BACKEND_URL}/Accessoires/${id}`)
-      await fetchAccessories(current_page.value)
+      const userStore = useUserStore();
+      await axios.delete(`${window.VITE_BACKEND_URL}/Accessoires/${id}`, {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+        withCredentials: true,
+      });
+      await fetchAccessories(current_page.value);
     } catch (err) {
-      console.error("Erreur lors de la suppression :", err)
-      alert("Échec de la suppression de l'accessoire.")
+      console.error("Erreur lors de la suppression :", err);
+      alert("Échec de la suppression de l'accessoire.");
     }
   }
 
