@@ -52,10 +52,12 @@ const changePage = async (page) => {
       <h2>FILTRER</h2>
       <!-- Filtrage par prix -->
       <div class="fitre">
-        <h2>Prix</h2>
-        <button @click="afficherPrix = !afficherPrix" class="toggle-button">
-          {{ afficherPrix ? '⬇' : '➡' }}
-        </button>
+        <div class="filtre_name_button">
+          <h2>Prix</h2>
+          <button @click="afficherPrix = !afficherPrix" class="toggle-button">
+            {{ afficherPrix ? '⬇' : '➡' }}
+          </button>
+        </div>
         <div class="depliant_fitre" v-show="afficherPrix">
           <div class="input_box_fitre">
             <label>De</label>
@@ -67,10 +69,12 @@ const changePage = async (page) => {
       </div>
       <!-- Filtrage par categorie -->
       <div class="fitre">
-        <h2>Categorie</h2>
-        <button @click="afficherCategorie = !afficherCategorie" class="toggle-button">
-          {{ afficherCategorie ? '⬇' : '➡' }}
-        </button>
+        <div class="filtre_name_button">
+          <h2>Categorie</h2>
+          <button @click="afficherCategorie = !afficherCategorie" class="toggle-button">
+            {{ afficherCategorie ? '⬇' : '➡' }}
+          </button>
+        </div>
         <div class="depliant_fitre" v-show="afficherCategorie">
           <div class="input_box_fitre">
             <input class="input_fitre" type="text" v-model="categoryId" />
@@ -94,49 +98,48 @@ const changePage = async (page) => {
 
    <!-- Pagination -->
    <div class="pagination">
-    <button v-if="accessoires.current_page > 0" @click="changePage(0)">
+    <button class="button_pagination" v-if="accessoires.current_page > 0" @click="changePage(0)">
       <FontAwesomeIcon :icon="faBackward" />
     </button>
-    <button v-if="accessoires.current_page > 0" @click="changePage(accessoires.current_page - 1)">
+    <button class="button_pagination" v-if="accessoires.current_page > 0" @click="changePage(accessoires.current_page - 1)">
       <FontAwesomeIcon :icon="faArrowLeft" />
     </button>
 
     <div v-for="i in [...Array(accessoires.current_page < accessoires.total_pages ? 3 : 6).keys()].reverse()" :key="i">
-      <button v-if="accessoires.current_page - i - 1 >= 0" @click="changePage(accessoires.current_page - i - 1)">
+      <button class="button_pagination" v-if="accessoires.current_page - i - 1 >= 0" @click="changePage(accessoires.current_page - i - 1)">
         {{ accessoires.current_page - i }}
       </button>
     </div>
 
-    <button disabled>{{ accessoires.current_page + 1 }}</button>
+    <button class="button_pagination" disabled>{{ accessoires.current_page + 1 }}</button>
 
     <div v-for="i in accessoires.current_page <= 1 ? 6 : 3" :key="i">
-      <button v-if="accessoires.current_page + i <= accessoires.total_pages" @click="changePage(accessoires.current_page + i)">
+      <button class="button_pagination" v-if="accessoires.current_page + i <= accessoires.total_pages" @click="changePage(accessoires.current_page + i)">
         {{ accessoires.current_page + i + 1 }}
       </button>
     </div>
 
-    <button v-if="accessoires.current_page < accessoires.total_pages" @click="changePage(accessoires.current_page + 1)">
+    <button class="button_pagination" v-if="accessoires.current_page < accessoires.total_pages" @click="changePage(accessoires.current_page + 1)">
       <FontAwesomeIcon :icon="faArrowRight" />
     </button>
-    <button v-if="accessoires.current_page != accessoires.total_pages" @click="changePage(accessoires.total_pages)">
+    <button class="button_pagination" v-if="accessoires.current_page != accessoires.total_pages" @click="changePage(accessoires.total_pages)">
       <FontAwesomeIcon :icon="faForward" />
     </button>
   </div>
 </template>
 
 <style scoped>
+.filtre_name_button{
+  display: flex;  
+  justify-content: space-between;
+}
 .toggle-button {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  padding: 6px 12px;
+  width: 20px;
+  height: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-.toggle-button:hover {
-  background-color: #0056b3;
+  font-size: 20px;
 }
 .accessoires_container {
   display: flex;
@@ -162,7 +165,7 @@ const changePage = async (page) => {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  min-width: 280px;
+  min-width: 300px;
 }
 .fitre h2 {
   font-size: 18px;
@@ -203,7 +206,7 @@ const changePage = async (page) => {
   width: 100%;
 }
 
-button {
+.button_pagination {
   margin: 10px;
   margin-bottom: 50px;
   width: 50px;

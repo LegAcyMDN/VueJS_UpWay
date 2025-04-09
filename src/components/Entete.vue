@@ -70,17 +70,19 @@ const userStore = useUserStore()
         </div>
         
         <div id="nav-connection">
-          <router-link v-if="userStore.connected && userStore.current && userStore.current.usertype === 'Admin'" to="/admin"><div id="login-user" >
-            <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.096"></g>
-              <g id="SVGRepo_iconCarrier"><path d="M6.00001 21V15.3426C6.00001 15.1158 5.96145 14.8908 5.88599 14.6769L3.35382 7.50248C3.15169 6.92978 3.40765 6.29618 3.95086 6.02457C4.5347 5.73265 5.24482 5.95902 5.552 6.53498L9.00001 13M18 21V15.3426C18 15.1158 18.0386 14.8908 18.114 14.6769L20.6462 7.50248C20.8483 6.92978 20.5924 6.29618 20.0491 6.02457C19.4653 5.73265 18.7552 5.95902 18.448 6.53498L15 13M16 6.5C16 8.70914 14.2091 10.5 12 10.5C9.79087 10.5 8.00001 8.70914 8.00001 6.5C8.00001 4.29086 9.79087 2.5 12 2.5C14.2091 2.5 16 4.29086 16 6.5Z" stroke="#000000" stroke-linecap="round" stroke-width="1.4"></path>
-              </g>
-            </svg>
-            <p v-if="userStore.connected" id="user-name">{{ userStore.current.loginClient }}</p>
-            </div>
-              <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Connexion / S'inscrire</router-link>
-              <button id="but-logout" @click="userStore.logout()" v-else>Déconnexion</button>
+          <router-link v-if="userStore.connected && userStore.current && userStore.current.usertype === 'Admin'" to="/admin">
+            <div id="login-user" >
+              <svg viewBox="-2.4 -2.4 28.80 28.80" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.096"></g>
+                <g id="SVGRepo_iconCarrier"><path d="M6.00001 21V15.3426C6.00001 15.1158 5.96145 14.8908 5.88599 14.6769L3.35382 7.50248C3.15169 6.92978 3.40765 6.29618 3.95086 6.02457C4.5347 5.73265 5.24482 5.95902 5.552 6.53498L9.00001 13M18 21V15.3426C18 15.1158 18.0386 14.8908 18.114 14.6769L20.6462 7.50248C20.8483 6.92978 20.5924 6.29618 20.0491 6.02457C19.4653 5.73265 18.7552 5.95902 18.448 6.53498L15 13M16 6.5C16 8.70914 14.2091 10.5 12 10.5C9.79087 10.5 8.00001 8.70914 8.00001 6.5C8.00001 4.29086 9.79087 2.5 12 2.5C14.2091 2.5 16 4.29086 16 6.5Z" stroke="#000000" stroke-linecap="round" stroke-width="1.4"></path>
+                </g>
+              </svg>
+              <p v-if="userStore.connected" id="user-name">{{ userStore.current.loginClient }}</p>
+              <div>
+                <router-link to="/auth" id="nav-auth" v-if="!userStore.connected">Connexion / S'inscrire</router-link>
+                <button id="but-logout" @click="userStore.logout()" v-else>Déconnexion</button>
+              </div>
             </div>
           </router-link>
         </div>
