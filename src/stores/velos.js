@@ -28,21 +28,20 @@ export const useVelosStore = defineStore('velos', () => {
       console.error("Le nom de la categorie est vide.");
       return;
     }
-    const accessoire = {
-      marqueId: marque,//
-      categorieId: categorie,//
+    const velo = {
+      marqueId: marque,
+      categorieId: categorie,
       moteurId: moteur,
       caracteristiqueVeloId: caracteristiqueVelo,
-      nomVelo: nom,//
+      nomVelo: nom,
       anneeVelo: annee,
       tailleMin: tailleMin,
       tailleMax: tailleMax,
       nombreKms: nombreKms,
-      //
       prixRemise: prixRemise,
       prixNeuf: prixNeuf,
       pourcentageReduction: pourcentageReduction, 
-      descriptifVelo : description,//
+      descriptifVelo : description,
       quantiteVelo: quantiteVelo,
       positionMoteur: positionMoteur,
       capaciteBatterie: capaciteBatterie,
@@ -71,7 +70,7 @@ export const useVelosStore = defineStore('velos', () => {
         },
         withCredentials: true,
       });
-      await fetchVelos(current_page.value);
+      await fetchBikes(current_page.value);
     } catch (err) {
       console.error("Erreur lors de la suppression :", err);
       alert("Échec de la suppression du velo.");
