@@ -69,7 +69,7 @@ export const useMarquesStore = defineStore('marques', () => {
   }
   
   async function deleteMarque(id){
-    await axios.delete(`${window.VITE_BACKEND_URL}/Marque/${id}`, {
+    await axios.delete(`${window.VITE_BACKEND_URL}/Marques/${id}`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
@@ -88,5 +88,24 @@ export const useMarquesStore = defineStore('marques', () => {
     list.value = response.data;
   }
 
-  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque, fetchAll }
+  async function fetchAllPages() {
+    try {
+      const count = await axios.get(`${window.VITE_BACKEND_URL}/Marques/count`);
+      const total = parseInt(count.data);
+      const totalPages = Math.ceil(total / 20); // si 20 éléments/page
+  
+      let allMarques = [];
+      for (let page = 0; page < totalPages; page++) {
+        const res = await axios.get(`${window.VITE_BACKEND_URL}/Marques?page=${page}`);
+        allMarques = allMarques.concat(res.data);
+      }
+  
+      list.value = allMarques;
+    } catch (error) {
+      console.error("Erreur lors du chargement des marques :", error.message);
+    }
+  }
+  
+
+  return { list, current_page, total_pages , getById, fetchMarque, count, post, deleteMarque, fetchAll, fetchAllPages }
 })
