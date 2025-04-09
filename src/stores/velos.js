@@ -119,6 +119,16 @@ export const useVelosStore = defineStore('velos', () => {
     return count
   }
 
+  async function getByFiltres(taille, categorie, cara, marque, annee, kilomMin, kilomMax, posmot, motmarId, couplemot, capbat, poids, prixMin, prixMax, page = 0) {
+    list.value = (await axios.get(
+      `${window.VITE_BACKEND_URL}/Velos/getByFiltres`,
+      {
+        params: {taille, categorie, cara, marque, annee, kilomMin, kilomMax, posmot, motmarId, couplemot, capbat, poids, prixMin, prixMax, page}
+      }
+    )).data;
+    current_page.value = page;
+  }
+
   async function fetchBikes(page) {
     list.value = (await axios.get(`${window.VITE_BACKEND_URL}/Velos?page=${page}`)).data
     current_page.value = page
@@ -131,6 +141,7 @@ export const useVelosStore = defineStore('velos', () => {
     getPhotosById,
     getPhotosByIds,
     getById,
+    getByFiltres,
     fetchBikes,
     count,
     current_page,
