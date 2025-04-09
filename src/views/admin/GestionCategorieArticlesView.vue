@@ -39,7 +39,9 @@ function deleteCategorie(id) {
         <label class="add">
           Nom de la Categorie :
           <input v-model="nomCategorie" type="text" />
+          Contenue de la Categorie :
           <textarea class="contenue" v-model="contenueCategorie" rows="5" cols="40"></textarea>
+          Image de la Categorie :
           <input v-model="urlPhotoCategorie" type="text" />
           <button @click="addCategorie">Valider</button>
         </label>

@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test'
 
+const USER_EMAIL = "user@gmail.com" // taken from default inserts
+const USER_PASSWORD = "User3d!";
+
 test('login success', async ({ page }) => {
   await page.goto('/auth')
 
@@ -7,8 +10,8 @@ test('login success', async ({ page }) => {
   const passwordField = page.locator("input[name='password']")
   const loginBtn = page.locator('#login_btn')
 
-  await emailField.fill('redboxing@redboxing.moe')
-  await passwordField.fill('thomas2005')
+  await emailField.fill(USER_EMAIL)
+  await passwordField.fill(USER_PASSWORD)
 
   await loginBtn.click()
   await page.waitForTimeout(1000)
@@ -42,7 +45,7 @@ test('login invalid password', async ({ page }) => {
   const loginBtn = page.locator('#login_btn')
   const errorText = page.locator('.error')
 
-  await emailField.fill('redboxing@redboxing.moe')
+  await emailField.fill(USER_EMAIL)
   await passwordField.fill('erererer')
 
   await loginBtn.click()

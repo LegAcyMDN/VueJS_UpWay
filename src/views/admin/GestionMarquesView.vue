@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useMarquesStore } from '@/stores/marques.js'
 
 const marquesStore = useMarquesStore()
@@ -16,6 +16,10 @@ function addMarque() {
 function deleteMarque(id) {
     marquesStore.deleteMarque(id)
 }
+
+onMounted(async () => {
+  await marqueStore.fetchMarque(0);
+});
 </script>
 
 <template>
