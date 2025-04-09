@@ -141,7 +141,7 @@ export const useVelosStore = defineStore('velos', () => {
     getPhotosById,
     getPhotosByIds,
     getById,
-    getByFiltres,
+    //getByFiltres,
     fetchBikes,
     count,
     current_page,
