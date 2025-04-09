@@ -21,10 +21,6 @@ const afficherMarqueMoteur = ref(false)
 const afficherCoupleMoteur = ref(false)
 //
 const afficherCapaciteBatterie = ref(false)
-const afficherPositionBatterie = ref(false)
-const afficherBatterieAmovible = ref(false)
-//
-const afficherPositionPB = ref(false)
 const afficherPoids = ref(false)
 
 // Valeurs des filtres
@@ -39,15 +35,11 @@ const caracteristiqueVeloId = ref(null)
 const kilometrageMin = ref(2)
 const kilometrageMax = ref(23218)
 //
-const positionMoteur = ref(false)
+const positionMoteur = ref(null)
 const marqueMoteurId = ref(null)
 const coupleMoteur = ref(70)
 //
 const capaciteBatterie = ref(500)
-const positionBatterie = ref(false)
-const batterieAmovible = ref(false)
-//
-const positionPorteBaguage = ref(false)
 const poids= ref(23)
 
 
@@ -61,22 +53,23 @@ watch(
     images.value = await velos.getPhotosByIds(velos.list.map((a) => a.veloId))
   },
 )
-/*
+
 // appelle `getByCategoryPrix` dès qu'un filtre est modifié
-const updateAccessoires = async () => {
-  await accessoires.getByCategoryPrix(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
+const updateVelos = async () => {
+  await velos.getByFiltres(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
   kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
-  positionBatterie.value, batterieAmovible.value, positionPorteBaguage.value, poids.value, prixMin.value, prixMax.value, accessoires.current_page)
+  poids.value, prixMin.value, prixMax.value, velos.current_page)
 }
-watch([prixMin, prixMax, categoryId], updateAccessoires, { immediate: true })
+watch([votreTaille, categoryId, caracteristiqueVeloId, marqueId, annee, kilometrageMin, kilometrageMax, positionMoteur, 
+  marqueMoteurId, coupleMoteur, capaciteBatterie, poids, prixMin, prixMax,], updateVelos, { immediate: true })
 
 // Pagination:
 const changePage = async (page) => {
-  await accessoires.getByCategoryPrix(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
+  await velos.getByFiltres(votreTaille.value, categoryId.value, caracteristiqueVeloId.value, marqueId.value, annee.value, 
   kilometrageMin.value, kilometrageMax.value, positionMoteur.value, marqueMoteurId.value, coupleMoteur.value, capaciteBatterie.value, 
-  positionBatterie.value, batterieAmovible.value, positionPorteBaguage.value, poids.value, prixMin.value, prixMax.value, page)
+  poids.value, prixMin.value, prixMax.value, page)
 }
-  */
+  
 </script>
 
 <template>
@@ -253,49 +246,7 @@ const changePage = async (page) => {
           </div>
         </div>
       </div>
-      <!-- Filtrage par Position Batterie -->
-      <div class="fitre">
-        <div class="filtre_name_button">
-          <h2>Position Batterier</h2>
-          <button @click="afficherPositionBatterie = !afficherPositionBatterie" class="toggle-button">
-            {{ afficherPositionBatterie ? '⬇' : '➡' }}
-          </button>
-        </div>
-        <div class="depliant_fitre" v-show="afficherPositionBatterie">
-          <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="positionBatterie" />
-          </div>
-        </div>
-      </div>
-      <!-- Filtrage par Batterie Amovible -->
-      <div class="fitre">
-        <div class="filtre_name_button">
-          <h2>Batterie Amovible</h2>
-          <button @click="afficherBatterieAmovible = !afficherBatterieAmovible" class="toggle-button">
-            {{ afficherBatterieAmovible ? '⬇' : '➡' }}
-          </button>
-        </div>
-        <div class="depliant_fitre" v-show="afficherBatterieAmovible">
-          <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="batterieAmovible" />
-          </div>
-        </div>
-      </div>
       <h2>COMPOSANTS ET EQUIPEMENT</h2>
-      <!-- Filtrage par Position Porte Baguage -->
-      <div class="fitre">
-        <div class="filtre_name_button">
-          <h2>Position Porte Baguage</h2>
-          <button @click="afficherPositionPB = !afficherPositionPB" class="toggle-button">
-            {{ afficherPositionPB ? '⬇' : '➡' }}
-          </button>
-        </div>
-        <div class="depliant_fitre" v-show="afficherPositionPB">
-          <div class="input_box_fitre">
-            <input class="input_fitre" type="text" v-model="positionPorteBaguage"/>
-          </div>
-        </div>
-      </div>
       <!-- Filtrage par Poids -->
       <div class="fitre">
         <div class="filtre_name_button">
