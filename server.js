@@ -12,6 +12,12 @@ promClient.register.setDefaultLabels({
   instance_name: process.env.INSTANCE_NAME == undefined ? 'upway-front' : process.env.INSTANCE_NAME,
 })
 
+const gauge = new promClient.Gauge({
+  name: 'process_start_time',
+  help: 'Start time of process in miliseconds since unix epoch',
+})
+gauge.set(Date.now())
+
 app.get('/env.js', (req, res) => {
   let content = ''
 
